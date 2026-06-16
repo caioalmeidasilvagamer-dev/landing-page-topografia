@@ -102,7 +102,7 @@ export function ContactForm() {
     <>
       {/* CTA Final — fundo escuro com curvas de nível */}
       <section className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: '#1A2332' }}>
-        <TopoBackground showGrid density="high" variant="dark" />
+        <TopoBackground showGrid variant="dark" />
         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(26,35,50,0.6)' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -9,10 +9,11 @@ import {
   Plane,
   Map,
   ArrowUpRight,
+  type LucideIcon,
 } from 'lucide-react'
 
 interface Service {
-  icon: React.ElementType
+  icon: LucideIcon
   code: string
   title: string
   description: string
