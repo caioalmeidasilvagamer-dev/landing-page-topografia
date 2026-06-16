@@ -30,8 +30,8 @@ export function TopoBackground({
           className="absolute inset-0 bg-no-repeat bg-cover bg-center"
           style={{
             backgroundImage: `url('${backgroundImageUrl}')`,
-            opacity: 0.045, // Opacidade discreta entre 3% e 8% para legibilidade
-            filter: 'grayscale(100%) blur(1.2px) contrast(1.15) brightness(0.98)',
+            opacity: 0.12, // Aumentado para 12% (visível mas discreto)
+            filter: 'sepia(12%) saturate(0.65) blur(0.8px) contrast(1.18) brightness(0.96)',
           }}
         />
       )}

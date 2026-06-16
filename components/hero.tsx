@@ -61,12 +61,12 @@ export function Hero() {
       {/* Background */}
       <TopoBackground showGrid showCoords backgroundImageUrl="/images/mapa-topo-bg.jpg" />
 
-      {/* Vinheta escura nas bordas */}
+      {/* Vinheta clara para transição suave com o fundo do site (#F8FAFC) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 20%, oklch(0.165 0.03 230 / 0.5) 80%, oklch(0.165 0.03 230) 100%)',
+            'radial-gradient(ellipse 85% 65% at 50% 50%, transparent 30%, rgba(248, 250, 252, 0.35) 75%, #F8FAFC 100%)',
         }}
       />
 
