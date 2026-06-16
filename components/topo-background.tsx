@@ -41,7 +41,7 @@ export function TopoBackground({
       {/* Imagem de background - Mobile */}
       {backgroundImageUrlMobile && (
         <div
-          className="absolute inset-0 bg-no-repeat bg-contain bg-center block md:hidden"
+          className="absolute inset-0 bg-no-repeat bg-cover bg-center block md:hidden"
           style={{
             backgroundImage: `url('${backgroundImageUrlMobile}')`,
             opacity: 0.35,
