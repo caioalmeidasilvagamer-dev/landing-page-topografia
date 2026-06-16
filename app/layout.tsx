@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+import { TopoPageBackground } from '@/components/topo-page-background'
 import './globals.css'
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -115,7 +116,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        {children}
+        {/* Fundo topográfico fixo — carta de relevo para todo o site */}
+        <TopoPageBackground />
+        {/* Conteúdo acima do fundo */}
+        <div className="relative" style={{ zIndex: 1 }}>
+          {children}
+        </div>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
