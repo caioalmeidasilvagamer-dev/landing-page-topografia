@@ -10,6 +10,7 @@ interface TopoBackgroundProps {
   showCoords?: boolean
   variant?: 'light' | 'dark'
   backgroundImageUrl?: string
+  backgroundImageUrlMobile?: string
 }
 
 export function TopoBackground({
@@ -18,18 +19,31 @@ export function TopoBackground({
   showCoords = false,
   variant = 'dark',
   backgroundImageUrl,
+  backgroundImageUrlMobile,
 }: TopoBackgroundProps) {
   const gridClass   = variant === 'dark' ? 'technical-grid-dark' : 'technical-grid'
   const metaColor   = variant === 'dark' ? 'rgba(175,162,132,0.16)' : 'rgba(80,70,50,0.14)'
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none select-none ${className}`}>
-      {/* Imagem de background sutil com tratamento visual se fornecida */}
+      {/* Imagem de background - Desktop */}
       {backgroundImageUrl && (
-        <div 
-          className="absolute inset-0 bg-no-repeat bg-contain bg-center"
+        <div
+          className="absolute inset-0 bg-no-repeat bg-contain bg-center hidden md:block"
           style={{
             backgroundImage: `url('${backgroundImageUrl}')`,
+            opacity: 0.35,
+            filter: 'sepia(12%) saturate(0.65) contrast(1.18) brightness(0.96)',
+          }}
+        />
+      )}
+
+      {/* Imagem de background - Mobile */}
+      {backgroundImageUrlMobile && (
+        <div
+          className="absolute inset-0 bg-no-repeat bg-contain bg-center block md:hidden"
+          style={{
+            backgroundImage: `url('${backgroundImageUrlMobile}')`,
             opacity: 0.35,
             filter: 'sepia(12%) saturate(0.65) contrast(1.18) brightness(0.96)',
           }}
