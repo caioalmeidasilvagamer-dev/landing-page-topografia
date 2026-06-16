@@ -1,8 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
-import { useInView } from 'framer-motion'
 import {
   Compass,
   Satellite,
@@ -72,25 +70,23 @@ const services: Service[] = [
   },
 ]
 
+const VP = { once: true, amount: 0.05 } as const
+
 function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
   const Icon = service.icon
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.45, delay: index * 0.08 }}
-      className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-250 overflow-hidden"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={VP}
+      transition={{ duration: 0.4, delay: index * 0.07 }}
+      className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-200 overflow-hidden"
       style={{ borderRadius: '8px' }}
     >
-      {/* Acento superior — aparece no hover */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
       <div className="p-6 flex flex-col gap-4">
-        {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div
@@ -106,17 +102,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           <ArrowUpRight className="size-4 text-muted-foreground/25 group-hover:text-primary/50 transition-colors" />
         </div>
 
-        {/* Título */}
         <h3 className="font-heading font-semibold text-base text-foreground leading-snug">
           {service.title}
         </h3>
 
-        {/* Descrição */}
         <p className="font-sans text-sm text-muted-foreground leading-relaxed">
           {service.description}
         </p>
 
-        {/* Specs técnicas */}
         <div className="pt-3 flex flex-wrap gap-x-4 gap-y-1.5" style={{ borderTop: '1px solid #E8EFF6' }}>
           {service.specs.map((spec) => (
             <div key={spec} className="flex items-center gap-1.5">
@@ -131,20 +124,17 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 }
 
 export function Services() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true })
-
   return (
     <section id="servicos" className="relative py-24 lg:py-32 bg-background">
       <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Cabeçalho */}
-        <div ref={ref} className="mb-16">
+        <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.4 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.35 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -156,8 +146,9 @@ export function Services() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.4, delay: 0.08 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
               Soluções técnicas para cada demanda de campo
@@ -165,8 +156,9 @@ export function Services() {
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="font-sans text-sm text-muted-foreground max-w-sm leading-relaxed"
             >
               Desde o levantamento inicial até a entrega dos documentos finais,
@@ -175,7 +167,6 @@ export function Services() {
           </div>
         </div>
 
-        {/* Grid de serviços */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {services.map((service, index) => (
             <ServiceCard key={service.code} service={service} index={index} />

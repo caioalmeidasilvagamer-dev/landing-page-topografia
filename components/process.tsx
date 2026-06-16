@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ClipboardList, MapPinned, Scan, Cpu, PackageCheck } from 'lucide-react'
 
 const steps = [
@@ -47,21 +46,20 @@ const steps = [
   },
 ]
 
-export function Process() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true })
+const VP = { once: true, amount: 0.05 } as const
 
+export function Process() {
   return (
     <section className="relative py-24 lg:py-32 bg-background">
       <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Cabeçalho */}
-        <div ref={ref} className="mb-16">
+        <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.4 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.35 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -73,16 +71,18 @@ export function Process() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.4, delay: 0.08 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
               Como executamos seu projeto
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="font-sans text-sm text-muted-foreground max-w-xs leading-relaxed"
             >
               Processo estruturado em cinco etapas para garantir qualidade e rastreabilidade em cada projeto.
@@ -90,19 +90,20 @@ export function Process() {
           </div>
         </div>
 
-        {/* Timeline */}
         <div className="relative">
-          {/* Linha conectora desktop — traço sólido */}
+          {/* Linha de fundo — sempre visível */}
           <div
             className="hidden lg:block absolute top-[2.6rem] left-0 right-0 h-px z-0"
             style={{ backgroundColor: '#D0DAEA' }}
           />
+          {/* Linha de progresso animada */}
           <motion.div
             className="hidden lg:block absolute top-[2.6rem] left-0 h-px z-0"
             style={{ backgroundColor: '#1F3A5F' }}
             initial={{ width: 0 }}
-            animate={inView ? { width: '100%' } : {}}
-            transition={{ duration: 1.4, delay: 0.5, ease: 'easeOut' }}
+            whileInView={{ width: '100%' }}
+            viewport={VP}
+            transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-4 relative z-10">
@@ -111,29 +112,24 @@ export function Process() {
               return (
                 <motion.div
                   key={step.number}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.45, delay: 0.3 + index * 0.1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={VP}
+                  transition={{ duration: 0.4, delay: 0.25 + index * 0.09 }}
                   className="flex lg:flex-col gap-4 lg:gap-0"
                 >
-                  {/* Nó da timeline */}
                   <div className="flex flex-col items-center lg:items-start">
                     <div
                       className="size-11 flex items-center justify-center bg-white relative z-10"
-                      style={{
-                        border: '2px solid #1F3A5F',
-                        borderRadius: '50%',
-                      }}
+                      style={{ border: '2px solid #1F3A5F', borderRadius: '50%' }}
                     >
                       <Icon className="size-[18px] text-primary" />
                     </div>
-                    {/* Linha vertical mobile */}
                     {index < steps.length - 1 && (
                       <div className="lg:hidden w-px flex-1 mt-2 min-h-[2rem]" style={{ backgroundColor: '#D0DAEA' }} />
                     )}
                   </div>
 
-                  {/* Conteúdo */}
                   <div className="flex-1 lg:mt-6 pb-4 lg:pb-0">
                     <div className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/45 mb-1">
                       {step.number}

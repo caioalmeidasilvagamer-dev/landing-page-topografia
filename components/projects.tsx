@@ -1,9 +1,11 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { ArrowUpRight, MapPin } from 'lucide-react'
+
+const VP = { once: true, amount: 0.05 } as const
 
 const projects = [
   {
@@ -53,8 +55,6 @@ const projects = [
 ]
 
 export function Projects() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true })
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
@@ -62,12 +62,12 @@ export function Projects() {
       <div className="absolute inset-0 technical-grid" style={{ opacity: 0.55 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Cabeçalho */}
-        <div ref={ref} className="mb-16">
+        <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.4 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.35 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -79,16 +79,18 @@ export function Projects() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.4, delay: 0.08 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
               Projetos realizados em todo o Brasil
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.45, delay: 0.18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="font-sans text-sm text-muted-foreground max-w-sm leading-relaxed"
             >
               Uma seleção dos nossos trabalhos mais relevantes em engenharia topográfica e geodésica.
@@ -96,20 +98,19 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Grid de projetos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 28 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.45, delay: index * 0.09 }}
               onMouseEnter={() => setHovered(project.id)}
               onMouseLeave={() => setHovered(null)}
-              className="group relative bg-white border border-border overflow-hidden hover:border-primary/35 transition-all duration-250 cursor-pointer"
+              className="group relative bg-white border border-border overflow-hidden hover:border-primary/35 transition-all duration-200 cursor-pointer"
               style={{ borderRadius: '8px' }}
             >
-              {/* Imagem */}
               <div className="relative h-52 overflow-hidden" style={{ borderBottom: '1px solid #D0DAEA' }}>
                 <Image
                   src={project.image}
@@ -118,10 +119,8 @@ export function Projects() {
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                {/* Overlay suave */}
                 <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-all duration-300" />
 
-                {/* ID técnico */}
                 <div
                   className="absolute top-3 left-3 font-mono text-[10px] text-white px-2 py-1"
                   style={{ backgroundColor: 'rgba(26,35,50,0.7)', borderRadius: '4px' }}
@@ -129,7 +128,6 @@ export function Projects() {
                   {project.id}
                 </div>
 
-                {/* Categoria */}
                 <div
                   className="absolute top-3 right-3 font-mono text-[10px] px-2 py-1"
                   style={{
@@ -142,7 +140,6 @@ export function Projects() {
                   {project.category}
                 </div>
 
-                {/* Ícone de acesso no hover */}
                 <AnimatePresence>
                   {hovered === project.id && (
                     <motion.div
@@ -158,7 +155,6 @@ export function Projects() {
                 </AnimatePresence>
               </div>
 
-              {/* Conteúdo */}
               <div className="p-5 flex flex-col gap-3">
                 <div className="flex items-center gap-1.5 text-muted-foreground">
                   <MapPin className="size-3" />

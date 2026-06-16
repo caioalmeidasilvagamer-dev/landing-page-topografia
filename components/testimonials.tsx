@@ -1,8 +1,10 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+
+const VP = { once: true, amount: 0.05 } as const
 
 const testimonials = [
   {
@@ -61,8 +63,6 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export function Testimonials() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true })
   const [current, setCurrent] = useState(0)
 
   const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length)
@@ -73,12 +73,12 @@ export function Testimonials() {
       <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Cabeçalho */}
-        <div ref={ref} className="mb-16">
+        <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.4 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.35 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -89,25 +89,25 @@ export function Testimonials() {
 
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.45, delay: 0.1 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.4, delay: 0.08 }}
             className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
           >
             Clientes que confiam na nossa precisão
           </motion.h2>
         </div>
 
-        {/* Layout: destaque + lista lateral */}
         <div className="grid lg:grid-cols-12 gap-6">
           {/* Depoimento principal */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.45, delay: 0.15 }}
             className="lg:col-span-7 bg-white border border-border relative overflow-hidden flex flex-col"
             style={{ borderRadius: '8px' }}
           >
-            {/* Acento Leica no topo */}
             <div className="h-[3px] w-full" style={{ backgroundColor: '#1F3A5F' }} />
 
             <div className="p-8 flex flex-col gap-6 flex-1">
@@ -137,7 +137,7 @@ export function Testimonials() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.28 }}
+                  transition={{ duration: 0.25 }}
                   className="font-sans text-base text-foreground/85 leading-relaxed relative z-10"
                 >
                   &ldquo;{testimonials[current].text}&rdquo;
@@ -183,8 +183,9 @@ export function Testimonials() {
               <motion.button
                 key={t.id}
                 initial={{ opacity: 0, x: 16 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.45, delay: 0.25 + index * 0.07 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={VP}
+                transition={{ duration: 0.4, delay: 0.2 + index * 0.07 }}
                 onClick={() => setCurrent(index)}
                 className="text-left border p-4 transition-all duration-200"
                 style={{

@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Crosshair, Users, MapPin, Clock, ShieldCheck } from 'lucide-react'
 
 const differentials = [
@@ -47,22 +46,20 @@ const differentials = [
   },
 ]
 
-export function Differentials() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true })
+const VP = { once: true, amount: 0.05 } as const
 
+export function Differentials() {
   return (
     <section id="diferenciais" className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: '#EDF1F7' }}>
-      {/* Grid técnico sobre fundo alternado */}
       <div className="absolute inset-0 technical-grid" style={{ opacity: 0.6 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Cabeçalho */}
-        <div ref={ref} className="mb-16">
+        <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.4 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.35 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -73,25 +70,25 @@ export function Differentials() {
 
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.45, delay: 0.1 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.4, delay: 0.08 }}
             className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-xl text-balance"
           >
             Por que escolher a GeoTech?
           </motion.h2>
         </div>
 
-        {/* Layout: card destaque + grid 2x2 */}
         <div className="grid lg:grid-cols-12 gap-4">
           {/* Card destaque principal */}
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.15 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.45, delay: 0.1 }}
             className="lg:col-span-5 bg-white border border-border relative overflow-hidden flex flex-col"
             style={{ borderRadius: '8px' }}
           >
-            {/* SVG interno de curvas de nível — muito sutil */}
             <svg
               className="absolute inset-0 w-full h-full"
               viewBox="0 0 400 500"
@@ -122,13 +119,12 @@ export function Differentials() {
                   Equipamentos de Alta Precisão
                 </h3>
                 <p className="font-sans text-sm text-muted-foreground leading-relaxed">
-                  Receptores GNSS geodésicos Trimble e Leica, estações totais
-                  robotizadas e drones aerofotogramétricos DJI com câmeras métricas.
-                  Tecnologia de ponta para resultados confiáveis e rastreáveis.
+                  Receptores GNSS geodésicos Trimble e Leica, estações totais robotizadas e
+                  drones aerofotogramétricos DJI com câmeras métricas. Tecnologia de ponta
+                  para resultados confiáveis e rastreáveis.
                 </p>
               </div>
 
-              {/* Métricas */}
               <div className="grid grid-cols-2 gap-4 pt-4" style={{ borderTop: '1px solid #D0DAEA' }}>
                 <div>
                   <div className="font-heading font-semibold text-3xl text-primary">±5mm</div>
@@ -150,8 +146,9 @@ export function Differentials() {
                 <motion.div
                   key={diff.title}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.45, delay: 0.2 + index * 0.08 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={VP}
+                  transition={{ duration: 0.4, delay: 0.15 + index * 0.07 }}
                   className="bg-white border border-border p-5 flex flex-col gap-3 hover:border-primary/35 transition-colors group"
                   style={{ borderRadius: '8px' }}
                 >
