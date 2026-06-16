@@ -27,11 +27,11 @@ export function TopoBackground({
       {/* Imagem de background sutil com tratamento visual se fornecida */}
       {backgroundImageUrl && (
         <div 
-          className="absolute inset-0 bg-no-repeat bg-cover bg-center"
+          className="absolute inset-0 bg-no-repeat bg-contain bg-center"
           style={{
             backgroundImage: `url('${backgroundImageUrl}')`,
             opacity: 0.35,
-            filter: 'sepia(12%) saturate(0.65) blur(0.8px) contrast(1.18) brightness(0.96)',
+            filter: 'sepia(12%) saturate(0.65) contrast(1.18) brightness(0.96)',
           }}
         />
       )}
