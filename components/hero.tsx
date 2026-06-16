@@ -59,7 +59,7 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden">
       {/* Background */}
-      <TopoBackground showGrid showCoords />
+      <TopoBackground showGrid showCoords backgroundImageUrl="/images/mapa-topo-bg.jpg" />
 
       {/* Vinheta escura nas bordas */}
       <div

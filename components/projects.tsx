@@ -58,7 +58,7 @@ export function Projects() {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <section id="projetos" className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(237, 241, 247, 0.82)' }}>
+    <section id="projetos" className="relative py-24 lg:py-32" style={{ backgroundColor: '#EDF1F7' }}>
       <div className="absolute inset-0 technical-grid" style={{ opacity: 0.55 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -9,6 +9,7 @@ interface TopoBackgroundProps {
   showGrid?: boolean
   showCoords?: boolean
   variant?: 'light' | 'dark'
+  backgroundImageUrl?: string
 }
 
 export function TopoBackground({
@@ -16,12 +17,25 @@ export function TopoBackground({
   showGrid = true,
   showCoords = false,
   variant = 'dark',
+  backgroundImageUrl,
 }: TopoBackgroundProps) {
   const gridClass   = variant === 'dark' ? 'technical-grid-dark' : 'technical-grid'
   const metaColor   = variant === 'dark' ? 'rgba(175,162,132,0.16)' : 'rgba(80,70,50,0.14)'
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none select-none ${className}`}>
+      {/* Imagem de background sutil com tratamento visual se fornecida */}
+      {backgroundImageUrl && (
+        <div 
+          className="absolute inset-0 bg-no-repeat bg-cover bg-center"
+          style={{
+            backgroundImage: `url('${backgroundImageUrl}')`,
+            opacity: 0.045, // Opacidade discreta entre 3% e 8% para legibilidade
+            filter: 'grayscale(100%) blur(1.2px) contrast(1.15) brightness(0.98)',
+          }}
+        />
+      )}
+
       {/* Grid de engenharia */}
       {showGrid && <div className={`absolute inset-0 ${gridClass}`} />}
 
