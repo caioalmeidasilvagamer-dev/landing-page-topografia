@@ -1,28 +1,9 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import dynamic from 'next/dynamic'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, MessageCircle, ChevronDown, Target, Layers, FileText, Home } from 'lucide-react'
 import { TopoBackground } from './topo-background'
-
-const Brazil3D = dynamic(
-  () => import('./brazil-3d').then((m) => ({ default: m.Brazil3D })),
-  { ssr: false, loading: () => <Brazil3DLoader /> }
-)
-
-function Brazil3DLoader() {
-  return (
-    <div className="w-full h-full flex items-center justify-center min-h-[480px]">
-      <div className="flex flex-col items-center gap-3">
-        <div className="size-8 border-2 border-primary border-t-transparent rounded-full animate-spin opacity-50" />
-        <span className="font-mono text-[10px] text-muted-foreground/50 tracking-widest uppercase">
-          Carregando modelo 3D…
-        </span>
-      </div>
-    </div>
-  )
-}
 
 interface CountUpProps {
   end: number
@@ -182,51 +163,85 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Coluna do modelo 3D */}
+          {/* Coluna de estatísticas + visual técnico */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.4 }}
-            className="relative flex flex-col items-center justify-center"
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex flex-col gap-6"
           >
-            {/* Label técnico flutuante */}
-            <div className="absolute top-0 left-0 z-10 flex items-center gap-2 px-2.5 py-1 bg-card/70 backdrop-blur-sm border border-border/40 rounded-[6px]">
-              <div className="size-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="font-mono text-[9px] tracking-[0.18em] text-primary/80 uppercase">
-                Modelo Topográfico 3D
-              </span>
-            </div>
+            {/* Painel técnico */}
+            <div className="relative border border-border/40 rounded-[8px] bg-card/60 backdrop-blur-sm overflow-hidden">
+              {/* Header do painel */}
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/40 bg-muted/30">
+                <div className="flex items-center gap-2">
+                  <div className="size-2 rounded-full bg-primary/60" />
+                  <span className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground uppercase">
+                    Dados Técnicos
+                  </span>
+                </div>
+                <span className="font-mono text-[10px] text-muted-foreground/60">
+                  v2.4.1
+                </span>
+              </div>
 
-            {/* Coordenadas técnicas */}
-            <div className="absolute bottom-4 right-0 z-10 text-right">
-              <div className="font-mono text-[9px] text-muted-foreground/40 leading-relaxed">
-                <div>LAT -15.7801° S</div>
-                <div>LON -47.9292° W</div>
-                <div>ALT 1172m AMSL</div>
+              {/* Conteúdo do painel */}
+              <div className="p-5 grid grid-cols-3 divide-x divide-border/30">
+                {stats.map(({ value, suffix, label }) => (
+                  <div key={label} className="px-4 first:pl-0 last:pr-0 flex flex-col gap-1">
+                    <div className="font-heading font-semibold text-3xl lg:text-4xl text-foreground tabular-nums">
+                      <CountUp end={value} suffix={suffix} />
+                    </div>
+                    <div className="font-sans text-xs text-muted-foreground leading-tight">
+                      {label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Barra de progresso técnica */}
+              <div className="px-5 pb-4 pt-2 border-t border-border/30">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="font-mono text-[10px] text-muted-foreground/70">Precisão posicional</span>
+                  <span className="font-mono text-[10px] text-primary">±5mm</span>
+                </div>
+                <div className="h-1 bg-muted rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-primary rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: '96%' }}
+                    transition={{ duration: 1.5, delay: 0.8, ease: 'easeOut' }}
+                  />
+                </div>
+                <div className="flex items-center justify-between mt-3">
+                  <span className="font-mono text-[10px] text-muted-foreground/70">Cobertura regional</span>
+                  <span className="font-mono text-[10px] text-primary">12 estados</span>
+                </div>
+                <div className="h-1 bg-muted rounded-full overflow-hidden mt-1.5">
+                  <motion.div
+                    className="h-full bg-primary/70 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: '78%' }}
+                    transition={{ duration: 1.5, delay: 1, ease: 'easeOut' }}
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Escala */}
-            <div className="absolute bottom-4 left-0 z-10 flex items-center gap-1.5">
-              <div className="w-12 h-px bg-muted-foreground/30" />
-              <span className="font-mono text-[9px] text-muted-foreground/40">500km</span>
-            </div>
-
-            {/* Canvas 3D – sem borda, sem fundo próprio */}
-            <div className="w-full" style={{ height: 520 }}>
-              <Brazil3D />
-            </div>
-
-            {/* Stats abaixo do modelo */}
-            <div className="w-full mt-1 grid grid-cols-3 divide-x divide-border/30 border border-border/30 rounded-[6px] bg-card/40 backdrop-blur-sm">
-              {stats.map(({ value, suffix, label }) => (
-                <div key={label} className="px-4 py-3 flex flex-col gap-0.5">
-                  <div className="font-heading font-semibold text-2xl text-foreground tabular-nums">
-                    <CountUp end={value} suffix={suffix} />
-                  </div>
-                  <div className="font-sans text-[11px] text-muted-foreground leading-tight">
-                    {label}
-                  </div>
+            {/* Certificações */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
+                { code: 'INCRA 572', label: 'Georreferenciamento Rural' },
+                { code: 'ISO 9001', label: 'Gestão da Qualidade' },
+                { code: 'CREA/CAU', label: 'Habilitação Profissional' },
+              ].map((cert) => (
+                <div
+                  key={cert.code}
+                  className="petroleum-accent pl-3 py-2"
+                >
+                  <div className="font-mono text-xs text-primary font-medium">{cert.code}</div>
+                  <div className="font-sans text-[11px] text-muted-foreground mt-0.5">{cert.label}</div>
                 </div>
               ))}
             </div>
