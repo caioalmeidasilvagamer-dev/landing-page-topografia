@@ -1,0 +1,176 @@
+'use client'
+
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+
+const faqs = [
+  {
+    id: 'q1',
+    question: 'Qual é o prazo médio para realização de um levantamento topográfico?',
+    answer:
+      'O prazo varia conforme a área e complexidade do projeto. Levantamentos de até 5 ha são concluídos em 2 a 3 dias úteis. Áreas maiores ou com terrenos acidentados podem demandar de 5 a 15 dias úteis. O prazo exato é informado na proposta técnica após a visita de reconhecimento.',
+  },
+  {
+    id: 'q2',
+    question: 'Quais documentos são entregues ao final do serviço?',
+    answer:
+      'A entrega padrão inclui: arquivos técnicos em DWG/DXF e PDF, memorial descritivo georreferenciado, relatório técnico com dados do levantamento, ART (Anotação de Responsabilidade Técnica) do engenheiro responsável, e lista de coordenadas dos pontos levantados. Para georreferenciamento rural, é incluso o certificado INCRA e os arquivos para inserção no SIGEF.',
+  },
+  {
+    id: 'q3',
+    question: 'A GeoTech atende a área em que preciso de serviços?',
+    answer:
+      'Atendemos os estados do Sudeste (SP, RJ, MG, ES), Centro-Oeste (GO, MT, MS, DF) e Sul (PR, SC, RS). Para demandas em outras regiões, avaliamos caso a caso conforme o tamanho e urgência do projeto. Entre em contato para verificar disponibilidade.',
+  },
+  {
+    id: 'q4',
+    question: 'O que é georreferenciamento e quando é obrigatório?',
+    answer:
+      'Georreferenciamento é o processo de determinar as coordenadas de um imóvel rural com precisão geodésica, vinculando-o ao Sistema Geodésico Brasileiro (SIRGAS2000). É obrigatório para imóveis que pretendem realizar desmembramento, parcelamento, remembramento, transferência de domínio ou qualquer alteração registral a partir das áreas mínimas definidas pelo INCRA (que variam conforme a região).',
+  },
+  {
+    id: 'q5',
+    question: 'Qual a diferença entre levantamento planimétrico e planialtimétrico?',
+    answer:
+      'O levantamento planimétrico registra apenas a posição horizontal dos elementos (limite de imóvel, construções, vias). O planialtimétrico inclui também as cotas de altitude, gerando curvas de nível e o modelo digital do terreno. Para projetos de drenagem, terraplanagem e construção civil, o levantamento planialtimétrico é indispensável.',
+  },
+  {
+    id: 'q6',
+    question: 'Como funciona o aerolevantamento com drone e quais os benefícios?',
+    answer:
+      'O aerolevantamento utiliza VANTs (drones) equipados com câmeras métricas que capturam centenas de imagens sobrepostas da área. Com o processamento fotogramétrico, geramos ortofotos de alta resolução (GSD até 3cm), modelos digitais de superfície e do terreno, e nuvens de pontos 3D. Os benefícios incluem cobertura rápida de grandes áreas, acesso a terrenos de difícil acesso e custo-benefício superior ao levantamento convencional para áreas acima de 50 ha.',
+  },
+  {
+    id: 'q7',
+    question: 'É necessário estar presente durante o levantamento em campo?',
+    answer:
+      'Não é obrigatório, mas recomendamos que o proprietário ou seu representante esteja disponível para identificar os marcos de divisa e sanar eventuais dúvidas sobre os limites do imóvel. Para georreferenciamentos rurais, a presença nos dias de campo garante maior precisão e evita retrabalhos.',
+  },
+]
+
+export function FAQ() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true })
+
+  return (
+    <section id="faq" className="relative py-24 lg:py-32">
+      <div className="absolute inset-0 technical-grid opacity-20" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Cabeçalho */}
+        <div ref={ref} className="mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-3 mb-6"
+          >
+            <div className="w-8 h-px bg-primary" />
+            <span className="font-mono text-[11px] tracking-[0.2em] text-primary uppercase">
+              FAQ / 06
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-xl text-balance"
+          >
+            Perguntas frequentes sobre topografia
+          </motion.h2>
+        </div>
+
+        {/* Layout assimétrico: FAQ + Painel técnico */}
+        <div className="grid lg:grid-cols-12 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-8"
+          >
+            <Accordion type="single" collapsible className="flex flex-col gap-2">
+              {faqs.map((faq, index) => (
+                <motion.div
+                  key={faq.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.25 + index * 0.05 }}
+                >
+                  <AccordionItem
+                    value={faq.id}
+                    className="border border-border/50 rounded-[8px] bg-card px-5 overflow-hidden data-[state=open]:border-primary/30"
+                  >
+                    <AccordionTrigger className="font-sans font-medium text-sm text-foreground py-4 hover:no-underline text-left">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="font-sans text-sm text-muted-foreground leading-relaxed pb-4">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                </motion.div>
+              ))}
+            </Accordion>
+          </motion.div>
+
+          {/* Painel lateral de contato rápido */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="lg:col-span-4 flex flex-col gap-4"
+          >
+            <div className="border border-border/50 rounded-[8px] bg-card p-6 flex flex-col gap-4">
+              <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+                Suporte técnico
+              </div>
+              <h3 className="font-heading font-semibold text-base text-foreground leading-snug">
+                Não encontrou sua dúvida?
+              </h3>
+              <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                Nossa equipe técnica está disponível para responder qualquer questão sobre
+                topografia, georreferenciamento e engenharia de precisão.
+              </p>
+              <div className="flex flex-col gap-2 pt-2">
+                <a
+                  href="https://wa.me/5511999999999"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-sans rounded-[6px] hover:bg-primary/90 transition-colors"
+                >
+                  Falar com especialista
+                </a>
+              </div>
+            </div>
+
+            {/* Normas técnicas */}
+            <div className="border border-border/50 rounded-[8px] bg-card p-5 flex flex-col gap-3">
+              <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+                Normas e certificações
+              </div>
+              {[
+                'ABNT NBR 13.133 — Levantamento Topográfico',
+                'INCRA 572 — Georreferenciamento',
+                'IBGE NT 05 — Coordenadas GPS',
+                'SIRGAS2000 — Datum Geodésico',
+              ].map((norm) => (
+                <div key={norm} className="flex items-start gap-2">
+                  <div className="size-1 rounded-full bg-primary/60 mt-1.5 flex-shrink-0" />
+                  <span className="font-mono text-[10px] text-muted-foreground/70 leading-relaxed">
+                    {norm}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
