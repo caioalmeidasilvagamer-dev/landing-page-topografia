@@ -1,17 +1,17 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter_Tight, Sora } from 'next/font/google'
+import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 
-const sora = Sora({
-  variable: '--font-sora',
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: '--font-ibm-plex-sans',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 })
 
-const interTight = Inter_Tight({
-  variable: '--font-inter-tight',
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: '--font-ibm-plex-mono',
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
   display: 'swap',
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#1B3A5C',
+  colorScheme: 'light',
+  themeColor: '#1F3A5F',
   width: 'device-width',
   initialScale: 1,
 }
@@ -65,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${sora.variable} ${interTight.variable} bg-background`}
+      className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} bg-background`}
       suppressHydrationWarning
     >
       <head>

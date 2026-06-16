@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, MapPin } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
@@ -34,8 +34,8 @@ export function Navbar() {
       className={cn(
         'fixed top-0 inset-x-0 z-50 transition-all duration-300',
         scrolled
-          ? 'bg-background/95 backdrop-blur-md border-b border-border/50'
-          : 'bg-transparent',
+          ? 'bg-white border-b border-border shadow-sm'
+          : 'bg-[#1F3A5F]',
       )}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
@@ -45,33 +45,60 @@ export function Navbar() {
         {/* Logo */}
         <a
           href="#"
-          className="flex items-center gap-2.5 group"
+          className="flex items-center gap-3 group"
           aria-label="GeoTech Topografia"
         >
-          <div className="relative size-8 flex items-center justify-center">
-            <div className="absolute inset-0 border border-primary/60 rounded-sm rotate-45 group-hover:rotate-[30deg] transition-transform duration-300" />
-            <MapPin className="size-4 text-primary relative z-10" />
+          {/* Símbolo geométrico — mira topográfica */}
+          <div className="relative size-8 flex items-center justify-center flex-shrink-0">
+            <svg viewBox="0 0 32 32" className="size-8" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="13" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <circle cx="16" cy="16" r="4" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.9)'} strokeWidth="1.5" />
+              <line x1="3" y1="16" x2="10" y2="16" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <line x1="22" y1="16" x2="29" y2="16" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <line x1="16" y1="3" x2="16" y2="10" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <line x1="16" y1="22" x2="16" y2="29" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+            </svg>
           </div>
           <div className="flex flex-col leading-none">
-            <span className="font-heading font-700 text-[15px] text-foreground tracking-tight">
+            <span
+              className={cn(
+                'font-heading font-semibold text-[15px] tracking-tight',
+                scrolled ? 'text-foreground' : 'text-white',
+              )}
+            >
               GeoTech
             </span>
-            <span className="font-mono text-[9px] text-muted-foreground tracking-[0.2em] uppercase">
+            <span
+              className={cn(
+                'font-mono text-[9px] tracking-[0.22em] uppercase',
+                scrolled ? 'text-muted-foreground' : 'text-white/60',
+              )}
+            >
               Topografia
             </span>
           </div>
         </a>
 
         {/* Nav desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <button
               key={link.href}
               onClick={() => handleLink(link.href)}
-              className="font-sans text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
+              className={cn(
+                'font-sans text-sm transition-colors duration-200 relative group',
+                scrolled
+                  ? 'text-muted-foreground hover:text-foreground'
+                  : 'text-white/75 hover:text-white',
+              )}
             >
               {link.label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
+              <span
+                className={cn(
+                  'absolute -bottom-0.5 left-0 w-0 h-px group-hover:w-full transition-all duration-300',
+                  scrolled ? 'bg-primary' : 'bg-white/60',
+                )}
+              />
             </button>
           ))}
         </div>
@@ -80,7 +107,12 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => handleLink('#contato')}
-            className="font-sans text-sm px-4 py-2 border border-primary/40 text-primary hover:bg-primary/10 rounded-[6px] transition-all duration-200"
+            className={cn(
+              'font-sans text-sm px-4 py-2 border rounded-[6px] transition-all duration-200',
+              scrolled
+                ? 'border-primary/50 text-primary hover:bg-primary/5'
+                : 'border-white/40 text-white hover:bg-white/10',
+            )}
           >
             Solicitar Orçamento
           </button>
@@ -88,7 +120,12 @@ export function Navbar() {
             href="https://wa.me/5511999999999"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-sans text-sm px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-[6px] transition-all duration-200"
+            className={cn(
+              'font-sans text-sm px-4 py-2 rounded-[6px] transition-all duration-200',
+              scrolled
+                ? 'bg-primary text-white hover:bg-primary/90'
+                : 'bg-white text-[#1F3A5F] font-medium hover:bg-white/90',
+            )}
           >
             WhatsApp
           </a>
@@ -96,7 +133,10 @@ export function Navbar() {
 
         {/* Hamburger mobile */}
         <button
-          className="md:hidden text-foreground p-2"
+          className={cn(
+            'md:hidden p-2',
+            scrolled ? 'text-foreground' : 'text-white',
+          )}
           onClick={() => setOpen(!open)}
           aria-label={open ? 'Fechar menu' : 'Abrir menu'}
         >
@@ -111,15 +151,15 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden bg-background/98 backdrop-blur-md border-b border-border/50 overflow-hidden"
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-b border-border overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
                   onClick={() => handleLink(link.href)}
-                  className="text-left font-sans text-sm text-muted-foreground hover:text-foreground py-2.5 border-b border-border/30 last:border-0 transition-colors"
+                  className="text-left font-sans text-sm text-muted-foreground hover:text-foreground py-2.5 border-b border-border/50 last:border-0 transition-colors"
                 >
                   {link.label}
                 </button>
@@ -127,7 +167,7 @@ export function Navbar() {
               <div className="flex flex-col gap-2 mt-3">
                 <button
                   onClick={() => handleLink('#contato')}
-                  className="font-sans text-sm px-4 py-2.5 border border-primary/40 text-primary hover:bg-primary/10 rounded-[6px] transition-all"
+                  className="font-sans text-sm px-4 py-2.5 border border-primary/50 text-primary hover:bg-primary/5 rounded-[6px] transition-all"
                 >
                   Solicitar Orçamento
                 </button>
@@ -135,7 +175,7 @@ export function Navbar() {
                   href="https://wa.me/5511999999999"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-sm px-4 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-[6px] text-center transition-all"
+                  className="font-sans text-sm px-4 py-2.5 bg-primary text-white hover:bg-primary/90 rounded-[6px] text-center transition-all"
                 >
                   WhatsApp
                 </a>

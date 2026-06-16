@@ -32,7 +32,7 @@ const faqs = [
     id: 'q4',
     question: 'O que é georreferenciamento e quando é obrigatório?',
     answer:
-      'Georreferenciamento é o processo de determinar as coordenadas de um imóvel rural com precisão geodésica, vinculando-o ao Sistema Geodésico Brasileiro (SIRGAS2000). É obrigatório para imóveis que pretendem realizar desmembramento, parcelamento, remembramento, transferência de domínio ou qualquer alteração registral a partir das áreas mínimas definidas pelo INCRA (que variam conforme a região).',
+      'Georreferenciamento é o processo de determinar as coordenadas de um imóvel rural com precisão geodésica, vinculando-o ao Sistema Geodésico Brasileiro (SIRGAS2000). É obrigatório para imóveis que pretendem realizar desmembramento, parcelamento, remembramento, transferência de domínio ou qualquer alteração registral a partir das áreas mínimas definidas pelo INCRA.',
   },
   {
     id: 'q5',
@@ -44,7 +44,7 @@ const faqs = [
     id: 'q6',
     question: 'Como funciona o aerolevantamento com drone e quais os benefícios?',
     answer:
-      'O aerolevantamento utiliza VANTs (drones) equipados com câmeras métricas que capturam centenas de imagens sobrepostas da área. Com o processamento fotogramétrico, geramos ortofotos de alta resolução (GSD até 3cm), modelos digitais de superfície e do terreno, e nuvens de pontos 3D. Os benefícios incluem cobertura rápida de grandes áreas, acesso a terrenos de difícil acesso e custo-benefício superior ao levantamento convencional para áreas acima de 50 ha.',
+      'O aerolevantamento utiliza VANTs (drones) equipados com câmeras métricas que capturam centenas de imagens sobrepostas da área. Com o processamento fotogramétrico, geramos ortofotos de alta resolução (GSD até 3cm), modelos digitais de superfície e do terreno, e nuvens de pontos 3D. Os benefícios incluem cobertura rápida de grandes áreas e custo-benefício superior ao levantamento convencional para áreas acima de 50 ha.',
   },
   {
     id: 'q7',
@@ -59,16 +59,16 @@ export function FAQ() {
   const inView = useInView(ref, { once: true })
 
   return (
-    <section id="faq" className="relative py-24 lg:py-32">
-      <div className="absolute inset-0 technical-grid opacity-20" />
+    <section id="faq" className="relative py-24 lg:py-32" style={{ backgroundColor: '#EDF1F7' }}>
+      <div className="absolute inset-0 technical-grid" style={{ opacity: 0.55 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div ref={ref} className="mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -78,34 +78,35 @@ export function FAQ() {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
             className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-xl text-balance"
           >
             Perguntas frequentes sobre topografia
           </motion.h2>
         </div>
 
-        {/* Layout assimétrico: FAQ + Painel técnico */}
+        {/* Layout: FAQ + painel lateral */}
         <div className="grid lg:grid-cols-12 gap-8">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-8"
           >
             <Accordion className="flex flex-col gap-2">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={faq.id}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.25 + index * 0.05 }}
+                  transition={{ duration: 0.35, delay: 0.25 + index * 0.05 }}
                 >
                   <AccordionItem
                     value={faq.id}
-                    className="border border-border/50 rounded-[8px] bg-card px-5 overflow-hidden data-[state=open]:border-primary/30"
+                    className="bg-white border border-border px-5 overflow-hidden data-[state=open]:border-l-[3px] data-[state=open]:border-l-primary"
+                    style={{ borderRadius: '8px' }}
                   >
                     <AccordionTrigger className="font-sans font-medium text-sm text-foreground py-4 hover:no-underline text-left">
                       {faq.question}
@@ -119,15 +120,18 @@ export function FAQ() {
             </Accordion>
           </motion.div>
 
-          {/* Painel lateral de contato rápido */}
+          {/* Painel lateral */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="lg:col-span-4 flex flex-col gap-4"
           >
-            <div className="border border-border/50 rounded-[8px] bg-card p-6 flex flex-col gap-4">
-              <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+            <div
+              className="bg-white border border-border p-6 flex flex-col gap-4"
+              style={{ borderRadius: '8px' }}
+            >
+              <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                 Suporte técnico
               </div>
               <h3 className="font-heading font-semibold text-base text-foreground leading-snug">
@@ -137,21 +141,23 @@ export function FAQ() {
                 Nossa equipe técnica está disponível para responder qualquer questão sobre
                 topografia, georreferenciamento e engenharia de precisão.
               </p>
-              <div className="flex flex-col gap-2 pt-2">
-                <a
-                  href="https://wa.me/5511999999999"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-sans rounded-[6px] hover:bg-primary/90 transition-colors"
-                >
-                  Falar com especialista
-                </a>
-              </div>
+              <a
+                href="https://wa.me/5511999999999"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white text-sm font-sans font-medium hover:bg-primary/90 transition-colors"
+                style={{ borderRadius: '6px' }}
+              >
+                Falar com especialista
+              </a>
             </div>
 
             {/* Normas técnicas */}
-            <div className="border border-border/50 rounded-[8px] bg-card p-5 flex flex-col gap-3">
-              <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/60 uppercase">
+            <div
+              className="bg-white border border-border p-5 flex flex-col gap-3"
+              style={{ borderRadius: '8px', borderLeft: '3px solid #1F3A5F' }}
+            >
+              <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                 Normas e certificações
               </div>
               {[
@@ -161,8 +167,8 @@ export function FAQ() {
                 'SIRGAS2000 — Datum Geodésico',
               ].map((norm) => (
                 <div key={norm} className="flex items-start gap-2">
-                  <div className="size-1 rounded-full bg-primary/60 mt-1.5 flex-shrink-0" />
-                  <span className="font-mono text-[10px] text-muted-foreground/70 leading-relaxed">
+                  <div className="size-1 rounded-full bg-primary/50 mt-1.5 flex-shrink-0" />
+                  <span className="font-mono text-[10px] text-muted-foreground/65 leading-relaxed">
                     {norm}
                   </span>
                 </div>

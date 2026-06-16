@@ -32,10 +32,10 @@ const steps = [
   {
     number: '04',
     icon: Cpu,
-    title: 'Processamento de Dados',
+    title: 'Processamento',
     description:
       'Processamento em software geodésico, ajustamento de redes, geração de modelos digitais e elaboração de relatórios técnicos conforme normas.',
-    detail: 'Software Trimble Business Center',
+    detail: 'Trimble Business Center',
   },
   {
     number: '05',
@@ -52,16 +52,16 @@ export function Process() {
   const inView = useInView(ref, { once: true })
 
   return (
-    <section className="relative py-24 lg:py-32">
-      <div className="absolute inset-0 technical-grid opacity-20" />
+    <section className="relative py-24 lg:py-32 bg-background">
+      <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div ref={ref} className="mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -72,17 +72,17 @@ export function Process() {
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.45, delay: 0.1 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
               Como executamos seu projeto
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.45, delay: 0.18 }}
               className="font-sans text-sm text-muted-foreground max-w-xs leading-relaxed"
             >
               Processo estruturado em cinco etapas para garantir qualidade e rastreabilidade em cada projeto.
@@ -90,15 +90,19 @@ export function Process() {
           </div>
         </div>
 
-        {/* Timeline horizontal desktop / vertical mobile */}
+        {/* Timeline */}
         <div className="relative">
-          {/* Linha conectora desktop */}
-          <div className="hidden lg:block absolute top-[2.75rem] left-0 right-0 h-px bg-border/50 z-0" />
+          {/* Linha conectora desktop — traço sólido */}
+          <div
+            className="hidden lg:block absolute top-[2.6rem] left-0 right-0 h-px z-0"
+            style={{ backgroundColor: '#D0DAEA' }}
+          />
           <motion.div
-            className="hidden lg:block absolute top-[2.75rem] left-0 h-px bg-primary/50 z-0"
+            className="hidden lg:block absolute top-[2.6rem] left-0 h-px z-0"
+            style={{ backgroundColor: '#1F3A5F' }}
             initial={{ width: 0 }}
             animate={inView ? { width: '100%' } : {}}
-            transition={{ duration: 1.5, delay: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 1.4, delay: 0.5, ease: 'easeOut' }}
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-4 relative z-10">
@@ -107,25 +111,31 @@ export function Process() {
               return (
                 <motion.div
                   key={step.number}
-                  initial={{ opacity: 0, y: 28 }}
+                  initial={{ opacity: 0, y: 24 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  transition={{ duration: 0.45, delay: 0.3 + index * 0.1 }}
                   className="flex lg:flex-col gap-4 lg:gap-0"
                 >
                   {/* Nó da timeline */}
                   <div className="flex flex-col items-center lg:items-start">
-                    <div className="size-11 flex items-center justify-center border-2 border-primary/50 rounded-full bg-background relative z-10">
-                      <Icon className="size-4.5 text-primary" />
+                    <div
+                      className="size-11 flex items-center justify-center bg-white relative z-10"
+                      style={{
+                        border: '2px solid #1F3A5F',
+                        borderRadius: '50%',
+                      }}
+                    >
+                      <Icon className="size-[18px] text-primary" />
                     </div>
                     {/* Linha vertical mobile */}
                     {index < steps.length - 1 && (
-                      <div className="lg:hidden w-px flex-1 bg-border/40 mt-2 ml-0 min-h-[2rem]" />
+                      <div className="lg:hidden w-px flex-1 mt-2 min-h-[2rem]" style={{ backgroundColor: '#D0DAEA' }} />
                     )}
                   </div>
 
-                  {/* Conteúdo do passo */}
+                  {/* Conteúdo */}
                   <div className="flex-1 lg:mt-6 pb-4 lg:pb-0">
-                    <div className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/50 mb-1">
+                    <div className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground/45 mb-1">
                       {step.number}
                     </div>
                     <h3 className="font-heading font-semibold text-sm text-foreground mb-2">
@@ -135,8 +145,8 @@ export function Process() {
                       {step.description}
                     </p>
                     <div className="flex items-center gap-1.5">
-                      <div className="size-1 rounded-full bg-primary/60 flex-shrink-0" />
-                      <span className="font-mono text-[10px] text-primary/70">{step.detail}</span>
+                      <div className="size-1 rounded-full bg-primary/50 flex-shrink-0" />
+                      <span className="font-mono text-[10px] text-primary/65">{step.detail}</span>
                     </div>
                   </div>
                 </motion.div>

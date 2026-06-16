@@ -53,7 +53,7 @@ function StarRating({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
-          className={`size-3 ${i < rating ? 'text-primary fill-primary' : 'text-muted-foreground/30'}`}
+          className={`size-3 ${i < rating ? 'fill-primary text-primary' : 'text-border'}`}
         />
       ))}
     </div>
@@ -69,17 +69,16 @@ export function Testimonials() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length)
 
   return (
-    <section id="depoimentos" className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-muted/10" />
-      <div className="absolute inset-0 technical-grid opacity-15" />
+    <section id="depoimentos" className="relative py-24 lg:py-32 bg-background overflow-hidden">
+      <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div ref={ref} className="mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -89,103 +88,111 @@ export function Testimonials() {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
             className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
           >
             Clientes que confiam na nossa precisão
           </motion.h2>
         </div>
 
-        {/* Layout: depoimento em destaque + lista lateral */}
+        {/* Layout: destaque + lista lateral */}
         <div className="grid lg:grid-cols-12 gap-6">
           {/* Depoimento principal */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-7 border border-border/50 rounded-[8px] bg-card p-8 flex flex-col gap-6 relative overflow-hidden"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="lg:col-span-7 bg-white border border-border relative overflow-hidden flex flex-col"
+            style={{ borderRadius: '8px' }}
           >
-            {/* Aspas decorativas */}
-            <Quote className="absolute top-6 right-6 size-16 text-primary/5" />
+            {/* Acento Leica no topo */}
+            <div className="h-[3px] w-full" style={{ backgroundColor: '#1F3A5F' }} />
 
-            <div className="flex items-start gap-4 relative z-10">
-              {/* Avatar placeholder técnico */}
-              <div className="size-12 rounded-[6px] border border-border/60 bg-muted flex items-center justify-center flex-shrink-0">
-                <span className="font-heading font-semibold text-base text-primary">
+            <div className="p-8 flex flex-col gap-6 flex-1">
+              <Quote className="size-14 absolute top-8 right-8" style={{ color: '#EDF1F7' }} aria-hidden="true" />
+
+              <div className="flex items-start gap-4 relative z-10">
+                <div
+                  className="size-12 flex items-center justify-center flex-shrink-0 font-heading font-semibold text-base text-primary"
+                  style={{ border: '1px solid #D0DAEA', borderRadius: '6px', backgroundColor: '#EDF1F7' }}
+                >
                   {testimonials[current].name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
-                </span>
-              </div>
-              <div className="flex flex-col gap-0.5">
-                <StarRating rating={testimonials[current].rating} />
-                <div className="font-heading font-semibold text-sm text-foreground mt-1">
-                  {testimonials[current].name}
                 </div>
-                <div className="font-sans text-xs text-muted-foreground">
-                  {testimonials[current].role} — {testimonials[current].company}
-                </div>
-              </div>
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.blockquote
-                key={current}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.3 }}
-                className="font-sans text-base text-foreground/90 leading-relaxed relative z-10"
-              >
-                &ldquo;{testimonials[current].text}&rdquo;
-              </motion.blockquote>
-            </AnimatePresence>
-
-            <div className="pt-4 border-t border-border/40 flex items-center justify-between">
-              <div className="petroleum-accent pl-3">
-                <div className="font-mono text-[10px] text-muted-foreground/60 mb-0.5">Projeto</div>
-                <div className="font-sans text-xs text-muted-foreground">
-                  {testimonials[current].project}
+                <div className="flex flex-col gap-0.5">
+                  <StarRating rating={testimonials[current].rating} />
+                  <div className="font-heading font-semibold text-sm text-foreground mt-1">
+                    {testimonials[current].name}
+                  </div>
+                  <div className="font-sans text-xs text-muted-foreground">
+                    {testimonials[current].role} — {testimonials[current].company}
+                  </div>
                 </div>
               </div>
 
-              {/* Controles de navegação */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={prev}
-                  className="size-9 flex items-center justify-center border border-border/60 rounded-[6px] text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all"
-                  aria-label="Depoimento anterior"
+              <AnimatePresence mode="wait">
+                <motion.blockquote
+                  key={current}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.28 }}
+                  className="font-sans text-base text-foreground/85 leading-relaxed relative z-10"
                 >
-                  <ChevronLeft className="size-4" />
-                </button>
-                <div className="font-mono text-xs text-muted-foreground/60">
-                  {String(current + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
+                  &ldquo;{testimonials[current].text}&rdquo;
+                </motion.blockquote>
+              </AnimatePresence>
+
+              <div className="pt-4 flex items-center justify-between" style={{ borderTop: '1px solid #E8EFF6' }}>
+                <div className="petroleum-accent pl-3">
+                  <div className="font-mono text-[10px] text-muted-foreground/55 mb-0.5">Projeto</div>
+                  <div className="font-sans text-xs text-muted-foreground">
+                    {testimonials[current].project}
+                  </div>
                 </div>
-                <button
-                  onClick={next}
-                  className="size-9 flex items-center justify-center border border-border/60 rounded-[6px] text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all"
-                  aria-label="Próximo depoimento"
-                >
-                  <ChevronRight className="size-4" />
-                </button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={prev}
+                    className="size-9 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/35 transition-all"
+                    style={{ borderRadius: '6px' }}
+                    aria-label="Depoimento anterior"
+                  >
+                    <ChevronLeft className="size-4" />
+                  </button>
+                  <div className="font-mono text-xs text-muted-foreground/55">
+                    {String(current + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
+                  </div>
+                  <button
+                    onClick={next}
+                    className="size-9 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/35 transition-all"
+                    style={{ borderRadius: '6px' }}
+                    aria-label="Próximo depoimento"
+                  >
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Lista de depoimentos compacta */}
+          {/* Lista compacta */}
           <div className="lg:col-span-5 flex flex-col gap-3">
             {testimonials.map((t, index) => (
               <motion.button
                 key={t.id}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 16 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.25 + index * 0.07 }}
+                transition={{ duration: 0.45, delay: 0.25 + index * 0.07 }}
                 onClick={() => setCurrent(index)}
-                className={`text-left border rounded-[8px] p-4 transition-all duration-200 ${
-                  current === index
-                    ? 'border-primary/50 bg-primary/5'
-                    : 'border-border/40 bg-card hover:border-border/70'
-                }`}
+                className="text-left border p-4 transition-all duration-200"
+                style={{
+                  borderRadius: '8px',
+                  backgroundColor: current === index ? '#FFFFFF' : 'transparent',
+                  borderColor: current === index ? '#1F3A5F' : '#D0DAEA',
+                  borderLeftWidth: current === index ? '3px' : '1px',
+                }}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="font-sans text-sm font-medium text-foreground">{t.name}</div>
@@ -194,7 +201,7 @@ export function Testimonials() {
                 <div className="font-sans text-xs text-muted-foreground mb-1">
                   {t.company} · {t.location}
                 </div>
-                <div className="font-sans text-xs text-muted-foreground/70 line-clamp-2">
+                <div className="font-sans text-xs text-muted-foreground/60 line-clamp-2">
                   {t.text}
                 </div>
               </motion.button>

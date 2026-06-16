@@ -58,16 +58,16 @@ export function Projects() {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <section id="projetos" className="relative py-24 lg:py-32">
-      <div className="absolute inset-0 technical-grid opacity-20" />
+    <section id="projetos" className="relative py-24 lg:py-32" style={{ backgroundColor: '#EDF1F7' }}>
+      <div className="absolute inset-0 technical-grid" style={{ opacity: 0.55 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div ref={ref} className="mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -78,17 +78,17 @@ export function Projects() {
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.45, delay: 0.1 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
               Projetos realizados em todo o Brasil
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.45, delay: 0.18 }}
               className="font-sans text-sm text-muted-foreground max-w-sm leading-relaxed"
             >
               Uma seleção dos nossos trabalhos mais relevantes em engenharia topográfica e geodésica.
@@ -101,15 +101,16 @@ export function Projects() {
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: 0.15 + index * 0.1 }}
+              transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
               onMouseEnter={() => setHovered(project.id)}
               onMouseLeave={() => setHovered(null)}
-              className="group relative border border-border/50 rounded-[8px] overflow-hidden bg-card hover:border-primary/40 transition-all duration-300 cursor-pointer"
+              className="group relative bg-white border border-border overflow-hidden hover:border-primary/35 transition-all duration-250 cursor-pointer"
+              style={{ borderRadius: '8px' }}
             >
               {/* Imagem */}
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-52 overflow-hidden" style={{ borderBottom: '1px solid #D0DAEA' }}>
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -117,29 +118,41 @@ export function Projects() {
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-background/40 group-hover:bg-background/20 transition-all duration-300" />
+                {/* Overlay suave */}
+                <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-all duration-300" />
 
                 {/* ID técnico */}
-                <div className="absolute top-3 left-3 font-mono text-[10px] text-foreground/80 bg-background/60 backdrop-blur-sm px-2 py-1 rounded-sm">
+                <div
+                  className="absolute top-3 left-3 font-mono text-[10px] text-white px-2 py-1"
+                  style={{ backgroundColor: 'rgba(26,35,50,0.7)', borderRadius: '4px' }}
+                >
                   {project.id}
                 </div>
 
                 {/* Categoria */}
-                <div className="absolute top-3 right-3 font-mono text-[10px] text-primary bg-background/70 backdrop-blur-sm px-2 py-1 rounded-sm border border-primary/30">
+                <div
+                  className="absolute top-3 right-3 font-mono text-[10px] px-2 py-1"
+                  style={{
+                    backgroundColor: 'rgba(31,58,95,0.85)',
+                    color: '#FFFFFF',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}
+                >
                   {project.category}
                 </div>
 
-                {/* Ícone de acesso */}
+                {/* Ícone de acesso no hover */}
                 <AnimatePresence>
                   {hovered === project.id && (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.85 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute bottom-3 right-3 size-9 flex items-center justify-center bg-primary rounded-[6px]"
+                      exit={{ opacity: 0, scale: 0.85 }}
+                      className="absolute bottom-3 right-3 size-9 flex items-center justify-center"
+                      style={{ backgroundColor: '#1F3A5F', borderRadius: '6px' }}
                     >
-                      <ArrowUpRight className="size-4 text-primary-foreground" />
+                      <ArrowUpRight className="size-4 text-white" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -151,7 +164,7 @@ export function Projects() {
                   <MapPin className="size-3" />
                   <span className="font-sans text-xs">{project.location}</span>
                   <span className="text-border mx-1">·</span>
-                  <span className="font-mono text-xs text-muted-foreground/70">{project.area}</span>
+                  <span className="font-mono text-xs text-muted-foreground/65">{project.area}</span>
                 </div>
 
                 <h3 className="font-heading font-semibold text-sm text-foreground leading-snug">
@@ -162,11 +175,16 @@ export function Projects() {
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border/30">
+                <div className="flex flex-wrap gap-1.5 pt-2" style={{ borderTop: '1px solid #E8EFF6' }}>
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="font-mono text-[10px] px-2 py-0.5 bg-muted rounded-sm text-muted-foreground/80 border border-border/40"
+                      className="font-mono text-[10px] px-2 py-0.5 text-muted-foreground/70"
+                      style={{
+                        backgroundColor: '#EDF1F7',
+                        border: '1px solid #D0DAEA',
+                        borderRadius: '4px',
+                      }}
                     >
                       {tag}
                     </span>

@@ -80,26 +80,30 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 28 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="group relative border border-border/50 rounded-[8px] bg-card hover:border-primary/40 hover:bg-card/80 transition-all duration-300 overflow-hidden"
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-250 overflow-hidden"
+      style={{ borderRadius: '8px' }}
     >
-      {/* Linha de acento */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-primary/0 group-hover:bg-primary/40 transition-all duration-300" />
+      {/* Acento superior — aparece no hover */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
       <div className="p-6 flex flex-col gap-4">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="size-10 flex items-center justify-center border border-primary/20 rounded-[6px] bg-primary/5 group-hover:bg-primary/10 transition-colors">
+            <div
+              className="size-10 flex items-center justify-center border border-primary/15 group-hover:border-primary/30 transition-colors"
+              style={{ borderRadius: '6px', backgroundColor: '#EDF1F7' }}
+            >
               <Icon className="size-5 text-primary" />
             </div>
-            <span className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/60">
+            <span className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/50">
               {service.code}
             </span>
           </div>
-          <ArrowUpRight className="size-4 text-muted-foreground/30 group-hover:text-primary/60 transition-colors" />
+          <ArrowUpRight className="size-4 text-muted-foreground/25 group-hover:text-primary/50 transition-colors" />
         </div>
 
         {/* Título */}
@@ -113,10 +117,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </p>
 
         {/* Specs técnicas */}
-        <div className="pt-3 border-t border-border/40 flex flex-wrap gap-x-4 gap-y-1.5">
+        <div className="pt-3 flex flex-wrap gap-x-4 gap-y-1.5" style={{ borderTop: '1px solid #E8EFF6' }}>
           {service.specs.map((spec) => (
             <div key={spec} className="flex items-center gap-1.5">
-              <div className="size-1 rounded-full bg-primary/60" />
+              <div className="size-1 rounded-full bg-primary/50" />
               <span className="font-mono text-[10px] text-muted-foreground/70">{spec}</span>
             </div>
           ))}
@@ -131,17 +135,16 @@ export function Services() {
   const inView = useInView(ref, { once: true })
 
   return (
-    <section id="servicos" className="relative py-24 lg:py-32">
-      {/* Grid técnico de fundo */}
-      <div className="absolute inset-0 technical-grid opacity-30" />
+    <section id="servicos" className="relative py-24 lg:py-32 bg-background">
+      <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Cabeçalho da seção */}
+        {/* Cabeçalho */}
         <div ref={ref} className="mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
             <div className="w-8 h-px bg-primary" />
@@ -152,18 +155,18 @@ export function Services() {
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.45, delay: 0.1 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
               Soluções técnicas para cada demanda de campo
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.45, delay: 0.18 }}
               className="font-sans text-sm text-muted-foreground max-w-sm leading-relaxed"
             >
               Desde o levantamento inicial até a entrega dos documentos finais,
@@ -173,7 +176,7 @@ export function Services() {
         </div>
 
         {/* Grid de serviços */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {services.map((service, index) => (
             <ServiceCard key={service.code} service={service} index={index} />
           ))}
