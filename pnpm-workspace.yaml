@@ -1,0 +1,5 @@
+allowBuilds:
+  bson: false
+  kerberos: false
+  msw: true
+  sharp: true
