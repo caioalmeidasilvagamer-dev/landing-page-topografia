@@ -95,7 +95,7 @@ export function FAQ() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-8"
           >
-            <Accordion type="single" collapsible className="flex flex-col gap-2">
+            <Accordion className="flex flex-col gap-2">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={faq.id}

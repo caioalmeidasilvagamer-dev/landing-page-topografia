@@ -66,6 +66,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${sora.variable} ${interTight.variable} bg-background`}
+      suppressHydrationWarning
     >
       <head>
         <script
