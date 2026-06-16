@@ -24,7 +24,7 @@ dist/
 node_modules/
 .pnp
 .pnp.js
-pnpm-lock.yaml
+# pnpm-lock.yaml deve ser commitado para o deploy da Vercel funcionar
 yarn.lock
 package-lock.json
 
