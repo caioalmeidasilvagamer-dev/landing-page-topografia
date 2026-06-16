@@ -93,12 +93,12 @@ export function Process() {
         <div className="relative">
           {/* Linha de fundo — sempre visível */}
           <div
-            className="hidden lg:block absolute top-[2.6rem] left-0 right-0 h-px z-0"
+            className="hidden lg:block absolute top-[1.4rem] left-0 right-0 h-px z-0"
             style={{ backgroundColor: '#D0DAEA' }}
           />
           {/* Linha de progresso animada */}
           <motion.div
-            className="hidden lg:block absolute top-[2.6rem] left-0 h-px z-0"
+            className="hidden lg:block absolute top-[1.4rem] left-0 h-px z-0"
             style={{ backgroundColor: '#1F3A5F' }}
             initial={{ width: 0 }}
             whileInView={{ width: '100%' }}
@@ -126,7 +126,7 @@ export function Process() {
                       <Icon className="size-[18px] text-primary" />
                     </div>
                     {index < steps.length - 1 && (
-                      <div className="lg:hidden w-px flex-1 mt-2 min-h-[2rem]" style={{ backgroundColor: '#D0DAEA' }} />
+                      <div className="lg:hidden w-px flex-1 mt-2 min-h-[2rem]" style={{ backgroundColor: '#1F3A5F' }} />
                     )}
                   </div>
 
