@@ -57,7 +57,7 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="relative py-24 lg:py-32" style={{ backgroundColor: '#EDF1F7' }}>
+    <section id="faq" className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(237, 241, 247, 0.82)' }}>
       <div className="absolute inset-0 technical-grid" style={{ opacity: 0.55 }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

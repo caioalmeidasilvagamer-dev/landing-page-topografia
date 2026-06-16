@@ -50,7 +50,7 @@ const VP = { once: true, amount: 0.05 } as const
 
 export function Process() {
   return (
-    <section className="relative py-24 lg:py-32 bg-background">
+    <section className="relative py-24 lg:py-32 bg-transparent">
       <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

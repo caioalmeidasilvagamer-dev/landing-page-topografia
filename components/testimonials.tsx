@@ -69,7 +69,7 @@ export function Testimonials() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length)
 
   return (
-    <section id="depoimentos" className="relative py-24 lg:py-32 bg-background overflow-hidden">
+    <section id="depoimentos" className="relative py-24 lg:py-32 bg-transparent overflow-hidden">
       <div className="absolute inset-0 technical-grid" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
