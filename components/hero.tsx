@@ -168,7 +168,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-6 items-center lg:items-stretch"
           >
             {/* Painel técnico */}
             <div className="relative border border-border/40 rounded-[8px] bg-card/60 backdrop-blur-sm overflow-hidden">
