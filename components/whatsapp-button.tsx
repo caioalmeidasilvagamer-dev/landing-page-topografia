@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import config from '@/site.config'
 
 export function WhatsAppButton() {
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState(false)
+
+  const whatsappUrl = `https://wa.me/${config.whatsapp.number}?text=${encodeURIComponent(config.whatsapp.message)}`
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 3000)
@@ -28,8 +31,7 @@ export function WhatsAppButton() {
             initial={{ opacity: 0, x: 8 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }}
-            className="absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap px-3 py-2 bg-white border border-border shadow-sm font-sans text-sm text-foreground hidden sm:block"
-            style={{ borderRadius: '6px' }}
+            className="absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap px-3 py-2 bg-white border border-border shadow-sm font-sans text-sm text-foreground hidden sm:block rounded-[6px]"
           >
             Falar no WhatsApp
             <div
@@ -40,7 +42,7 @@ export function WhatsAppButton() {
       </AnimatePresence>
 
       <motion.a
-        href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20de%20topografia."
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setHovered(true)}

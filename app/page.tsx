@@ -1,3 +1,4 @@
+import config from '@/site.config'
 import { Navbar } from '@/components/navbar'
 import { Hero } from '@/components/hero'
 import { ClientLogos } from '@/components/client-logos'
@@ -18,26 +19,27 @@ import { Footer } from '@/components/footer'
 import { WhatsAppButton } from '@/components/whatsapp-button'
 
 export default function HomePage() {
+  const s = config.sections
   return (
     <main>
-      <Navbar />
-      <Hero />
-      <ClientLogos />
-      <Services />
-      <Equipment />
-      <Differentials />
-      <About />
-      <CoverageMap />
-      <Process />
-      <Projects />
-      <GoogleRating />
-      <Testimonials />
-      <BlogPreview />
-      <Calculator />
-      <FAQ />
-      <ContactForm />
-      <Footer />
-      <WhatsAppButton />
+      {s.navbar && <Navbar />}
+      {s.hero && <Hero />}
+      {s.clientLogos && <ClientLogos />}
+      {s.services && <Services />}
+      {s.equipment && <Equipment />}
+      {s.differentials && <Differentials />}
+      {s.about && <About />}
+      {s.coverage && <CoverageMap />}
+      {s.process && <Process />}
+      {s.projects && <Projects />}
+      {s.googleRating && <GoogleRating />}
+      {s.testimonials && <Testimonials />}
+      {s.blog && <BlogPreview />}
+      {s.calculator && <Calculator />}
+      {s.faq && <FAQ />}
+      {s.contact && <ContactForm />}
+      {s.footer && <Footer />}
+      {s.whatsapp && <WhatsAppButton />}
     </main>
   )
 }

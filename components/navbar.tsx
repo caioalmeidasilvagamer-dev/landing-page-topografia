@@ -4,18 +4,16 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const navLinks = [
-  { label: 'Serviços', href: '#servicos' },
-  { label: 'Diferenciais', href: '#diferenciais' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Depoimentos', href: '#depoimentos' },
-  { label: 'Contato', href: '#contato' },
-]
+import config from '@/site.config'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+
+  const navLinks = config.navLinks
+  const brandName = config.brand.name.split(' ')[0]
+  const brandSlogan = config.brand.slogan
+  const whatsappUrl = `https://wa.me/${config.contact.whatsapp}`
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 48)
@@ -45,7 +43,7 @@ export function Navbar() {
         <a
           href="#"
           className="flex items-center gap-3 group"
-          aria-label="GeoTech Topografia"
+          aria-label={config.brand.name}
         >
           <div className="relative size-8 flex items-center justify-center flex-shrink-0">
             <svg viewBox="0 0 32 32" className="size-8" fill="none" aria-hidden="true">
@@ -64,7 +62,7 @@ export function Navbar() {
                 scrolled ? 'text-foreground' : 'text-white',
               )}
             >
-              GeoTech
+              {brandName}
             </span>
             <span
               className={cn(
@@ -72,7 +70,7 @@ export function Navbar() {
                 scrolled ? 'text-muted-foreground' : 'text-white/60',
               )}
             >
-              Topografia
+              {brandSlogan.split('&')[1]?.trim() || brandSlogan}
             </span>
           </div>
         </a>
@@ -113,7 +111,7 @@ export function Navbar() {
             Solicitar Orçamento
           </button>
           <a
-            href="https://wa.me/5511999999999"
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -166,7 +164,7 @@ export function Navbar() {
                   Solicitar Orçamento
                 </button>
                 <a
-                  href="https://wa.me/5511999999999"
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-sans text-sm px-4 py-2.5 bg-primary text-white hover:bg-primary/90 rounded-[6px] text-center transition-all"
