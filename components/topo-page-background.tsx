@@ -172,7 +172,7 @@ export function TopoPageBackground() {
           <text
             key={i}
             x={c.x} y={c.y}
-            textAnchor={(c as { anchor?: string }).anchor ?? "start"}
+            textAnchor={(c as { anchor?: "start" | "end" }).anchor ?? "start"}
             fontSize="8"
             fill="rgba(60,80,60,0.25)"
             fontFamily="monospace"
