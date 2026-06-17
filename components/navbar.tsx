@@ -70,7 +70,7 @@ export function Navbar() {
                 scrolled ? 'text-muted-foreground' : 'text-white/60',
               )}
             >
-              {brandSlogan.split('&')[1]?.trim() || brandSlogan}
+              {brandSlogan?.split('&')[1]?.trim() || brandSlogan}
             </span>
           </div>
         </a>
