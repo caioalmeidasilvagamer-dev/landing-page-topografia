@@ -147,13 +147,15 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: transparent;
     font-feature-settings: 'kern' 1, 'liga' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   html {
     @apply font-sans;
+    background-color: transparent;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-ibm-plex-sans), var(--font-sans);

@@ -93,6 +93,7 @@ export function TopoPageBackground() {
         zIndex: 0,
         pointerEvents: "none",
         overflow: "hidden",
+        backgroundColor: "#F8FAFC", // fallback caso a imagem não carregue
       }}
     >
       {/* ── IMAGEM DE FUNDO (repetida para manter qualidade) ── */}

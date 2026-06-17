@@ -64,11 +64,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} bg-background`}
-      suppressHydrationWarning
-    >
+      <html
+        lang="pt-BR"
+        className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
+        suppressHydrationWarning
+      >
       <head>
         <script
           type="application/ld+json"
