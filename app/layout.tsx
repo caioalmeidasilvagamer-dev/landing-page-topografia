@@ -58,6 +58,24 @@ export default function RootLayout({
         suppressHydrationWarning
       >
       <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                --primary: ${config.colors.primary};
+                --foreground: ${config.colors.foreground};
+                --background: ${config.colors.background};
+                --muted: ${config.colors.muted};
+                --secondary: ${config.colors.secondary};
+                --destructive: ${config.colors.destructive};
+                --border: ${config.colors.border};
+                --topo-line: ${config.colors.topoLine};
+                --topo-accent: ${config.colors.topoAccent};
+                --background-alt: ${config.colors.backgroundAlt};
+              }
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
