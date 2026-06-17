@@ -3,35 +3,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Loader2 } from 'lucide-react'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
 
-const serviceOptions = [
-  'Levantamento Topográfico',
-  'Georreferenciamento Rural',
-  'Locação de Obras',
-  'Aerolevantamento com Drone',
-  'Cadastro Técnico',
-  'Regularização Fundiária',
-]
-
-const purposeOptions = [
-  'Engenharia Civil',
-  'Regularização Fundiária',
-  'Projeto de Irrigação',
-  'Loteamento Urbano',
-  'Certificação INCRA',
-  'Outro',
-]
-
-const serviceBase: Record<string, { pricePerHa: number; minDays: number; maxDays: number; equipment: string; fixedPrice?: number }> = {
-  'Levantamento Topográfico': { pricePerHa: 180, minDays: 3, maxDays: 7, equipment: 'GNSS RTK + Estação Total' },
-  'Georreferenciamento Rural': { pricePerHa: 95, minDays: 10, maxDays: 25, equipment: 'GNSS Geodésico L1/L2' },
-  'Locação de Obras': { pricePerHa: 0, minDays: 2, maxDays: 5, equipment: 'Estação Total Robotizada', fixedPrice: 3500 },
-  'Aerolevantamento com Drone': { pricePerHa: 45, minDays: 5, maxDays: 12, equipment: 'DJI Matrice 350 RTK' },
-  'Cadastro Técnico': { pricePerHa: 120, minDays: 7, maxDays: 15, equipment: 'GNSS RTK + GIS' },
-  'Regularização Fundiária': { pricePerHa: 0, minDays: 15, maxDays: 40, equipment: 'GNSS + Cartório', fixedPrice: 4500 },
-}
+const serviceOptions = config.calculator.serviceOptions
+const purposeOptions = config.calculator.purposeOptions
+const serviceBase = config.calculator.pricing
 
 interface Result {
   prazoMin: number

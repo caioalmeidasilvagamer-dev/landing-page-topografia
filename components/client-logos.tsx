@@ -1,28 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
-
-const row1 = [
-  'Construtora Alpha',
-  'Agro Santa Clara',
-  'Incorporadora Horizonte',
-  'Infraestrutura Nacional S.A.',
-  'Fazenda Bom Retiro',
-  'Logística Express',
-  'Grupo Terraço',
-]
-
-const row2 = [
-  'GLP Logística',
-  'Mineração Centro-Oeste',
-  'Prefeitura de Campinas',
-  'Agro Pantanal',
-  'Construtora Delta',
-  'Engenharia Prime',
-  'Incorporadora Vista',
-]
 
 function LogoTrack({ logos, direction }: { logos: string[]; direction: 'left' | 'right' }) {
   const duplicated = [...logos, ...logos, ...logos]
@@ -52,8 +33,10 @@ function LogoTrack({ logos, direction }: { logos: string[]; direction: 'left' | 
 }
 
 export function ClientLogos() {
+  const cl = config.clientLogos
+
   return (
-    <section className="relative py-20 lg:py-24" style={{ backgroundColor: 'rgba(237,241,247,0.50)' }}>
+    <section className="relative py-20 lg:py-24 bg-muted/50">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,8 +61,8 @@ export function ClientLogos() {
         </motion.div>
 
         <div className="flex flex-col gap-4">
-          <LogoTrack logos={row1} direction="left" />
-          <LogoTrack logos={row2} direction="right" />
+          <LogoTrack logos={cl.row1} direction="left" />
+          <LogoTrack logos={cl.row2} direction="right" />
         </div>
       </div>
     </section>

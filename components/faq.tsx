@@ -7,55 +7,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
 
-const faqs = [
-  {
-    id: 'q1',
-    question: 'Qual é o prazo médio para realização de um levantamento topográfico?',
-    answer:
-      'O prazo varia conforme a área e complexidade do projeto. Levantamentos de até 5 ha são concluídos em 2 a 3 dias úteis. Áreas maiores ou com terrenos acidentados podem demandar de 5 a 15 dias úteis. O prazo exato é informado na proposta técnica após a visita de reconhecimento.',
-  },
-  {
-    id: 'q2',
-    question: 'Quais documentos são entregues ao final do serviço?',
-    answer:
-      'A entrega padrão inclui: arquivos técnicos em DWG/DXF e PDF, memorial descritivo georreferenciado, relatório técnico com dados do levantamento, ART (Anotação de Responsabilidade Técnica) do engenheiro responsável, e lista de coordenadas dos pontos levantados. Para georreferenciamento rural, é incluso o certificado INCRA e os arquivos para inserção no SIGEF.',
-  },
-  {
-    id: 'q3',
-    question: 'A GeoTech atende a área em que preciso de serviços?',
-    answer:
-      'Atendemos os estados do Sudeste (SP, RJ, MG, ES), Centro-Oeste (GO, MT, MS, DF) e Sul (PR, SC, RS). Para demandas em outras regiões, avaliamos caso a caso conforme o tamanho e urgência do projeto. Entre em contato para verificar disponibilidade.',
-  },
-  {
-    id: 'q4',
-    question: 'O que é georreferenciamento e quando é obrigatório?',
-    answer:
-      'Georreferenciamento é o processo de determinar as coordenadas de um imóvel rural com precisão geodésica, vinculando-o ao Sistema Geodésico Brasileiro (SIRGAS2000). É obrigatório para imóveis que pretendem realizar desmembramento, parcelamento, remembramento, transferência de domínio ou qualquer alteração registral a partir das áreas mínimas definidas pelo INCRA.',
-  },
-  {
-    id: 'q5',
-    question: 'Qual a diferença entre levantamento planimétrico e planialtimétrico?',
-    answer:
-      'O levantamento planimétrico registra apenas a posição horizontal dos elementos (limite de imóvel, construções, vias). O planialtimétrico inclui também as cotas de altitude, gerando curvas de nível e o modelo digital do terreno. Para projetos de drenagem, terraplanagem e construção civil, o levantamento planialtimétrico é indispensável.',
-  },
-  {
-    id: 'q6',
-    question: 'Como funciona o aerolevantamento com drone e quais os benefícios?',
-    answer:
-      'O aerolevantamento utiliza VANTs (drones) equipados com câmeras métricas que capturam centenas de imagens sobrepostas da área. Com o processamento fotogramétrico, geramos ortofotos de alta resolução (GSD até 3cm), modelos digitais de superfície e do terreno, e nuvens de pontos 3D. Os benefícios incluem cobertura rápida de grandes áreas e custo-benefício superior ao levantamento convencional para áreas acima de 50 ha.',
-  },
-  {
-    id: 'q7',
-    question: 'É necessário estar presente durante o levantamento em campo?',
-    answer:
-      'Não é obrigatório, mas recomendamos que o proprietário ou seu representante esteja disponível para identificar os marcos de divisa e sanar eventuais dúvidas sobre os limites do imóvel. Para georreferenciamentos rurais, a presença nos dias de campo garante maior precisão e evita retrabalhos.',
-  },
-]
-
 export function FAQ() {
+  const faqs = config.faq
+
   return (
     <section id="faq" className="relative py-24 lg:py-32 bg-muted/50">
 
@@ -104,8 +62,7 @@ export function FAQ() {
                 >
                   <AccordionItem
                     value={faq.id}
-                    className="bg-white border border-border px-5 overflow-hidden data-[state=open]:border-l-[3px] data-[state=open]:border-l-primary"
-                    style={{ borderRadius: '8px' }}
+                    className="bg-white border border-border px-5 overflow-hidden data-[state=open]:border-l-[3px] data-[state=open]:border-l-primary rounded-lg"
                   >
                     <AccordionTrigger className="font-sans font-medium text-sm text-foreground py-4 hover:no-underline text-left">
                       {faq.question}
@@ -119,7 +76,6 @@ export function FAQ() {
             </Accordion>
           </motion.div>
 
-          {/* Painel lateral */}
           <motion.div
             initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -127,10 +83,7 @@ export function FAQ() {
             transition={{ duration: 0.45, delay: 0.25 }}
             className="lg:col-span-4 flex flex-col gap-4"
           >
-            <div
-              className="bg-white border border-border p-6 flex flex-col gap-4"
-              style={{ borderRadius: '8px' }}
-            >
+            <div className="bg-white border border-border p-6 flex flex-col gap-4 rounded-lg">
               <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                 Suporte técnico
               </div>
@@ -142,19 +95,16 @@ export function FAQ() {
                 topografia, georreferenciamento e engenharia de precisão.
               </p>
               <a
-                href="https://wa.me/5511999999999"
+                href={`https://wa.me/${config.contact.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white text-sm font-sans font-medium hover:bg-primary/90 transition-colors"
-                style={{ borderRadius: '6px' }}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white text-sm font-sans font-medium hover:bg-primary/90 transition-colors rounded-[6px]"
               >
                 Falar com especialista
               </a>
             </div>
 
-            <div
-              className="bg-white border border-border p-5 flex flex-col gap-3 rounded-lg border-l-[3px] border-l-primary"
-            >
+            <div className="bg-white border border-border p-5 flex flex-col gap-3 rounded-lg border-l-[3px] border-l-primary">
               <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                 Normas e certificações
               </div>

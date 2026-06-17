@@ -4,58 +4,13 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { ArrowUpRight, MapPin } from 'lucide-react'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
 
-const projects = [
-  {
-    id: 'P-001',
-    title: 'Aerolevantamento — Fazenda Santa Clara',
-    category: 'Aerolevantamento',
-    location: 'Mato Grosso do Sul',
-    area: '4.820 ha',
-    description:
-      'Levantamento aerofotogramétrico com VANT de 4.820 ha para geração de ortofoto (GSD 3cm), MDT e curvas de nível para projeto de irrigação.',
-    image: '/images/project-aerial.png',
-    tags: ['Drone', 'Ortofoto', 'MDT'],
-  },
-  {
-    id: 'P-002',
-    title: 'Parcelamento Urbano — Loteamento Horizonte',
-    category: 'Topografia Urbana',
-    location: 'Ribeirão Preto, SP',
-    area: '68 ha',
-    description:
-      'Levantamento planialtimétrico e projeto de parcelamento urbano de 68 ha com 380 lotes, aprovação junto à Prefeitura Municipal.',
-    image: '/images/project-loteamento.png',
-    tags: ['Loteamento', 'Parcelamento', 'NBR 13.133'],
-  },
-  {
-    id: 'P-003',
-    title: 'Georreferenciamento — Gleba Rural Norte',
-    category: 'Georreferenciamento',
-    location: 'Goiás',
-    area: '1.240 ha',
-    description:
-      'Georreferenciamento e certificação INCRA de propriedade rural de 1.240 ha com receptores GNSS L1/L2 e processamento PPP/diferencial.',
-    image: '/images/project-gnss.png',
-    tags: ['GNSS', 'INCRA', 'SIGEF'],
-  },
-  {
-    id: 'P-004',
-    title: 'Locação de Obra — Centro Logístico',
-    category: 'Locação de Obras',
-    location: 'Campinas, SP',
-    area: '12.000 m²',
-    description:
-      'Locação e monitoramento de obras de um centro logístico de 12.000 m², incluindo implantação de pilares, laje e estrutura metálica.',
-    image: '/images/project-obra.png',
-    tags: ['Locação', 'Estrutura', 'Monitoramento'],
-  },
-]
-
 export function Projects() {
   const [hovered, setHovered] = useState<string | null>(null)
+  const projects = config.projects
 
   return (
     <section id="projetos" className="relative py-24 lg:py-32 bg-muted/50">

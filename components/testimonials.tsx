@@ -3,51 +3,9 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
-
-const testimonials = [
-  {
-    id: 1,
-    name: 'Engenheiro Carlos Mendes',
-    role: 'Diretor de Projetos',
-    company: 'Construtora Alpha',
-    rating: 5,
-    text: 'A GeoTech entregou o levantamento topográfico do nosso canteiro de obras com uma precisão impressionante. O relatório técnico estava em conformidade total com as normas ABNT e o prazo de entrega foi cumprido rigorosamente. Recomendo sem hesitar.',
-    location: 'São Paulo, SP',
-    project: 'Locação de Obras — Edifício Comercial',
-  },
-  {
-    id: 2,
-    name: 'Ricardo Souza',
-    role: 'Proprietário Rural',
-    company: 'Fazenda Bom Retiro',
-    rating: 5,
-    text: 'Precisava georreferenciar minha propriedade de 3.200 ha para regularização junto ao INCRA. A equipe da GeoTech conduziu todo o processo com profissionalismo e clareza técnica. Certificado aprovado na primeira análise.',
-    location: 'Goiás',
-    project: 'Georreferenciamento Rural — 3.200 ha',
-  },
-  {
-    id: 3,
-    name: 'Arq. Fernanda Lima',
-    role: 'Gerente de Incorporação',
-    company: 'Incorporadora Horizonte',
-    rating: 5,
-    text: 'Utilizamos a GeoTech no levantamento planialtimétrico do nosso novo empreendimento. A qualidade dos arquivos DWG entregues facilitou imensamente o trabalho dos projetistas. Equipe técnica muito capacitada e atenciosa.',
-    location: 'Ribeirão Preto, SP',
-    project: 'Topografia Urbana — Loteamento',
-  },
-  {
-    id: 4,
-    name: 'Dr. Marcos Pereira',
-    role: 'Superintendente de Obras',
-    company: 'Infraestrutura Nacional S.A.',
-    rating: 5,
-    text: 'Para obras de infraestrutura como a nossa, precisão não é opcional. A GeoTech nos atendeu com equipamentos de última geração e uma equipe altamente treinada. Os dados de monitoramento foram fundamentais para o controle de qualidade estrutural.',
-    location: 'Campinas, SP',
-    project: 'Locação e Monitoramento — Centro Logístico',
-  },
-]
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -64,6 +22,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export function Testimonials() {
   const [current, setCurrent] = useState(0)
+  const testimonials = config.testimonials
 
   const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length)
   const next = () => setCurrent((c) => (c + 1) % testimonials.length)

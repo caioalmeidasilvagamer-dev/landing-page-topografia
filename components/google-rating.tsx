@@ -1,21 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
-
-const reviews = [
-  {
-    name: 'José Ferreira',
-    initial: 'J',
-    text: 'Serviço excelente, prazo cumprido e documentação impecável. Recomendo!',
-  },
-  {
-    name: 'Ana Paula Silva',
-    initial: 'A',
-    text: 'Georreferenciamento aprovado no INCRA na primeira análise. Equipe muito competente.',
-  },
-]
 
 function Stars() {
   return (
@@ -28,8 +16,10 @@ function Stars() {
 }
 
 export function GoogleRating() {
+  const gr = config.googleRating
+
   return (
-    <section className="relative py-12 lg:py-16" style={{ backgroundColor: 'rgba(237,241,247,0.50)' }}>
+    <section className="relative py-12 lg:py-16 bg-muted/50">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8 items-center">
           <motion.div
@@ -48,10 +38,10 @@ export function GoogleRating() {
               </svg>
               <span className="font-mono text-xs text-muted-foreground">Google Reviews</span>
             </div>
-            <div className="font-heading font-semibold text-5xl text-primary mb-2">4.9</div>
+            <div className="font-heading font-semibold text-5xl text-primary mb-2">{gr.rating}</div>
             <Stars />
             <p className="font-sans text-sm text-muted-foreground mt-2">Nota no Google</p>
-            <p className="font-sans text-xs text-muted-foreground/60">Baseado em 127 avaliações</p>
+            <p className="font-sans text-xs text-muted-foreground/60">Baseado em {gr.reviewCount} avaliações</p>
             <a
               href="#"
               className="font-sans text-xs text-primary mt-3 hover:underline"
@@ -60,20 +50,17 @@ export function GoogleRating() {
             </a>
           </motion.div>
 
-          {reviews.map((review, index) => (
+          {gr.reviews.map((review, index) => (
             <motion.div
               key={review.name}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={VP}
               transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
-              className="bg-white border border-border p-5"
-              style={{ borderRadius: '8px' }}
+              className="bg-white border border-border p-5 rounded-lg"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div
-                  className="size-9 flex items-center justify-center rounded-full bg-primary text-white font-heading font-semibold text-sm"
-                >
+                <div className="size-9 flex items-center justify-center rounded-full bg-primary text-white font-heading font-semibold text-sm">
                   {review.initial}
                 </div>
                 <div>
