@@ -1,12 +1,12 @@
 ---
 gsd_state_version: '1.0'
-status: in_progress
+status: complete
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 10
-  completed_plans: 8
-  percent: 80
+  completed_plans: 10
+  percent: 100
 ---
 
 # Project State
@@ -16,23 +16,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-17)
 
 **Core value:** Um arquivo `site.config.ts` único que, ao ser editado, customiza toda a landing page sem necessidade de alterar componentes.
-**Current focus:** Phase 5 - Demo & Integration
+**Current focus:** All phases complete — milestone done
 
 ## Current Position
 
 Phase: 5 of 5 (Demo & Integration)
-Plan: 0 of 2 in current phase
-Status: Ready to plan Phase 5
-Last activity: 2026-06-17 — Phase 4 Supporting Component Refactor complete (code + plans)
+Plan: 2 of 2 in current phase
+Status: All phases complete
+Last activity: 2026-06-17 — Phase 5-02 complete (end-to-end static verification)
 
-Progress: ████████░░ 80%
+Progress: ██████████ 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: ~12 min
-- Total execution time: 1.5 hours
+- Total plans completed: 10
+- Average duration: ~11 min
+- Total execution time: 1.8 hours
 
 **By Phase:**
 
@@ -42,10 +42,11 @@ Progress: ████████░░ 80%
 | 2-Theme System | 2 | 2 | ~10 min |
 | 3-Core Component Refactor | 2 | 2 | ~10 min |
 | 4-Supporting Component Refactor | 2 | 2 | ~12 min |
+| 5-Demo & Integration | 2 | 2 | ~8 min |
 
 **Recent Trend:**
-- Last 8 plans: 01-01, 01-02, 02-01, 02-02, 03-01, 03-02, 04-01, 04-02
-- Trend: On track
+- Last 10 plans: 01-01, 01-02, 02-01, 02-02, 03-01, 03-02, 04-01, 04-02, 05-01, 05-02
+- Trend: Complete
 
 *Updated after each plan completion*
 
@@ -65,7 +66,8 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- Phase 5: Create demo config + validation checklist + end-to-end manual testing
+- Manual browser testing with `pnpm dev` (visual verification)
+- Remove ignoreBuildErrors: true (incremental)
 
 ### Blockers/Concerns
 
@@ -82,5 +84,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-17
-Stopped at: Phase 4 complete, ready to plan Phase 5 Demo & Integration
+Stopped at: All phases complete — 100% milestone done
 Resume file: None

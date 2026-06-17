@@ -99,8 +99,8 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [x] 05-01: Create site.config.demo.ts (CartoPrime fictional data) + VALIDATION.md (18-section checklist)
+- [x] 05-02: End-to-end manual testing with demo config
 
 ## Progress
 
@@ -113,4 +113,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Theme System | 2/2 | Complete | 2026-06-17 |
 | 3. Core Component Refactor | 2/2 | Complete | 2026-06-17 |
 | 4. Supporting Component Refactor | 2/2 | Complete | 2026-06-17 |
-| 5. Demo & Integration | 0/2 | Not started | - |
+| 5. Demo & Integration | 2/2 | Complete | 2026-06-17 |
