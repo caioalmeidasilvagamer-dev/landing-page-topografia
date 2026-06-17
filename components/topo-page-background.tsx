@@ -12,7 +12,7 @@ import { useMemo } from 'react'
  *  sx, sy  — escala horizontal / vertical (permite criar cristas alongadas)
  *  steps   — resolução (≥72 para suavidade)
  * ═══════════════════════════════════════════════════════════════════════════ */
-function mkContour(
+function contourPoints(
   cx: number,
   cy: number,
   r: number,
@@ -20,8 +20,8 @@ function mkContour(
   sx = 1.0,
   sy = 1.0,
   steps = 90,
-): string {
-  const pts: string[] = []
+): [number, number][] {
+  const pts: [number, number][] = []
   for (let i = 0; i <= steps; i++) {
     const a = (i / steps) * Math.PI * 2
     /* Perturbação multi-harmônica → curvas naturais, não elipses */
@@ -35,21 +35,44 @@ function mkContour(
         0.04 * Math.sin(seed * 4.7  + a * 4) +
         0.03 * Math.cos(seed * 2.3  + a * 9) +
         0.02 * Math.sin(seed * 5.9  + a * 6))
-    const x = (cx + dr * sx * Math.cos(a)).toFixed(1)
-    const y = (cy + dr * sy * Math.sin(a)).toFixed(1)
-    pts.push(`${i === 0 ? 'M' : 'L'} ${x},${y}`)
+    const x = cx + dr * sx * Math.cos(a)
+    const y = cy + dr * sy * Math.sin(a)
+    pts.push([x, y])
   }
-  return pts.join(' ') + ' Z'
+  return pts
 }
 
-/* ─── Paleta — tons terrosos em baixíssima opacidade ────────────────────── */
-const S = {
-  regular : 'rgba(175,162,132,0.042)',   /* ~4 %  curva normal            */
-  index   : 'rgba(175,162,132,0.080)',   /* ~8 %  curva-índice (a cada 5ª)*/
-  label   : 'rgba(175,162,132,0.20)',    /* rótulos de cota               */
-  river   : 'rgba(90,138,192,0.075)',    /* drenagem / rios               */
-  meta    : 'rgba(175,162,132,0.16)',    /* metadados cartográficos       */
+function toPath(pts: [number, number][]): string {
+  return pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)},${y.toFixed(1)}`).join(' ') + ' Z'
 }
+
+/* ─── Paleta hipsométrica — degradê IBGE/relevo (baixada → pico) ─────────
+ * Cada relevo usa as MESMAS 8 faixas de cor — só a área coberta por cada
+ * uma muda conforme a altitude do morro. Isto reproduz o efeito de mapa
+ * de camadas em cores (verde → amarelo → laranja → marrom → branco). */
+const HYPSO = [
+  '#E8EDD9', // 0 — planície / vale
+  '#D7E2BE', // 1
+  '#C3D69E', // 2
+  '#A9C97F', // 3
+  '#D9CD7E', // 4 — transição amarela
+  '#D9A95C', // 5 — encosta média
+  '#C4824A', // 6 — encosta alta
+  '#A66238', // 7 — quase-pico
+  '#F1ECE3', // 8 — pico (neve/rocha clara)
+]
+
+/* ─── Paleta de linhas — tons terrosos em baixíssima opacidade ──────────── */
+const S = {
+  regular : 'rgba(120,100,70,0.16)',     /* curva normal                  */
+  index   : 'rgba(120,100,70,0.30)',     /* curva-índice (a cada 5ª)      */
+  label   : 'rgba(90,75,50,0.45)',       /* rótulos de cota               */
+  river   : 'rgba(70,120,168,0.30)',     /* drenagem / rios               */
+  meta    : 'rgba(90,75,50,0.40)',       /* metadados cartográficos       */
+}
+
+/* opacidade global do preenchimento hipsométrico — sutil, não compete com o conteúdo */
+const FILL_OPACITY = 0.16
 
 /* ─── Definição dos relevos ──────────────────────────────────────────────── */
 interface Feat {
@@ -137,15 +160,34 @@ const FEATS: Feat[] = [
 
 /* ─── Componente ─────────────────────────────────────────────────────────── */
 export function TopoPageBackground() {
-  /* Pré-computa todos os paths uma única vez */
-  const contours = useMemo(
+  /* Pré-computa todos os paths uma única vez.
+   * Para cada relevo, geramos:
+   *  - "rings": polígonos preenchidos do MAIOR raio (base) para o MENOR (pico),
+   *    cada um pintado com uma cor da escala hipsométrica. Como são desenhados
+   *    nessa ordem, cada anel mais interno "cobre" parte do anel externo,
+   *    deixando visível apenas a faixa de altitude correspondente — exatamente
+   *    como um mapa de cores por elevação (IBGE / CPRM).
+   *  - "lines": as mesmas curvas, sem preenchimento, para o traço fino por cima. */
+  const relief = useMemo(
     () =>
-      FEATS.map((f) =>
-        f.radii.map((r, ri) => ({
-          d      : mkContour(f.cx, f.cy, r, f.seed, f.sx ?? 1, f.sy ?? 1),
+      FEATS.map((f) => {
+        const sortedDesc = [...f.radii].sort((a, b) => b - a) // maior → menor (base → pico)
+        const rings = sortedDesc.map((r, i) => {
+          const colorIdx = Math.min(
+            HYPSO.length - 1,
+            Math.round((i / Math.max(1, sortedDesc.length - 1)) * (HYPSO.length - 1)),
+          )
+          return {
+            d: toPath(contourPoints(f.cx, f.cy, r, f.seed, f.sx ?? 1, f.sy ?? 1)),
+            fill: HYPSO[colorIdx],
+          }
+        })
+        const lines = f.radii.map((r, ri) => ({
+          d: toPath(contourPoints(f.cx, f.cy, r, f.seed, f.sx ?? 1, f.sy ?? 1)),
           isIndex: ri === 0 || (ri + 1) % 5 === 0,
-        })),
-      ),
+        }))
+        return { rings, lines }
+      }),
     [],
   )
 
@@ -160,9 +202,21 @@ export function TopoPageBackground() {
         viewBox="0 0 1400 900"
         preserveAspectRatio="xMidYMid slice"
       >
-        {/* ══ CURVAS DE NÍVEL ══════════════════════════════════════════════ */}
-        {contours.map((feat, fi) =>
-          feat.map(({ d, isIndex }, ri) => (
+        {/* ══ BASE — tom de planície sob todo o terreno ═══════════════════ */}
+        <rect x="0" y="0" width="1400" height="900" fill={HYPSO[0]} opacity={FILL_OPACITY} />
+
+        {/* ══ CAMADAS HIPSOMÉTRICAS (preenchimento por faixa de altitude) ══ */}
+        {relief.map((feat, fi) => (
+          <g key={`fill${fi}`} opacity={FILL_OPACITY}>
+            {feat.rings.map((ring, ri) => (
+              <path key={`f${fi}ring${ri}`} d={ring.d} fill={ring.fill} stroke="none" />
+            ))}
+          </g>
+        ))}
+
+        {/* ══ CURVAS DE NÍVEL (traço fino por cima das camadas) ═══════════ */}
+        {relief.map((feat, fi) =>
+          feat.lines.map(({ d, isIndex }, ri) => (
             <path
               key={`f${fi}r${ri}`}
               d={d}
@@ -306,6 +360,22 @@ export function TopoPageBackground() {
           <text x="18"   y="889">UTM 23S  ·  DATUM SIRGAS2000  ·  FUSO 23</text>
           {/* Rodapé direito */}
           <text x="1142" y="889">ESCALA 1:25.000</text>
+        </g>
+
+        {/* ══ LEGENDA HIPSOMÉTRICA (faixas de cor por altitude) ════════════ */}
+        <g fontFamily="'IBM Plex Mono',monospace" fontSize="7" opacity="0.85">
+          {[
+            { label: '0–200m',     color: HYPSO[0] },
+            { label: '200–400m',   color: HYPSO[2] },
+            { label: '400–700m',   color: HYPSO[4] },
+            { label: '700–1000m',  color: HYPSO[6] },
+            { label: '1000m+',     color: HYPSO[8] },
+          ].map((row, i) => (
+            <g key={row.label} transform={`translate(18, ${742 + i * 14})`}>
+              <rect width="14" height="9" fill={row.color} stroke={S.meta} strokeWidth="0.4" />
+              <text x="20" y="7.5" fill={S.meta}>{row.label}</text>
+            </g>
+          ))}
         </g>
 
         {/* ══ BARRA DE ESCALA GRÁFICA ══════════════════════════════════════ */}

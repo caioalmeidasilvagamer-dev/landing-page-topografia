@@ -126,8 +126,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 export function Services() {
   return (
-    <section id="servicos" className="relative py-24 lg:py-32 bg-background">
-      <div className="absolute inset-0 technical-grid" />
+    <section id="servicos" className="relative py-24 lg:py-32 bg-background/85 backdrop-blur-[2px]">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">

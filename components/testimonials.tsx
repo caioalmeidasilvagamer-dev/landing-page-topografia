@@ -69,8 +69,7 @@ export function Testimonials() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length)
 
   return (
-    <section id="depoimentos" className="relative py-24 lg:py-32 bg-background overflow-hidden">
-      <div className="absolute inset-0 technical-grid" />
+    <section id="depoimentos" className="relative py-24 lg:py-32 bg-background/85 backdrop-blur-[2px] overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
