@@ -27,6 +27,19 @@ const config = SiteConfigSchema.parse({
     slogan: 'Topografia & Georreferenciamento',
   },
 
+  colors: {
+    primary: '#1F3A5F',
+    foreground: '#1A2332',
+    background: '#F8FAFC',
+    muted: '#EDF1F7',
+    secondary: '#E8EFF6',
+    destructive: '#E20613',
+    border: '#D0DAEA',
+    topoLine: '#315D8A',
+    topoAccent: '#7DB3D4',
+    backgroundAlt: '#F0F4F8',
+  },
+
   contact: {
     phone: '+55 (11) 99999-9999',
     email: 'contato@geotech.com.br',

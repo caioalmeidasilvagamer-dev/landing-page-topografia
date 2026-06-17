@@ -58,7 +58,7 @@ export function Projects() {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <section id="projetos" className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(237,241,247,0.50)' }}>
+    <section id="projetos" className="relative py-24 lg:py-32 bg-muted/50">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
@@ -107,10 +107,9 @@ export function Projects() {
               transition={{ duration: 0.45, delay: index * 0.09 }}
               onMouseEnter={() => setHovered(project.id)}
               onMouseLeave={() => setHovered(null)}
-              className="group relative bg-white border border-border overflow-hidden hover:border-primary/35 transition-all duration-200 cursor-pointer"
-              style={{ borderRadius: '8px' }}
+              className="group relative bg-white border border-border overflow-hidden hover:border-primary/35 transition-all duration-200 cursor-pointer rounded-lg"
             >
-              <div className="relative aspect-square overflow-hidden" style={{ borderBottom: '1px solid #D0DAEA' }}>
+              <div className="relative aspect-square overflow-hidden border-b border-border">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -120,22 +119,11 @@ export function Projects() {
                 />
                 <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-all duration-300" />
 
-                <div
-                  className="absolute top-3 left-3 font-mono text-[10px] text-white px-2 py-1"
-                  style={{ backgroundColor: 'rgba(26,35,50,0.7)', borderRadius: '4px' }}
-                >
+                <div className="absolute top-3 left-3 font-mono text-[10px] text-white px-2 py-1 bg-foreground/70 rounded">
                   {project.id}
                 </div>
 
-                <div
-                  className="absolute top-3 right-3 font-mono text-[10px] px-2 py-1"
-                  style={{
-                    backgroundColor: 'rgba(31,58,95,0.85)',
-                    color: '#FFFFFF',
-                    borderRadius: '4px',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                  }}
-                >
+                <div className="absolute top-3 right-3 font-mono text-[10px] px-2 py-1 bg-primary/85 text-white rounded border border-white/15">
                   {project.category}
                 </div>
 
@@ -145,8 +133,7 @@ export function Projects() {
                       initial={{ opacity: 0, scale: 0.85 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.85 }}
-                      className="absolute bottom-3 right-3 size-9 flex items-center justify-center"
-                      style={{ backgroundColor: '#1F3A5F', borderRadius: '6px' }}
+                      className="absolute bottom-3 right-3 size-9 flex items-center justify-center bg-primary rounded-[6px]"
                     >
                       <ArrowUpRight className="size-4 text-white" />
                     </motion.div>
@@ -170,16 +157,11 @@ export function Projects() {
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5 pt-2" style={{ borderTop: '1px solid #E8EFF6' }}>
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-secondary">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="font-mono text-[10px] px-2 py-0.5 text-muted-foreground/70"
-                      style={{
-                        backgroundColor: '#EDF1F7',
-                        border: '1px solid #D0DAEA',
-                        borderRadius: '4px',
-                      }}
+                      className="font-mono text-[10px] px-2 py-0.5 text-muted-foreground/70 bg-muted border border-border rounded"
                     >
                       {tag}
                     </span>

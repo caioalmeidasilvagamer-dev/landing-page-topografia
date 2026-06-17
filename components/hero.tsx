@@ -57,16 +57,14 @@ export function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden" style={{ backgroundColor: '#F8FAFC' }}>
-      {/* Background */}
+    <section className="relative min-h-screen flex flex-col overflow-hidden bg-background">
       <TopoBackground showGrid showCoords backgroundImageUrl="/images/mapa-topo-bg.jpeg" backgroundImageUrlMobile="/images/mapa-topo-bg-mobile.jpeg" />
 
-      {/* Vinheta clara para transição suave com o fundo do site (#F8FAFC) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 85% 65% at 50% 50%, transparent 30%, rgba(248, 250, 252, 0.15) 75%, #F8FAFC 100%)',
+            'radial-gradient(ellipse 85% 65% at 50% 50%, transparent 30%, rgba(248, 250, 252, 0.15) 75%, var(--background) 100%)',
         }}
       />
 
@@ -271,7 +269,7 @@ export function Hero() {
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent, #F8FAFC)',
+          background: 'linear-gradient(to bottom, transparent, var(--background))',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
         }}

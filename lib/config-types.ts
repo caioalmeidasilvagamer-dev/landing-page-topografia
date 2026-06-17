@@ -277,9 +277,23 @@ export const FooterLinkSchema = z.object({
 
 // ─── Top-Level Config ─────────────────────────────────────────────────────────
 
+export const ColorsSchema = z.object({
+  primary: z.string().min(1),
+  foreground: z.string().min(1),
+  background: z.string().min(1),
+  muted: z.string().min(1),
+  secondary: z.string().min(1),
+  destructive: z.string().min(1),
+  border: z.string().min(1),
+  topoLine: z.string().min(1),
+  topoAccent: z.string().min(1),
+  backgroundAlt: z.string().min(1),
+})
+
 export const SiteConfigSchema = z.object({
   sections: SectionsSchema,
   brand: BrandSchema,
+  colors: ColorsSchema,
   contact: ContactSchema,
   social: SocialSchema,
   seo: SeoSchema,
@@ -306,6 +320,7 @@ export const SiteConfigSchema = z.object({
 export type SiteConfig = z.infer<typeof SiteConfigSchema>
 export type Sections = z.infer<typeof SectionsSchema>
 export type Brand = z.infer<typeof BrandSchema>
+export type Colors = z.infer<typeof ColorsSchema>
 export type Contact = z.infer<typeof ContactSchema>
 export type Social = z.infer<typeof SocialSchema>
 export type Seo = z.infer<typeof SeoSchema>

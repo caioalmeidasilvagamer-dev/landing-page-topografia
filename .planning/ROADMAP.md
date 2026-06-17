@@ -30,11 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. User receives clear Zod validation errors when config has invalid data (fail fast at import)
   3. All config sections (brand, contact, social, seo, hero, services, equipment, etc.) exist with complete schemas
   4. Config file is pure data with no React imports — works in both Server Components and client components
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01: Install Zod + Create lib/config-types.ts (all 23 Zod schemas) + lib/icons.ts (icon mapping)
+- [ ] 01-02: Create site.config.ts (validated config data) + lib/config-helpers.ts (derived value utilities)
 
 ### Phase 2: Theme System
 **Goal**: User can customize site colors and typography by editing config

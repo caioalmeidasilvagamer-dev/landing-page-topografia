@@ -69,7 +69,7 @@ export function Testimonials() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length)
 
   return (
-    <section id="depoimentos" className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: 'rgba(248,250,252,0.50)' }}>
+    <section id="depoimentos" className="relative py-24 lg:py-32 overflow-hidden bg-background/50">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
@@ -98,25 +98,20 @@ export function Testimonials() {
         </div>
 
         <div className="grid lg:grid-cols-12 gap-6">
-          {/* Depoimento principal */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={VP}
             transition={{ duration: 0.45, delay: 0.15 }}
-            className="lg:col-span-7 bg-white border border-border relative overflow-hidden flex flex-col"
-            style={{ borderRadius: '8px' }}
+            className="lg:col-span-7 bg-white border border-border relative overflow-hidden flex flex-col rounded-lg"
           >
-            <div className="h-[3px] w-full" style={{ backgroundColor: '#1F3A5F' }} />
+            <div className="h-[3px] w-full bg-primary" />
 
             <div className="p-8 flex flex-col gap-6 flex-1">
-              <Quote className="size-14 absolute top-8 right-8" style={{ color: '#EDF1F7' }} aria-hidden="true" />
+              <Quote className="size-14 absolute top-8 right-8 text-muted" aria-hidden="true" />
 
               <div className="flex items-start gap-4 relative z-10">
-                <div
-                  className="size-12 flex items-center justify-center flex-shrink-0 font-heading font-semibold text-base text-primary"
-                  style={{ border: '1px solid #D0DAEA', borderRadius: '6px', backgroundColor: '#EDF1F7' }}
-                >
+                <div className="size-12 flex items-center justify-center flex-shrink-0 font-heading font-semibold text-base text-primary border border-border rounded-[6px] bg-muted">
                   {testimonials[current].name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
                 </div>
                 <div className="flex flex-col gap-0.5">
@@ -143,7 +138,7 @@ export function Testimonials() {
                 </motion.blockquote>
               </AnimatePresence>
 
-              <div className="pt-4 flex items-center justify-between" style={{ borderTop: '1px solid #E8EFF6' }}>
+              <div className="pt-4 flex items-center justify-between border-t border-secondary">
                 <div className="petroleum-accent pl-3">
                   <div className="font-mono text-[10px] text-muted-foreground/55 mb-0.5">Projeto</div>
                   <div className="font-sans text-xs text-muted-foreground">
@@ -154,8 +149,7 @@ export function Testimonials() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={prev}
-                    className="size-9 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/35 transition-all"
-                    style={{ borderRadius: '6px' }}
+                    className="size-9 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/35 transition-all rounded-[6px]"
                     aria-label="Depoimento anterior"
                   >
                     <ChevronLeft className="size-4" />
@@ -165,8 +159,7 @@ export function Testimonials() {
                   </div>
                   <button
                     onClick={next}
-                    className="size-9 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/35 transition-all"
-                    style={{ borderRadius: '6px' }}
+                    className="size-9 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/35 transition-all rounded-[6px]"
                     aria-label="Próximo depoimento"
                   >
                     <ChevronRight className="size-4" />
@@ -176,7 +169,6 @@ export function Testimonials() {
             </div>
           </motion.div>
 
-          {/* Lista compacta */}
           <div className="lg:col-span-5 flex flex-col gap-3">
             {testimonials.map((t, index) => (
               <motion.button
@@ -186,13 +178,11 @@ export function Testimonials() {
                 viewport={VP}
                 transition={{ duration: 0.4, delay: 0.2 + index * 0.07 }}
                 onClick={() => setCurrent(index)}
-                className="text-left border p-4 transition-all duration-200"
-                style={{
-                  borderRadius: '8px',
-                  backgroundColor: current === index ? '#FFFFFF' : 'transparent',
-                  borderColor: current === index ? '#1F3A5F' : '#D0DAEA',
-                  borderLeftWidth: current === index ? '3px' : '1px',
-                }}
+                className={`text-left border p-4 transition-all duration-200 rounded-lg ${
+                  current === index
+                    ? 'bg-white border-primary border-l-[3px]'
+                    : 'bg-transparent border-border'
+                }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="font-sans text-sm font-medium text-foreground">{t.name}</div>

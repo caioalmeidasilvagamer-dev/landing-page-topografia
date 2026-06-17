@@ -35,28 +35,26 @@ export function Navbar() {
         'fixed top-0 inset-x-0 z-50 transition-all duration-300',
         scrolled
           ? 'bg-white border-b border-border shadow-sm'
-          : 'bg-[#1F3A5F]',
+          : 'bg-primary',
       )}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
         <a
           href="#"
           className="flex items-center gap-3 group"
           aria-label="GeoTech Topografia"
         >
-          {/* Símbolo geométrico — mira topográfica */}
           <div className="relative size-8 flex items-center justify-center flex-shrink-0">
             <svg viewBox="0 0 32 32" className="size-8" fill="none" aria-hidden="true">
-              <circle cx="16" cy="16" r="13" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
-              <circle cx="16" cy="16" r="4" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.9)'} strokeWidth="1.5" />
-              <line x1="3" y1="16" x2="10" y2="16" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
-              <line x1="22" y1="16" x2="29" y2="16" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
-              <line x1="16" y1="3" x2="16" y2="10" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
-              <line x1="16" y1="22" x2="16" y2="29" stroke={scrolled ? '#1F3A5F' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <circle cx="16" cy="16" r="13" stroke={scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <circle cx="16" cy="16" r="4" stroke={scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.9)'} strokeWidth="1.5" />
+              <line x1="3" y1="16" x2="10" y2="16" stroke={scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <line x1="22" y1="16" x2="29" y2="16" stroke={scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <line x1="16" y1="3" x2="16" y2="10" stroke={scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
+              <line x1="16" y1="22" x2="16" y2="29" stroke={scrolled ? 'var(--primary)' : 'rgba(255,255,255,0.7)'} strokeWidth="1.2" />
             </svg>
           </div>
           <div className="flex flex-col leading-none">
@@ -79,7 +77,6 @@ export function Navbar() {
           </div>
         </a>
 
-        {/* Nav desktop */}
         <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <button
@@ -103,7 +100,6 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* CTA desktop */}
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => handleLink('#contato')}
@@ -124,14 +120,13 @@ export function Navbar() {
               'font-sans text-sm px-4 py-2 rounded-[6px] transition-all duration-200',
               scrolled
                 ? 'bg-primary text-white hover:bg-primary/90'
-                : 'bg-white text-[#1F3A5F] font-medium hover:bg-white/90',
+                : 'bg-white text-primary font-medium hover:bg-white/90',
             )}
           >
             WhatsApp
           </a>
         </div>
 
-        {/* Hamburger mobile */}
         <button
           className={cn(
             'md:hidden p-2',
@@ -144,7 +139,6 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div

@@ -82,18 +82,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={VP}
       transition={{ duration: 0.4, delay: index * 0.07 }}
-      className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-200 overflow-hidden"
-      style={{ borderRadius: '8px' }}
+      className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-200 overflow-hidden rounded-lg"
     >
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
       <div className="p-6 flex flex-col gap-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div
-              className="size-10 flex items-center justify-center border border-primary/15 group-hover:border-primary/30 transition-colors"
-              style={{ borderRadius: '6px', backgroundColor: '#EDF1F7' }}
-            >
+            <div className="size-10 flex items-center justify-center border border-primary/15 group-hover:border-primary/30 transition-colors rounded-[6px] bg-muted">
               <Icon className="size-5 text-primary" />
             </div>
             <span className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/50">
@@ -111,7 +107,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           {service.description}
         </p>
 
-        <div className="pt-3 flex flex-wrap gap-x-4 gap-y-1.5" style={{ borderTop: '1px solid #E8EFF6' }}>
+        <div className="pt-3 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-secondary">
           {service.specs.map((spec) => (
             <div key={spec} className="flex items-center gap-1.5">
               <div className="size-1 rounded-full bg-primary/50" />
@@ -126,9 +122,8 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 export function Services() {
   return (
-    <section id="servicos" className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(248,250,252,0.50)' }}>
+    <section id="servicos" className="relative py-24 lg:py-32 bg-background/50">
 
-      {/* Transição blur no início da seção */}
       <div
         className="absolute top-0 left-0 right-0 h-24 pointer-events-none"
         style={{

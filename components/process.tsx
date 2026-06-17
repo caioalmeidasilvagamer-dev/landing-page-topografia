@@ -50,7 +50,7 @@ const VP = { once: true, amount: 0.05 } as const
 
 export function Process() {
   return (
-    <section className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(248,250,252,0.50)' }}>
+    <section className="relative py-24 lg:py-32 bg-background/50">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
@@ -90,15 +90,9 @@ export function Process() {
         </div>
 
         <div className="relative">
-          {/* Linha de fundo — sempre visível */}
-          <div
-            className="hidden lg:block absolute top-[1.4rem] left-0 right-0 h-px z-0"
-            style={{ backgroundColor: '#D0DAEA' }}
-          />
-          {/* Linha de progresso animada */}
+          <div className="hidden lg:block absolute top-[1.4rem] left-0 right-0 h-px z-0 bg-border" />
           <motion.div
-            className="hidden lg:block absolute top-[1.4rem] left-0 h-px z-0"
-            style={{ backgroundColor: '#1F3A5F' }}
+            className="hidden lg:block absolute top-[1.4rem] left-0 h-px z-0 bg-primary"
             initial={{ width: 0 }}
             whileInView={{ width: '100%' }}
             viewport={VP}
@@ -118,14 +112,11 @@ export function Process() {
                   className="flex lg:flex-col gap-4 lg:gap-0"
                 >
                   <div className="flex flex-col items-center lg:items-start">
-                    <div
-                      className="size-11 flex items-center justify-center bg-white relative z-10"
-                      style={{ border: '2px solid #1F3A5F', borderRadius: '50%' }}
-                    >
+                    <div className="size-11 flex items-center justify-center bg-white relative z-10 border-2 border-primary rounded-full">
                       <Icon className="size-[18px] text-primary" />
                     </div>
                     {index < steps.length - 1 && (
-                      <div className="lg:hidden w-px flex-1 mt-2 min-h-[2rem]" style={{ backgroundColor: '#1F3A5F' }} />
+                      <div className="lg:hidden w-px flex-1 mt-2 min-h-[2rem] bg-primary" />
                     )}
                   </div>
 

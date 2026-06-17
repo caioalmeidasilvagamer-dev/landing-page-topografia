@@ -42,7 +42,7 @@ export function CoverageMap() {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <section className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(248,250,252,0.50)' }}>
+    <section className="relative py-24 lg:py-32 bg-background/50">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
           <motion.div
@@ -107,13 +107,11 @@ export function CoverageMap() {
                   onMouseLeave={() => setHovered(null)}
                 >
                   <div
-                    className="aspect-square flex items-center justify-center text-xs font-mono font-medium cursor-default transition-all duration-200"
-                    style={{
-                      borderRadius: '6px',
-                      backgroundColor: state.served ? '#1F3A5F' : '#EDF1F7',
-                      color: state.served ? '#FFFFFF' : 'rgba(83,96,112,0.4)',
-                      border: `1px solid ${state.served ? '#1F3A5F' : '#D0DAEA'}`,
-                    }}
+                    className={`aspect-square flex items-center justify-center text-xs font-mono font-medium cursor-default transition-all duration-200 rounded-[6px] ${
+                      state.served
+                        ? 'bg-primary text-white border border-primary'
+                        : 'bg-muted text-muted-foreground/40 border border-border'
+                    }`}
                   >
                     {state.abbr}
                   </div>
@@ -124,8 +122,7 @@ export function CoverageMap() {
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 4 }}
-                        className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap px-3 py-1.5 text-xs font-sans bg-white border border-border shadow-sm"
-                        style={{ borderRadius: '6px' }}
+                        className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap px-3 py-1.5 text-xs font-sans bg-white border border-border shadow-sm rounded-[6px]"
                       >
                         {state.served ? (
                           <span className="text-foreground">{state.name} ✓</span>
@@ -141,11 +138,11 @@ export function CoverageMap() {
 
             <div className="mt-6 flex items-center gap-6">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded" style={{ backgroundColor: '#1F3A5F' }} />
+                <div className="w-4 h-4 rounded bg-primary" />
                 <span className="font-mono text-[10px] text-muted-foreground">Atendido</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded border" style={{ borderColor: '#D0DAEA', backgroundColor: '#EDF1F7' }} />
+                <div className="w-4 h-4 rounded border border-border bg-muted" />
                 <span className="font-mono text-[10px] text-muted-foreground">Consultar</span>
               </div>
             </div>

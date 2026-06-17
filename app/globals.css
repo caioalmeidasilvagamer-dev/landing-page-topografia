@@ -53,6 +53,8 @@
   --color-terrain: var(--terrain);
   --color-vegetation: var(--vegetation);
   --color-topo-line: var(--topo-line);
+  --color-topo-accent: var(--topo-accent);
+  --color-background-alt: var(--background-alt);
   --color-graphite: var(--graphite);
 
   /* Radius — 6px base (técnico, sem exagero) */
@@ -122,6 +124,8 @@
 
   /* Tokens extras de marca */
   --topo-line: #315D8A;
+  --topo-accent: #7DB3D4;
+  --background-alt: #F0F4F8;
   --graphite: #2B2B2B;
 
   /* Charts */
@@ -195,17 +199,17 @@
 
 /* ─── Acento petróleo lateral (barra esquerda) ─── */
 .petroleum-accent {
-  border-left: 2px solid #1F3A5F;
+  border-left: 2px solid var(--primary);
 }
 
 /* ─── Acento Leica (vermelho — uso pontual) ─── */
 .leica-accent {
-  border-left: 2px solid #E20613;
+  border-left: 2px solid var(--destructive);
 }
 
 /* ─── Linha técnica de separação (substitui shadow floating) ─── */
 .section-border-top {
-  border-top: 1px solid #D0DAEA;
+  border-top: 1px solid var(--border);
 }
 
 /* ─── Scrollbar técnica ─── */
@@ -213,12 +217,12 @@
   width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #F8FAFC;
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #D0DAEA;
+  background: var(--border);
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1F3A5F;
+  background: var(--primary);
 }

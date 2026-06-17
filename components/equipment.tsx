@@ -44,7 +44,7 @@ const manufacturers = ['Trimble', 'Leica Geosystems', 'DJI', 'Topcon', 'Agisoft'
 
 export function Equipment() {
   return (
-    <section className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(248,250,252,0.50)' }}>
+    <section className="relative py-24 lg:py-32 bg-background/50">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
           <motion.div
@@ -92,16 +92,12 @@ export function Equipment() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={VP}
                 transition={{ duration: 0.45, delay: index * 0.09 }}
-                className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-200 overflow-hidden"
-                style={{ borderRadius: '8px' }}
+                className="group relative bg-white border border-border hover:border-primary/40 transition-all duration-200 overflow-hidden rounded-lg"
               >
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 <div className="p-6 flex flex-col gap-4">
                   <div className="flex items-start gap-4">
-                    <div
-                      className="size-12 flex items-center justify-center border border-primary/15 shrink-0"
-                      style={{ borderRadius: '8px', backgroundColor: '#EDF1F7' }}
-                    >
+                    <div className="size-12 flex items-center justify-center border border-primary/15 shrink-0 rounded-lg bg-muted">
                       <Icon className="size-6 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -118,7 +114,7 @@ export function Equipment() {
                     {item.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-1.5 pt-3" style={{ borderTop: '1px solid #E8EFF6' }}>
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-secondary">
                     {item.specs.map((spec) => (
                       <div key={spec} className="flex items-center gap-1.5">
                         <div className="size-1 rounded-full bg-primary/50" />

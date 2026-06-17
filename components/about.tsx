@@ -35,7 +35,7 @@ const stats = [
 
 export function About() {
   return (
-    <section className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(237,241,247,0.50)' }}>
+    <section className="relative py-24 lg:py-32 bg-muted/50">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
           <motion.div
@@ -106,13 +106,9 @@ export function About() {
               return (
                 <div
                   key={cred.title}
-                  className="bg-white border border-border p-5 flex gap-4"
-                  style={{ borderRadius: '8px', borderLeft: '3px solid #1F3A5F' }}
+                  className="bg-white border border-border p-5 flex gap-4 rounded-lg border-l-[3px] border-l-primary"
                 >
-                  <div
-                    className="size-10 flex items-center justify-center border border-primary/15 shrink-0"
-                    style={{ borderRadius: '6px', backgroundColor: '#EDF1F7' }}
-                  >
+                  <div className="size-10 flex items-center justify-center border border-primary/15 shrink-0 rounded-[6px] bg-muted">
                     <Icon className="size-5 text-primary" />
                   </div>
                   <div>
@@ -132,7 +128,7 @@ export function About() {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
               {stats.map((stat) => (
-                <div key={stat.label} className="text-center py-3 bg-white border border-border" style={{ borderRadius: '6px' }}>
+                <div key={stat.label} className="text-center py-3 bg-white border border-border rounded-[6px]">
                   <div className="font-heading font-semibold text-xl text-primary">{stat.value}</div>
                   <div className="font-sans text-xs text-muted-foreground mt-0.5">{stat.label}</div>
                 </div>

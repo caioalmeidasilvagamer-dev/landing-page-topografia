@@ -204,10 +204,7 @@ export function Calculator() {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <div
-                  className="mt-6 p-5 bg-muted/30"
-                  style={{ borderRadius: '6px', borderLeft: '3px solid #1F3A5F' }}
-                >
+                <div className="mt-6 p-5 bg-muted/30 rounded-[6px] border-l-[3px] border-l-primary">
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
                       <div className="font-mono text-[10px] text-muted-foreground/60 uppercase mb-1">Prazo estimado</div>

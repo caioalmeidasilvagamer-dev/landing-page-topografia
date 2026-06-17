@@ -50,7 +50,7 @@ const VP = { once: true, amount: 0.05 } as const
 
 export function Differentials() {
   return (
-    <section id="diferenciais" className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: 'rgba(237,241,247,0.50)' }}>
+    <section id="diferenciais" className="relative py-24 lg:py-32 overflow-hidden bg-muted/50">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
@@ -79,14 +79,12 @@ export function Differentials() {
         </div>
 
         <div className="grid lg:grid-cols-12 gap-4">
-          {/* Card destaque principal */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={VP}
             transition={{ duration: 0.45, delay: 0.1 }}
-            className="lg:col-span-5 bg-white border border-border relative overflow-hidden flex flex-col"
-            style={{ borderRadius: '8px' }}
+            className="lg:col-span-5 bg-white border border-border relative overflow-hidden flex flex-col rounded-lg"
           >
             <svg
               className="absolute inset-0 w-full h-full"
@@ -95,7 +93,7 @@ export function Differentials() {
               aria-hidden="true"
               style={{ opacity: 0.04 }}
             >
-              <g stroke="#1F3A5F" fill="none" strokeWidth="1.2">
+              <g stroke="var(--primary)" fill="none" strokeWidth="1.2">
                 <path d="M0,100 C80,60 180,120 280,80 C360,48 420,100 480,70" />
                 <path d="M0,160 C90,115 200,175 310,130 C390,97 450,150 480,125" />
                 <path d="M0,225 C100,172 220,235 340,185 C420,152 465,205 480,182" />
@@ -106,10 +104,7 @@ export function Differentials() {
             </svg>
 
             <div className="relative z-10 p-8 flex flex-col gap-6 flex-1">
-              <div
-                className="size-14 flex items-center justify-center border border-primary/20"
-                style={{ borderRadius: '8px', backgroundColor: '#EDF1F7' }}
-              >
+              <div className="size-14 flex items-center justify-center border border-primary/20 rounded-lg bg-muted">
                 <Crosshair className="size-7 text-primary" />
               </div>
 
@@ -124,7 +119,7 @@ export function Differentials() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-4" style={{ borderTop: '1px solid #D0DAEA' }}>
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
                 <div>
                   <div className="font-heading font-semibold text-3xl text-primary">±5mm</div>
                   <div className="font-sans text-xs text-muted-foreground mt-1">Precisão posicional</div>
@@ -137,7 +132,6 @@ export function Differentials() {
             </div>
           </motion.div>
 
-          {/* Grid 2x2 */}
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
             {differentials.slice(1).map((diff, index) => {
               const Icon = diff.icon
@@ -148,14 +142,10 @@ export function Differentials() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={VP}
                   transition={{ duration: 0.4, delay: 0.15 + index * 0.07 }}
-                  className="bg-white border border-border p-5 flex flex-col gap-3 hover:border-primary/35 transition-colors group"
-                  style={{ borderRadius: '8px' }}
+                  className="bg-white border border-border p-5 flex flex-col gap-3 hover:border-primary/35 transition-colors group rounded-lg"
                 >
                   <div className="flex items-center justify-between">
-                    <div
-                      className="size-8 flex items-center justify-center border border-primary/15 group-hover:border-primary/25 transition-colors"
-                      style={{ borderRadius: '6px', backgroundColor: '#EDF1F7' }}
-                    >
+                    <div className="size-8 flex items-center justify-center border border-primary/15 group-hover:border-primary/25 transition-colors rounded-[6px] bg-muted">
                       <Icon className="size-4 text-primary" />
                     </div>
                     <div className="text-right">

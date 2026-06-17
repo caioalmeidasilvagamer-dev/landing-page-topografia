@@ -57,7 +57,7 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(237,241,247,0.50)' }}>
+    <section id="faq" className="relative py-24 lg:py-32 bg-muted/50">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
@@ -153,8 +153,7 @@ export function FAQ() {
             </div>
 
             <div
-              className="bg-white border border-border p-5 flex flex-col gap-3"
-              style={{ borderRadius: '8px', borderLeft: '3px solid #1F3A5F' }}
+              className="bg-white border border-border p-5 flex flex-col gap-3 rounded-lg border-l-[3px] border-l-primary"
             >
               <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                 Normas e certificações
