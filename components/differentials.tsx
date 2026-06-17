@@ -50,7 +50,7 @@ const VP = { once: true, amount: 0.05 } as const
 
 export function Differentials() {
   return (
-    <section id="diferenciais" className="relative py-24 lg:py-32 overflow-hidden backdrop-blur-[2px]" style={{ backgroundColor: 'rgba(237,241,247,0.55)' }}>
+    <section id="diferenciais" className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: 'rgba(237,241,247,0.40)' }}>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
