@@ -54,6 +54,14 @@ export const ContactSchema = z.object({
     weekdays: z.string().default('08h às 18h'),
     saturday: z.string().optional(),
   }),
+  coverageRegions: z.array(z.string()).optional().default([
+    'São Paulo (SP)',
+    'Campinas (SP)',
+    'Sorocaba (SP)',
+    'Santos (SP)',
+    'Jundiaí (SP)',
+    'Interior de SP',
+  ]),
 })
 
 // ─── Social ───────────────────────────────────────────────────────────────────
@@ -90,6 +98,11 @@ export const HeroCtaSchema = z.object({
   href: z.string(),
 })
 
+export const HeroCertificationSchema = z.object({
+  code: z.string().min(1),
+  label: z.string().min(1),
+})
+
 export const HeroSchema = z.object({
   badge: z.string(),
   headline: z.string(),
@@ -97,6 +110,7 @@ export const HeroSchema = z.object({
   stats: z.array(HeroStatSchema),
   tags: z.array(HeroTagSchema),
   ctas: z.array(HeroCtaSchema),
+  certifications: z.array(HeroCertificationSchema).optional().default([]),
 })
 
 // ─── Services ─────────────────────────────────────────────────────────────────
@@ -107,6 +121,12 @@ export const ServiceSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   specs: z.array(z.string()),
+})
+
+export const ServicesConfigSchema = z.object({
+  headline: z.string().optional().default('Soluções Completas para seu Projeto'),
+  description: z.string().optional().default('Do levantamento ao projeto final, oferecemos serviços integrados de topografia e engenharia com tecnologia de ponta.'),
+  items: z.array(ServiceSchema),
 })
 
 // ─── Equipment ────────────────────────────────────────────────────────────────
@@ -144,6 +164,7 @@ export const AboutStatSchema = z.object({
 })
 
 export const AboutSchema = z.object({
+  headline: z.string().optional().default('Engenharia de precisão com foco no seu projeto'),
   engineer: z.string().min(1),
   creNumber: z.string().min(1),
   foundedYear: z.string().min(1),
@@ -206,6 +227,18 @@ export const FaqSchema = z.object({
   id: z.string().min(1),
   question: z.string().min(1),
   answer: z.string().min(1),
+})
+
+export const FaqConfigSchema = z.object({
+  headline: z.string().optional().default('Perguntas Frequentes'),
+  certifications: z.array(z.string()).optional().default([
+    'NBR 13.133',
+    'ABNT NBR 13.133',
+    'INCRA',
+    'ISO 9001',
+    'CREA/CAU',
+  ]),
+  items: z.array(FaqSchema),
 })
 
 // ─── Process ──────────────────────────────────────────────────────────────────
@@ -275,6 +308,16 @@ export const FooterLinkSchema = z.object({
   href: z.string().min(1),
 })
 
+export const FooterCertificationSchema = z.object({
+  code: z.string().min(1),
+  label: z.string().min(1),
+})
+
+export const FooterConfigSchema = z.object({
+  description: z.string().optional().default('Soluções completas em topografia e engenharia. Tecnologia de precisão para projetos de qualquer escala.'),
+  certifications: z.array(FooterCertificationSchema).optional().default([]),
+})
+
 // ─── Top-Level Config ─────────────────────────────────────────────────────────
 
 export const ColorsSchema = z.object({
@@ -298,7 +341,7 @@ export const SiteConfigSchema = z.object({
   social: SocialSchema,
   seo: SeoSchema,
   hero: HeroSchema,
-  services: z.array(ServiceSchema),
+  services: ServicesConfigSchema,
   equipment: z.array(EquipmentSchema),
   differentials: z.array(DifferentialSchema),
   about: AboutSchema,
@@ -306,13 +349,14 @@ export const SiteConfigSchema = z.object({
   testimonials: z.array(TestimonialSchema),
   clientLogos: ClientLogosSchema,
   googleRating: GoogleRatingSchema,
-  faq: z.array(FaqSchema),
+  faq: FaqConfigSchema,
   process: z.array(ProcessStepSchema),
   coverage: z.array(CoverageStateSchema),
   calculator: CalculatorSchema,
   blog: z.array(BlogArticleSchema),
   whatsapp: WhatsappSchema,
   navLinks: z.array(NavLinkSchema),
+  footer: FooterConfigSchema,
   footerLinks: z.array(FooterLinkSchema),
   footerServices: z.array(z.string()),
 })
@@ -325,7 +369,9 @@ export type Contact = z.infer<typeof ContactSchema>
 export type Social = z.infer<typeof SocialSchema>
 export type Seo = z.infer<typeof SeoSchema>
 export type Hero = z.infer<typeof HeroSchema>
+export type HeroCertification = z.infer<typeof HeroCertificationSchema>
 export type Service = z.infer<typeof ServiceSchema>
+export type ServicesConfig = z.infer<typeof ServicesConfigSchema>
 export type Equipment = z.infer<typeof EquipmentSchema>
 export type Differential = z.infer<typeof DifferentialSchema>
 export type About = z.infer<typeof AboutSchema>
@@ -334,9 +380,12 @@ export type Testimonial = z.infer<typeof TestimonialSchema>
 export type ClientLogos = z.infer<typeof ClientLogosSchema>
 export type GoogleRating = z.infer<typeof GoogleRatingSchema>
 export type Faq = z.infer<typeof FaqSchema>
+export type FaqConfig = z.infer<typeof FaqConfigSchema>
 export type ProcessStep = z.infer<typeof ProcessStepSchema>
 export type CoverageState = z.infer<typeof CoverageStateSchema>
 export type Calculator = z.infer<typeof CalculatorSchema>
 export type BlogArticle = z.infer<typeof BlogArticleSchema>
 export type Whatsapp = z.infer<typeof WhatsappSchema>
 export type NavLink = z.infer<typeof NavLinkSchema>
+export type FooterLink = z.infer<typeof FooterLinkSchema>
+export type FooterConfig = z.infer<typeof FooterConfigSchema>

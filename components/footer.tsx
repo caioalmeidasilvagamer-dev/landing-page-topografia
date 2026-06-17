@@ -9,6 +9,7 @@ export function Footer() {
   const social = config.social
   const links = config.footerLinks
   const services = config.footerServices
+  const footerConfig = config.footer
 
   return (
     <footer className="bg-foreground" style={{ borderTop: '1px solid rgba(49,93,138,0.35)' }}>
@@ -38,8 +39,7 @@ export function Footer() {
             </div>
 
             <p className="font-sans text-xs leading-relaxed text-topo-accent/65">
-              Empresa especializada em topografia, georreferenciamento e engenharia de precisão.
-              Equipamentos GNSS de última geração e equipe certificada CREA.
+              {footerConfig.description}
             </p>
 
             <div className="flex flex-col gap-2">
@@ -136,13 +136,7 @@ export function Footer() {
                 Certificações
               </span>
             </div>
-            {[
-              { code: 'CREA/CONFEA', label: 'Registro ativo' },
-              { code: 'INCRA', label: 'Habilitado p/ Georreferenciamento' },
-              { code: 'ANAC', label: 'Operação VANT certificada' },
-              { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
-              { code: 'SIRGAS2000', label: 'Datum Geodésico Oficial' },
-            ].map(({ code, label }) => (
+            {footerConfig.certifications.map(({ code, label }) => (
               <div key={code} className="pl-2.5 border-l-2 border-topo-line/55">
                 <div className="font-mono text-[10px] font-medium text-topo-accent">{code}</div>
                 <div className="font-sans text-[10px] mt-0.5 text-topo-accent/50">{label}</div>

@@ -2,10 +2,10 @@
 gsd_state_version: '1.0'
 status: complete
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 10
-  completed_plans: 10
+  total_phases: 6
+  completed_phases: 6
+  total_plans: 12
+  completed_plans: 12
   percent: 100
 ---
 
@@ -16,23 +16,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-17)
 
 **Core value:** Um arquivo `site.config.ts` único que, ao ser editado, customiza toda a landing page sem necessidade de alterar componentes.
-**Current focus:** All phases complete — milestone done
+**Current focus:** All phases complete — 100% config-driven template
 
 ## Current Position
 
-Phase: 5 of 5 (Demo & Integration)
+Phase: 6 of 6 (Hardcoded Cleanup)
 Plan: 2 of 2 in current phase
-Status: All phases complete
-Last activity: 2026-06-17 — Phase 5-02 complete (end-to-end static verification)
+Status: All phases complete — 100% config-driven
+Last activity: 2026-06-17 — Phase 6 complete (hardcoded cleanup)
 
 Progress: ██████████ 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: ~11 min
-- Total execution time: 1.8 hours
+- Total plans completed: 12
+- Average duration: ~10 min
+- Total execution time: 2.0 hours
 
 **By Phase:**
 
@@ -43,9 +43,10 @@ Progress: ██████████ 100%
 | 3-Core Component Refactor | 2 | 2 | ~10 min |
 | 4-Supporting Component Refactor | 2 | 2 | ~12 min |
 | 5-Demo & Integration | 2 | 2 | ~8 min |
+| 6-Hardcoded Cleanup | 2 | 2 | ~10 min |
 
 **Recent Trend:**
-- Last 10 plans: 01-01, 01-02, 02-01, 02-02, 03-01, 03-02, 04-01, 04-02, 05-01, 05-02
+- Last 12 plans: 01-01, 01-02, 02-01, 02-02, 03-01, 03-02, 04-01, 04-02, 05-01, 05-02, 06-01, 06-02
 - Trend: Complete
 
 *Updated after each plan completion*
@@ -63,6 +64,7 @@ Recent decisions affecting current work:
 - [Phase 3]: Section toggles via config.sections (hero: false removes hero component)
 - [Phase 4]: Calculator reads serviceOptions, purposeOptions, pricing from config.calculator
 - [Phase 4]: Blog articles, Google rating, client logos all from config
+- [Phase 6]: All hardcoded text moved to config — 100% config-driven template
 
 ### Pending Todos
 
@@ -84,5 +86,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-17
-Stopped at: All phases complete — 100% milestone done
+Stopped at: All phases complete — 100% config-driven template
 Resume file: None

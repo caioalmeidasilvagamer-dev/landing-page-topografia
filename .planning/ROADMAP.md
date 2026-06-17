@@ -16,7 +16,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Theme System** - Migrate inline hex colors to CSS variables driven by config
 - [x] **Phase 3: Core Component Refactor** - Refactor conversion-critical sections (hero, navbar, services, contact, WhatsApp, footer, layout)
 - [x] **Phase 4: Supporting Component Refactor** - Refactor remaining content sections (equipment, about, projects, testimonials, FAQ, calculator, etc.)
-- [ ] **Phase 5: Demo & Integration** - Create demo config, validation checklist, end-to-end testing
+- [x] **Phase 5: Demo & Integration** - Create demo config, validation checklist, end-to-end testing
+- [x] **Phase 6: Hardcoded Cleanup** - Migrate remaining hardcoded text in components to config for 100% template customization
 
 ## Phase Details
 
@@ -114,3 +115,21 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 3. Core Component Refactor | 2/2 | Complete | 2026-06-17 |
 | 4. Supporting Component Refactor | 2/2 | Complete | 2026-06-17 |
 | 5. Demo & Integration | 2/2 | Complete | 2026-06-17 |
+| 6. Hardcoded Cleanup | 0/2 | Pending | - |
+
+### Phase 6: Hardcoded Cleanup
+**Goal**: All component text configurable via site.config.ts — zero hardcoded text
+**Mode:** mvp
+**Depends on**: Phase 5
+**Requirements**: CLEAN-01, CLEAN-02, CLEAN-03, CLEAN-04, CLEAN-05, CLEAN-06
+**Success Criteria** (what must be TRUE):
+  1. User can change certifications in config and see them update in hero, footer, and FAQ
+  2. User can change section headlines/descriptions in config (services, about)
+  3. User can change footer company description in config
+  4. User can change coverage regions in contact form via config
+  5. Zero hardcoded Portuguese text remains in any component
+**Plans**: 2 plans
+
+Plans:
+- [ ] 06-01: Add new schema fields to config-types.ts + update site.config.ts + site.config.demo.ts
+- [ ] 06-02: Refactor hero, footer, services, about, contact-form, faq to use new config fields

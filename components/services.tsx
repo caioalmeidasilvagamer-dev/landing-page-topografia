@@ -7,7 +7,7 @@ import { getIcon } from '@/lib/icons'
 
 const VP = { once: true, amount: 0.05 } as const
 
-function ServiceCard({ service, index }: { service: typeof config.services[number]; index: number }) {
+function ServiceCard({ service, index }: { service: typeof config.services.items[number]; index: number }) {
   const Icon = getIcon(service.icon)
 
   return (
@@ -90,7 +90,7 @@ export function Services() {
               transition={{ duration: 0.4, delay: 0.08 }}
               className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-lg text-balance"
             >
-              Soluções técnicas para cada demanda de campo
+              {config.services.headline}
             </motion.h2>
 
             <motion.p
@@ -100,14 +100,13 @@ export function Services() {
               transition={{ duration: 0.4, delay: 0.15 }}
               className="font-sans text-sm text-muted-foreground max-w-sm leading-relaxed"
             >
-              Desde o levantamento inicial até a entrega dos documentos finais,
-              cobrimos todas as etapas do processo topográfico e geodésico.
+              {config.services.description}
             </motion.p>
           </div>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {config.services.map((service, index) => (
+          {config.services.items.map((service, index) => (
             <ServiceCard key={service.code} service={service} index={index} />
           ))}
         </div>

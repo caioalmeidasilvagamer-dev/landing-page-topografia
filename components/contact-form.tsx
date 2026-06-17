@@ -380,17 +380,10 @@ export function ContactForm() {
                   <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                     Área de cobertura
                   </div>
-                  {[
-                    'São Paulo (Capital e Interior)',
-                    'Minas Gerais',
-                    'Rio de Janeiro',
-                    'Goiás e DF',
-                    'Mato Grosso / MS',
-                    'Paraná e Santa Catarina',
-                  ].map((estado) => (
-                    <div key={estado} className="flex items-center gap-2">
+                  {config.contact.coverageRegions.map((region) => (
+                    <div key={region} className="flex items-center gap-2">
                       <div className="size-1 rounded-full bg-primary/50 flex-shrink-0" />
-                      <span className="font-sans text-xs text-muted-foreground">{estado}</span>
+                      <span className="font-sans text-xs text-muted-foreground">{region}</span>
                     </div>
                   ))}
                 </div>

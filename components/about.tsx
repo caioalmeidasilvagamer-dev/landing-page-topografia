@@ -46,7 +46,7 @@ export function About() {
             </div>
 
             <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-foreground leading-tight">
-              Engenharia de precisão com responsabilidade técnica
+              {a.headline}
             </h2>
 
             {a.paragraphs.map((p, i) => (

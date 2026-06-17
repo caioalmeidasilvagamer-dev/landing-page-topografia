@@ -49,6 +49,14 @@ const config = SiteConfigSchema.parse({
       weekdays: '08h às 18h',
       saturday: '08h às 12h',
     },
+    coverageRegions: [
+      'São Paulo (SP)',
+      'Campinas (SP)',
+      'Sorocaba (SP)',
+      'Santos (SP)',
+      'Jundiaí (SP)',
+      'Interior de SP',
+    ],
   },
 
   social: {
@@ -93,9 +101,18 @@ const config = SiteConfigSchema.parse({
       { label: 'Solicitar Orçamento', href: '#contato' },
       { label: 'Falar no WhatsApp', href: 'https://wa.me/5511999999999' },
     ],
+    certifications: [
+      { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
+      { code: 'INCRA 572', label: 'Georreferenciamento Rural' },
+      { code: 'ISO 9001', label: 'Gestão da Qualidade' },
+      { code: 'CREA/CAU', label: 'Habilitação Profissional' },
+    ],
   },
 
-  services: [
+  services: {
+    headline: 'Soluções Completas para seu Projeto',
+    description: 'Do levantamento ao projeto final, oferecemos serviços integrados de topografia e engenharia com tecnologia de ponta.',
+    items: [
     {
       icon: 'Compass',
       code: 'SRV-01',
@@ -144,7 +161,8 @@ const config = SiteConfigSchema.parse({
         'Elaboração de cadastro técnico rural para fins de tributação, crédito rural e programas governamentais, com levantamento e mapeamento da propriedade.',
       specs: ['CAR/SNCR', 'Georreferenciamento', 'Compatível INCRA'],
     },
-  ],
+    ],
+  },
 
   equipment: [
     {
@@ -225,6 +243,7 @@ const config = SiteConfigSchema.parse({
   ],
 
   about: {
+    headline: 'Engenharia de precisão com foco no seu projeto',
     engineer: 'Eng. Rafael Moreira Costa',
     creNumber: 'CREA-SP 123.456/D',
     foundedYear: '2009',
@@ -389,50 +408,60 @@ const config = SiteConfigSchema.parse({
     ],
   },
 
-  faq: [
-    {
-      id: 'q1',
-      question: 'Qual é o prazo médio para realização de um levantamento topográfico?',
-      answer:
-        'O prazo varia conforme a área e complexidade do projeto. Levantamentos de até 5 ha são concluídos em 2 a 3 dias úteis. Áreas maiores podem demandar de 5 a 15 dias úteis.',
-    },
-    {
-      id: 'q2',
-      question: 'Quais documentos são entregues ao final do serviço?',
-      answer:
-        'A entrega padrão inclui: arquivos técnicos em DWG/DXF e PDF, memorial descritivo georreferenciado, relatório técnico, ART do engenheiro responsável, e lista de coordenadas.',
-    },
-    {
-      id: 'q3',
-      question: 'A GeoTech atende a área em que preciso de serviços?',
-      answer:
-        'Atendemos os estados do Sudeste (SP, RJ, MG, ES), Centro-Oeste (GO, MT, MS, DF) e Sul (PR, SC, RS). Para outras regiões, avaliamos caso a caso.',
-    },
-    {
-      id: 'q4',
-      question: 'O que é georreferenciamento e quando é obrigatório?',
-      answer:
-        'Georreferenciamento é o processo de determinar as coordenadas de um imóvel rural com precisão geodésica. É obrigatório para desmembramento, parcelamento, remembramento e transferência de domínio.',
-    },
-    {
-      id: 'q5',
-      question: 'Qual a diferença entre levantamento planimétrico e planialtimétrico?',
-      answer:
-        'O planimétrico registra apenas a posição horizontal. O planialtimétrico inclui cotas de altitude, curvas de nível e modelo digital do terreno.',
-    },
-    {
-      id: 'q6',
-      question: 'Como funciona o aerolevantamento com drone?',
-      answer:
-        'Utilizamos VANTs com câmeras métricas que capturam centenas de imagens. Com processamento fotogramétrico, geramos ortofotos de alta resolução, modelos digitais e nuvens de pontos 3D.',
-    },
-    {
-      id: 'q7',
-      question: 'É necessário estar presente durante o levantamento em campo?',
-      answer:
-        'Não é obrigatório, mas recomendamos que o proprietário ou representante esteja disponível para identificar marcos de divisa e sanar dúvidas sobre os limites do imóvel.',
-    },
-  ],
+  faq: {
+    headline: 'Perguntas Frequentes',
+    certifications: [
+      'NBR 13.133',
+      'ABNT NBR 13.133',
+      'INCRA',
+      'ISO 9001',
+      'CREA/CAU',
+    ],
+    items: [
+      {
+        id: 'q1',
+        question: 'Qual é o prazo médio para realização de um levantamento topográfico?',
+        answer:
+          'O prazo varia conforme a área e complexidade do projeto. Levantamentos de até 5 ha são concluídos em 2 a 3 dias úteis. Áreas maiores podem demandar de 5 a 15 dias úteis.',
+      },
+      {
+        id: 'q2',
+        question: 'Quais documentos são entregues ao final do serviço?',
+        answer:
+          'A entrega padrão inclui: arquivos técnicos em DWG/DXF e PDF, memorial descritivo georreferenciado, relatório técnico, ART do engenheiro responsável, e lista de coordenadas.',
+      },
+      {
+        id: 'q3',
+        question: 'A GeoTech atende a área em que preciso de serviços?',
+        answer:
+          'Atendemos os estados do Sudeste (SP, RJ, MG, ES), Centro-Oeste (GO, MT, MS, DF) e Sul (PR, SC, RS). Para outras regiões, avaliamos caso a caso.',
+      },
+      {
+        id: 'q4',
+        question: 'O que é georreferenciamento e quando é obrigatório?',
+        answer:
+          'Georreferenciamento é o processo de determinar as coordenadas de um imóvel rural com precisão geodésica. É obrigatório para desmembramento, parcelamento, remembramento e transferência de domínio.',
+      },
+      {
+        id: 'q5',
+        question: 'Qual a diferença entre levantamento planimétrico e planialtimétrico?',
+        answer:
+          'O planimétrico registra apenas a posição horizontal. O planialtimétrico inclui cotas de altitude, curvas de nível e modelo digital do terreno.',
+      },
+      {
+        id: 'q6',
+        question: 'Como funciona o aerolevantamento com drone?',
+        answer:
+          'Utilizamos VANTs com câmeras métricas que capturam centenas de imagens. Com processamento fotogramétrico, geramos ortofotos de alta resolução, modelos digitais e nuvens de pontos 3D.',
+      },
+      {
+        id: 'q7',
+        question: 'É necessário estar presente durante o levantamento em campo?',
+        answer:
+          'Não é obrigatório, mas recomendamos que o proprietário ou representante esteja disponível para identificar marcos de divisa e sanar dúvidas sobre os limites do imóvel.',
+      },
+    ],
+  },
 
   process: [
     {
@@ -579,6 +608,17 @@ const config = SiteConfigSchema.parse({
     { label: 'Depoimentos', href: '#depoimentos' },
     { label: 'Contato', href: '#contato' },
   ],
+
+  footer: {
+    description: 'Soluções completas em topografia e engenharia. Tecnologia de precisão para projetos de qualquer escala.',
+    certifications: [
+      { code: 'CREA/SP 123.456/D', label: 'Eng. Responsável' },
+      { code: 'INCRA Habilitado', label: 'Georreferenciamento' },
+      { code: 'ISO 9001:2015', label: 'Gestão da Qualidade' },
+      { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
+      { code: 'ANAC SARP', label: 'Aerolevantamento' },
+    ],
+  },
 
   footerLinks: [
     { label: 'Serviços', href: '#servicos' },

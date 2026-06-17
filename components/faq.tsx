@@ -12,7 +12,7 @@ import config from '@/site.config'
 const VP = { once: true, amount: 0.05 } as const
 
 export function FAQ() {
-  const faqs = config.faq
+  const faqs = config.faq.items
 
   return (
     <section id="faq" className="relative py-24 lg:py-32 bg-muted/50">
@@ -39,7 +39,7 @@ export function FAQ() {
             transition={{ duration: 0.4, delay: 0.08 }}
             className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-xl text-balance"
           >
-            Perguntas frequentes sobre topografia
+            {config.faq.headline}
           </motion.h2>
         </div>
 
@@ -108,16 +108,11 @@ export function FAQ() {
               <div className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground/55 uppercase">
                 Normas e certificações
               </div>
-              {[
-                'ABNT NBR 13.133 — Levantamento Topográfico',
-                'INCRA 572 — Georreferenciamento',
-                'IBGE NT 05 — Coordenadas GPS',
-                'SIRGAS2000 — Datum Geodésico',
-              ].map((norm) => (
-                <div key={norm} className="flex items-start gap-2">
+              {config.faq.certifications.map((cert) => (
+                <div key={cert} className="flex items-start gap-2">
                   <div className="size-1 rounded-full bg-primary/50 mt-1.5 flex-shrink-0" />
                   <span className="font-mono text-[10px] text-muted-foreground/65 leading-relaxed">
-                    {norm}
+                    {cert}
                   </span>
                 </div>
               ))}

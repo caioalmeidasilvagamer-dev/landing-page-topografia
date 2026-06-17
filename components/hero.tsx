@@ -219,12 +219,7 @@ export function Hero() {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              {[
-                { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
-                { code: 'INCRA 572', label: 'Georreferenciamento Rural' },
-                { code: 'ISO 9001', label: 'Gestão da Qualidade' },
-                { code: 'CREA/CAU', label: 'Habilitação Profissional' },
-              ].map((cert) => (
+              {h.certifications.map((cert) => (
                 <div
                   key={cert.code}
                   className="petroleum-accent pl-3 py-2"

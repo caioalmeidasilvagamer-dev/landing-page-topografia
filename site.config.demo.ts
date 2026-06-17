@@ -49,6 +49,14 @@ const config = SiteConfigSchema.parse({
       weekdays: '07h30 às 17h30',
       saturday: '08h às 12h',
     },
+    coverageRegions: [
+      'Belo Horizonte (MG)',
+      'Contagem (MG)',
+      'Uberlândia (MG)',
+      'Juiz de Fora (MG)',
+      'Interior de MG',
+      'São Paulo (SP)',
+    ],
   },
 
   social: {
@@ -92,9 +100,18 @@ const config = SiteConfigSchema.parse({
       { label: 'Solicitar Orçamento', href: '#contato' },
       { label: 'Falar no WhatsApp', href: 'https://wa.me/5531988887777' },
     ],
+    certifications: [
+      { code: 'INCRA 572', label: 'Georreferenciamento Rural' },
+      { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
+      { code: 'CREA/MG', label: 'Habilitação Profissional' },
+      { code: 'ISO 9001', label: 'Gestão da Qualidade' },
+    ],
   },
 
-  services: [
+  services: {
+    headline: 'Georreferenciamento & Soluções Geoespaciais',
+    description: 'Do levantamento em campo à certificação final, oferecemos serviços integrados de topografia e consultoria geoespacial com tecnologia de ponta.',
+    items: [
     {
       icon: 'Satellite',
       code: 'CP-01',
@@ -143,7 +160,8 @@ const config = SiteConfigSchema.parse({
         'Análise de viabilidade, estudos de solo e planejamento territorial com dados geoespaciais de alta precisão.',
       specs: ['SIG/GIS', 'Análise de viabilidade', 'Planejamento territorial'],
     },
-  ],
+    ],
+  },
 
   equipment: [
     {
@@ -224,6 +242,7 @@ const config = SiteConfigSchema.parse({
   ],
 
   about: {
+    headline: 'Precisão geodésica com foco no seu projeto',
     engineer: 'Eng. Marcos Vinícius Almeida',
     creNumber: 'CREA-MG 789.012/D',
     foundedYear: '2004',
@@ -388,44 +407,54 @@ const config = SiteConfigSchema.parse({
     ],
   },
 
-  faq: [
-    {
-      id: 'cp-q1',
-      question: 'Qual o prazo para georreferenciamento de imóvel rural?',
-      answer:
-        'O prazo varia conforme a área e complexidade. Imóveis de até 500 ha são concluídos em 10 a 15 dias úteis. Áreas maiores podem demandar de 15 a 30 dias úteis.',
-    },
-    {
-      id: 'cp-q2',
-      question: 'Quais documentos são necessários para o georreferenciamento?',
-      answer:
-        'Carta de AR, certidão de matrícula atualizada, documento de identidade e CPF do proprietário, comprovante de residência e planta de localização do imóvel.',
-    },
-    {
-      id: 'cp-q3',
-      question: 'A CartoPrime atende fora de Minas Gerais?',
-      answer:
-        'Sim! Atendemos todos os estados brasileiros. Para projetos fora de MG, avaliamos a viabilidade e custos de deslocamento.',
-    },
-    {
-      id: 'cp-q4',
-      question: 'O que é SIGEF e como funciona?',
-      answer:
-        'SIGEF é o Sistema de Gestão Fundiária do INCRA. É o sistema onde o georreferenciamento é registrado e certificado. Nós executamos todo o processo, desde o levantamento em campo até o registro no SIGEF.',
-    },
-    {
-      id: 'cp-q5',
-      question: 'Qual a diferença entre georreferenciamento e levantamento topográfico?',
-      answer:
-        'O georreferenciamento determina as coordenadas geodésicas de um imóvel rural. O levantamento topográfico mapeia o terreno em detalhes (curvas de nível, cotas, volumes).',
-    },
-    {
-      id: 'cp-q6',
-      question: 'Vocês trabalham com mapeamento por drone?',
-      answer:
-        'Sim! Utilizamos drones de mapeamento de alta resolução para gerar ortofotos, modelos digitais e nuvens de pontos 3D. Ideal para grandes áreas e projetos de engenharia.',
-    },
-  ],
+  faq: {
+    headline: 'Perguntas Frequentes',
+    certifications: [
+      'INCRA 572',
+      'NBR 13.133',
+      'CREA/MG',
+      'ISO 9001',
+      'SIGEF',
+    ],
+    items: [
+      {
+        id: 'cp-q1',
+        question: 'Qual o prazo para georreferenciamento de imóvel rural?',
+        answer:
+          'O prazo varia conforme a área e complexidade. Imóveis de até 500 ha são concluídos em 10 a 15 dias úteis. Áreas maiores podem demandar de 15 a 30 dias úteis.',
+      },
+      {
+        id: 'cp-q2',
+        question: 'Quais documentos são necessários para o georreferenciamento?',
+        answer:
+          'Carta de AR, certidão de matrícula atualizada, documento de identidade e CPF do proprietário, comprovante de residência e planta de localização do imóvel.',
+      },
+      {
+        id: 'cp-q3',
+        question: 'A CartoPrime atende fora de Minas Gerais?',
+        answer:
+          'Sim! Atendemos todos os estados brasileiros. Para projetos fora de MG, avaliamos a viabilidade e custos de deslocamento.',
+      },
+      {
+        id: 'cp-q4',
+        question: 'O que é SIGEF e como funciona?',
+        answer:
+          'SIGEF é o Sistema de Gestão Fundiária do INCRA. É o sistema onde o georreferenciamento é registrado e certificado. Nós executamos todo o processo, desde o levantamento em campo até o registro no SIGEF.',
+      },
+      {
+        id: 'cp-q5',
+        question: 'Qual a diferença entre georreferenciamento e levantamento topográfico?',
+        answer:
+          'O georreferenciamento determina as coordenadas geodésicas de um imóvel rural. O levantamento topográfico mapeia o terreno em detalhes (curvas de nível, cotas, volumes).',
+      },
+      {
+        id: 'cp-q6',
+        question: 'Vocês trabalham com mapeamento por drone?',
+        answer:
+          'Sim! Utilizamos drones de mapeamento de alta resolução para gerar ortofotos, modelos digitais e nuvens de pontos 3D. Ideal para grandes áreas e projetos de engenharia.',
+      },
+    ],
+  },
 
   process: [
     {
@@ -572,6 +601,17 @@ const config = SiteConfigSchema.parse({
     { label: 'Depoimentos', href: '#depoimentos' },
     { label: 'Contato', href: '#contato' },
   ],
+
+  footer: {
+    description: 'Georreferenciamento certificado pelo INCRA e soluções geoespaciais com precisão geodésica.',
+    certifications: [
+      { code: 'CREA-MG 789.012/D', label: 'Eng. Responsável' },
+      { code: 'INCRA Habilitado', label: 'Georreferenciamento' },
+      { code: 'ISO 9001:2015', label: 'Gestão da Qualidade' },
+      { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
+      { code: 'ANAC SARP', label: 'Mapeamento por Drone' },
+    ],
+  },
 
   footerLinks: [
     { label: 'Serviços', href: '#servicos' },
