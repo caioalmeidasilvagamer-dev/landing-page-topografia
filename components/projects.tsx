@@ -110,12 +110,12 @@ export function Projects() {
               className="group relative bg-white border border-border overflow-hidden hover:border-primary/35 transition-all duration-200 cursor-pointer"
               style={{ borderRadius: '8px' }}
             >
-              <div className="relative h-52 overflow-hidden" style={{ borderBottom: '1px solid #D0DAEA' }}>
+              <div className="relative aspect-square overflow-hidden" style={{ borderBottom: '1px solid #D0DAEA' }}>
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-all duration-300" />
