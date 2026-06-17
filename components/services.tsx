@@ -1,80 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  Compass,
-  Satellite,
-  Building2,
-  FileCheck,
-  Plane,
-  Map,
-  ArrowUpRight,
-  type LucideIcon,
-} from 'lucide-react'
-
-interface Service {
-  icon: LucideIcon
-  code: string
-  title: string
-  description: string
-  specs: string[]
-}
-
-const services: Service[] = [
-  {
-    icon: Compass,
-    code: 'SRV-01',
-    title: 'Levantamento Topográfico',
-    description:
-      'Levantamentos planialtimétricos e cadastrais com estações totais e equipamentos GNSS de alta precisão, para projetos de engenharia civil, ambiental e rural.',
-    specs: ['Precisão ±5mm', 'Entrega em DWG/DXF', 'Relatório NBR 13.133'],
-  },
-  {
-    icon: Satellite,
-    code: 'SRV-02',
-    title: 'Georreferenciamento Rural',
-    description:
-      'Georreferenciamento de imóveis rurais conforme padrão INCRA, com receptores GNSS geodésicos de dupla frequência e processamento em base diferencial.',
-    specs: ['Padrão INCRA 572', 'SIGEF/SNCR', 'Certificado pelo INCRA'],
-  },
-  {
-    icon: Building2,
-    code: 'SRV-03',
-    title: 'Locação de Obras',
-    description:
-      'Implantação de projetos em campo com rigor milimétrico, garantindo que fundações, estruturas e infraestruturas sejam executadas conforme o projeto.',
-    specs: ['Locação estrutural', 'Nivelamento de precisão', 'Acompanhamento de obra'],
-  },
-  {
-    icon: FileCheck,
-    code: 'SRV-04',
-    title: 'Regularização Fundiária',
-    description:
-      'Assessoria técnica completa para regularização de imóveis urbanos e rurais, desde o levantamento até a aprovação nos órgãos competentes.',
-    specs: ['REURB urbano', 'Regularização rural', 'Memorial descritivo'],
-  },
-  {
-    icon: Plane,
-    code: 'SRV-05',
-    title: 'Aerolevantamento com Drone',
-    description:
-      'Levantamentos aerofotogramétricos com VANTs homologados pela ANAC, gerando ortofotos, modelos digitais de superfície e nuvens de pontos 3D.',
-    specs: ['Ortofoto GSD 3cm', 'Nuvem de pontos 3D', 'Modelo Digital Terreno'],
-  },
-  {
-    icon: Map,
-    code: 'SRV-06',
-    title: 'Cadastro Técnico',
-    description:
-      'Cadastro técnico multifinalitário de imóveis e infraestrutura, com georreferenciamento, banco de dados espacial e integração com sistemas GIS.',
-    specs: ['SIG/GIS integrado', 'Banco de dados espacial', 'Relatórios personalizados'],
-  },
-]
+import { ArrowUpRight } from 'lucide-react'
+import config from '@/site.config'
+import { getIcon } from '@/lib/icons'
 
 const VP = { once: true, amount: 0.05 } as const
 
-function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const Icon = service.icon
+function ServiceCard({ service, index }: { service: typeof config.services[number]; index: number }) {
+  const Icon = getIcon(service.icon)
 
   return (
     <motion.div
@@ -173,7 +107,7 @@ export function Services() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
+          {config.services.map((service, index) => (
             <ServiceCard key={service.code} service={service} index={index} />
           ))}
         </div>

@@ -2,8 +2,10 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, MessageCircle, ChevronDown, Target, Layers, FileText, Home } from 'lucide-react'
+import { ArrowRight, MessageCircle, ChevronDown } from 'lucide-react'
 import { TopoBackground } from './topo-background'
+import config from '@/site.config'
+import { getIcon } from '@/lib/icons'
 
 interface CountUpProps {
   end: number
@@ -37,23 +39,21 @@ function CountUp({ end, suffix = '', duration = 2 }: CountUpProps) {
   )
 }
 
-const services = [
-  { icon: Target, label: 'Levantamentos Topográficos' },
-  { icon: Layers, label: 'Georreferenciamento' },
-  { icon: Home, label: 'Locação de Obras' },
-  { icon: FileText, label: 'Regularização Fundiária' },
-]
-
-const stats = [
-  { value: 850, suffix: '+', label: 'Projetos Realizados' },
-  { value: 15, suffix: ' anos', label: 'De Experiência' },
-  { value: 620, suffix: '+', label: 'Clientes Atendidos' },
-]
-
 export function Hero() {
+  const h = config.hero
+
   const scrollToContact = () => {
     const el = document.querySelector('#contato')
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const handleCta = (href: string) => {
+    if (href.startsWith('#')) {
+      const el = document.querySelector(href)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      window.open(href, '_blank', 'noopener,noreferrer')
+    }
   }
 
   return (
@@ -68,15 +68,11 @@ export function Hero() {
         }}
       />
 
-      {/* Divisor vertical técnico */}
       <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border/20 hidden lg:block" />
 
-      {/* Conteúdo principal */}
       <div className="relative z-10 flex-1 flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Coluna de texto */}
           <div className="flex flex-col gap-8">
-            {/* Badge técnico */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -86,91 +82,89 @@ export function Hero() {
               <div className="flex items-center gap-2 px-3 py-1.5 border border-primary/30 rounded-[6px] bg-primary/5">
                 <div className="size-1.5 rounded-full bg-primary animate-pulse" />
                 <span className="font-mono text-[10px] tracking-[0.2em] text-primary uppercase">
-                  Precisão GNSS Certificada
+                  {h.badge}
                 </span>
               </div>
             </motion.div>
 
-            {/* Headline */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <h1 className="font-heading font-semibold text-4xl sm:text-5xl lg:text-6xl text-foreground leading-[1.1] tracking-tight text-balance">
-                Precisão em{' '}
-                <span className="text-primary">Topografia</span>
-                <br />
-                para Seu Projeto
+                {h.headline}
               </h1>
             </motion.div>
 
-            {/* Subheadline */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="font-sans text-base text-muted-foreground leading-relaxed max-w-[480px]"
             >
-              Soluções completas em levantamento topográfico, georreferenciamento,
-              locação de obras e regularização fundiária — com equipamentos GNSS de
-              alta precisão e conformidade com normas técnicas.
+              {h.subheadline}
             </motion.p>
 
-            {/* Tags de serviços */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-wrap gap-2"
             >
-              {services.map(({ icon: Icon, label }) => (
-                <div
-                  key={label}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-card border border-border/60 rounded-[6px] text-sm text-muted-foreground"
-                >
-                  <Icon className="size-3.5 text-primary flex-shrink-0" />
-                  <span className="font-sans text-xs">{label}</span>
-                </div>
-              ))}
+              {h.tags.map((tag) => {
+                const Icon = getIcon(tag.icon)
+                return (
+                  <div
+                    key={tag.label}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-card border border-border/60 rounded-[6px] text-sm text-muted-foreground"
+                  >
+                    <Icon className="size-3.5 text-primary flex-shrink-0" />
+                    <span className="font-sans text-xs">{tag.label}</span>
+                  </div>
+                )
+              })}
             </motion.div>
 
-            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-3"
             >
-              <button
-                onClick={scrollToContact}
-                className="group flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-sans font-medium text-sm rounded-[6px] hover:bg-primary/90 transition-all duration-200"
-              >
-                Solicitar Orçamento
-                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <a
-                href="https://wa.me/5511999999999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-6 py-3 border border-border/60 text-foreground font-sans font-medium text-sm rounded-[6px] hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
-              >
-                <MessageCircle className="size-4 text-primary" />
-                Falar no WhatsApp
-              </a>
+              {h.ctas.map((cta, i) => (
+                i === 0 ? (
+                  <button
+                    key={cta.label}
+                    onClick={() => handleCta(cta.href)}
+                    className="group flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-sans font-medium text-sm rounded-[6px] hover:bg-primary/90 transition-all duration-200"
+                  >
+                    {cta.label}
+                    <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                ) : (
+                  <a
+                    key={cta.label}
+                    href={cta.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-6 py-3 border border-border/60 text-foreground font-sans font-medium text-sm rounded-[6px] hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+                  >
+                    <MessageCircle className="size-4 text-primary" />
+                    {cta.label}
+                  </a>
+                )
+              ))}
             </motion.div>
           </div>
 
-          {/* Coluna de estatísticas + visual técnico */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
             className="flex flex-col gap-6 items-center lg:items-stretch"
           >
-            {/* Painel técnico */}
             <div className="relative border border-border/40 rounded-[8px] bg-card/60 backdrop-blur-sm overflow-hidden">
-              {/* Header do painel */}
               <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/40 bg-muted/30">
                 <div className="flex items-center gap-2">
                   <div className="size-2 rounded-full bg-primary/60" />
@@ -183,21 +177,19 @@ export function Hero() {
                 </span>
               </div>
 
-              {/* Conteúdo do painel */}
               <div className="p-5 grid grid-cols-3 divide-x divide-border/30">
-                {stats.map(({ value, suffix, label }) => (
-                  <div key={label} className="px-4 first:pl-0 last:pr-0 flex flex-col gap-1">
+                {h.stats.map((stat) => (
+                  <div key={stat.label} className="px-4 first:pl-0 last:pr-0 flex flex-col gap-1">
                     <div className="font-heading font-semibold text-3xl lg:text-4xl text-foreground tabular-nums">
-                      <CountUp end={value} suffix={suffix} />
+                      <CountUp end={stat.value} suffix={stat.suffix} />
                     </div>
                     <div className="font-sans text-xs text-muted-foreground leading-tight">
-                      {label}
+                      {stat.label}
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Barra de progresso técnica */}
               <div className="px-5 pb-4 pt-2 border-t border-border/30">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="font-mono text-[10px] text-muted-foreground/70">Precisão posicional</span>
@@ -226,7 +218,6 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Certificações */}
             <div className="grid grid-cols-2 gap-3">
               {[
                 { code: 'NBR 13.133', label: 'Levantamento Topográfico' },
@@ -246,7 +237,6 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -265,7 +255,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Transição blur no fim da hero */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
         style={{

@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, MessageCircle, Phone, Mail, CheckCircle2, Loader2 } from 'lucide-react'
 import { TopoBackground } from './topo-background'
+import config from '@/site.config'
 
 interface FormData {
   nome: string
@@ -29,12 +30,7 @@ function formatPhone(value: string): string {
 }
 
 const servicos = [
-  'Levantamento Topográfico',
-  'Georreferenciamento Rural',
-  'Locação de Obras',
-  'Regularização Fundiária',
-  'Aerolevantamento com Drone',
-  'Cadastro Técnico',
+  ...config.services.map((s) => s.title),
   'Outro',
 ]
 
@@ -115,7 +111,7 @@ export function ContactForm() {
                   </span>
                 </div>
                 <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-balance text-background-alt">
-                  Inicie seu projeto com a GeoTech
+                  Inicie seu projeto com a {config.brand.name}
                 </h2>
                 <p className="font-sans text-sm leading-relaxed max-w-md text-topo-accent/80">
                   Do levantamento inicial à entrega da documentação, nossa equipe garante
@@ -123,9 +119,9 @@ export function ContactForm() {
                 </p>
                 <div className="flex flex-col gap-3">
                   {[
-                    { icon: Phone, text: '+55 (11) 99999-9999' },
-                    { icon: Mail, text: 'contato@geotech.com.br' },
-                    { icon: MessageCircle, text: 'WhatsApp disponível 8h–18h' },
+                    { icon: Phone, text: config.contact.phone },
+                    { icon: Mail, text: config.contact.email },
+                    { icon: MessageCircle, text: `WhatsApp disponível ${config.contact.hours.weekdays}` },
                   ].map(({ icon: Icon, text }) => (
                     <div key={text} className="flex items-center gap-3">
                       <div className="size-8 flex items-center justify-center border border-topo-line/45 rounded-[6px] bg-primary/25">
@@ -150,7 +146,7 @@ export function ContactForm() {
                   <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href="https://wa.me/5511999999999"
+                  href={`https://wa.me/${config.contact.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-6 py-4 border border-topo-accent/30 text-topo-accent/90 font-sans font-medium text-base rounded-[6px] hover:bg-topo-line/20 transition-all"
@@ -341,7 +337,7 @@ export function ContactForm() {
                         )}
                       </button>
                       <a
-                        href="https://wa.me/5511999999999"
+                        href={`https://wa.me/${config.contact.whatsapp}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2 px-6 py-3 border border-border text-foreground font-sans text-sm hover:border-primary/45 hover:bg-primary/5 transition-all rounded-[6px]"
@@ -368,8 +364,8 @@ export function ContactForm() {
                     Atendimento
                   </div>
                   {[
-                    { label: 'Seg – Sex', value: '08h às 18h' },
-                    { label: 'Sábado', value: '08h às 12h' },
+                    { label: 'Seg – Sex', value: config.contact.hours.weekdays },
+                    { label: 'Sábado', value: config.contact.hours.saturday },
                     { label: 'Resposta', value: 'Até 24h úteis' },
                     { label: 'Proposta', value: 'Sem compromisso' },
                   ].map(({ label, value }) => (

@@ -1,26 +1,15 @@
 'use client'
 
 import { Phone, Mail } from 'lucide-react'
-
-const services = [
-  'Levantamento Topográfico',
-  'Georreferenciamento Rural',
-  'Locação de Obras',
-  'Regularização Fundiária',
-  'Aerolevantamento com Drone',
-  'Cadastro Técnico',
-]
-
-const links = [
-  { label: 'Serviços', href: '#servicos' },
-  { label: 'Diferenciais', href: '#diferenciais' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Depoimentos', href: '#depoimentos' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Contato', href: '#contato' },
-]
+import config from '@/site.config'
 
 export function Footer() {
+  const brand = config.brand
+  const contact = config.contact
+  const social = config.social
+  const links = config.footerLinks
+  const services = config.footerServices
+
   return (
     <footer className="bg-foreground" style={{ borderTop: '1px solid rgba(49,93,138,0.35)' }}>
       <div className="h-[3px]" style={{ background: 'linear-gradient(90deg, var(--primary) 0%, var(--topo-line) 50%, var(--primary) 100%)' }} />
@@ -40,10 +29,10 @@ export function Footer() {
               </svg>
               <div className="flex flex-col leading-none">
                 <span className="font-heading font-semibold text-[15px] tracking-tight text-background-alt">
-                  GeoTech
+                  {brand.name.split(' ')[0]}
                 </span>
                 <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-topo-accent opacity-50">
-                  Topografia
+                  {brand.slogan.split('&')[1]?.trim() || brand.slogan}
                 </span>
               </div>
             </div>
@@ -55,48 +44,52 @@ export function Footer() {
 
             <div className="flex flex-col gap-2">
               <a
-                href="tel:+5511999999999"
+                href={`tel:${contact.phone.replace(/\D/g, '').replace(/^0/, '+55')}`}
                 className="flex items-center gap-2 text-topo-accent/65 hover:text-background-alt transition-colors"
               >
                 <Phone className="size-3.5 flex-shrink-0 text-topo-accent" />
-                <span className="font-sans text-xs">(11) 99999-9999</span>
+                <span className="font-sans text-xs">{contact.phone}</span>
               </a>
               <a
-                href="mailto:contato@geotech.com.br"
+                href={`mailto:${contact.email}`}
                 className="flex items-center gap-2 text-topo-accent/65 hover:text-background-alt transition-colors"
               >
                 <Mail className="size-3.5 flex-shrink-0 text-topo-accent" />
-                <span className="font-sans text-xs">contato@geotech.com.br</span>
+                <span className="font-sans text-xs">{contact.email}</span>
               </a>
             </div>
 
             <div className="flex items-center gap-3">
-              <a
-                href="https://instagram.com/geotech"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="size-8 flex items-center justify-center rounded-[6px] border border-topo-line/50 text-topo-accent/60 hover:text-background-alt hover:border-topo-accent/50 transition-all"
-                aria-label="Instagram"
-              >
-                <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                </svg>
-              </a>
-              <a
-                href="https://linkedin.com/company/geotech"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="size-8 flex items-center justify-center rounded-[6px] border border-topo-line/50 text-topo-accent/60 hover:text-background-alt hover:border-topo-accent/50 transition-all"
-                aria-label="LinkedIn"
-              >
-                <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                  <rect x="2" y="9" width="4" height="12" />
-                  <circle cx="4" cy="4" r="2" />
-                </svg>
-              </a>
+              {social.instagram && (
+                <a
+                  href={social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="size-8 flex items-center justify-center rounded-[6px] border border-topo-line/50 text-topo-accent/60 hover:text-background-alt hover:border-topo-accent/50 transition-all"
+                  aria-label="Instagram"
+                >
+                  <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </a>
+              )}
+              {social.linkedin && (
+                <a
+                  href={social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="size-8 flex items-center justify-center rounded-[6px] border border-topo-line/50 text-topo-accent/60 hover:text-background-alt hover:border-topo-accent/50 transition-all"
+                  aria-label="LinkedIn"
+                >
+                  <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
 
@@ -160,7 +153,7 @@ export function Footer() {
 
         <div className="mt-14 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-topo-line/30">
           <div className="font-mono text-[10px] text-center sm:text-left text-topo-accent/35">
-            © {new Date().getFullYear()} GeoTech Topografia Ltda. · CNPJ 00.000.000/0001-00 · Todos os direitos reservados.
+            © {new Date().getFullYear()} {brand.name} Ltda. · {contact.address} · Todos os direitos reservados.
           </div>
           <div className="flex items-center gap-4">
             <a href="#" className="font-sans text-[11px] text-topo-accent/35 hover:text-topo-accent/70 transition-colors">
