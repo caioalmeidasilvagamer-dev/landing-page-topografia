@@ -30,7 +30,7 @@ function formatPhone(value: string): string {
 }
 
 const servicos = [
-  ...config.services.map((s) => s.title),
+  ...config.services.items.map((s) => s.title),
   'Outro',
 ]
 
