@@ -1,411 +1,201 @@
-'use client'
+"use client";
+import { useEffect, useRef } from "react";
 
-import { useMemo } from 'react'
+/* ─── PALETA HIPSOMÉTRICA ────────────────────────────────────────────── */
+const HYPS = [
+  { t: 0.00, color: "rgba(34,  85,  34,  OPACITY)" },  // verde-escuro (base)
+  { t: 0.20, color: "rgba(80,  140,  60,  OPACITY)" },  // verde-médio
+  { t: 0.40, color: "rgba(160, 190,  80,  OPACITY)" },  // verde-claro/amarelado
+  { t: 0.60, color: "rgba(210, 180,  80,  OPACITY)" },  // amarelo
+  { t: 0.75, color: "rgba(190, 120,  50,  OPACITY)" },  // laranja
+  { t: 0.90, color: "rgba(150,  80,  40,  OPACITY)" },  // marrom
+  { t: 1.00, color: "rgba(240, 230, 210,  OPACITY)" },  // quase branco (pico)
+];
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  Gerador de curva de nível — caminho orgânico fechado
- *  Inspirado em cartas topográficas do IBGE / ArcGIS / QGIS
- *
- *  cx, cy  — centro do morro/maciço
- *  r       — raio base (distância ao pico)
- *  seed    — "impressão digital" do relevo (mesmo seed = mesmo formato)
- *  sx, sy  — escala horizontal / vertical (permite criar cristas alongadas)
- *  steps   — resolução (≥72 para suavidade)
- * ═══════════════════════════════════════════════════════════════════════════ */
-function contourPoints(
-  cx: number,
-  cy: number,
-  r: number,
-  seed: number,
-  sx = 1.0,
-  sy = 1.0,
-  steps = 90,
-): [number, number][] {
-  const pts: [number, number][] = []
-  for (let i = 0; i <= steps; i++) {
-    const a = (i / steps) * Math.PI * 2
-    /* Perturbação multi-harmônica → curvas naturais, não elipses */
-    const dr =
-      r *
-      (1 +
-        0.22 * Math.sin(seed * 2.1  + a * 2) +
-        0.15 * Math.cos(seed * 1.7  + a * 3) +
-        0.10 * Math.sin(seed * 3.3  + a * 5) +
-        0.07 * Math.cos(seed * 0.9  + a * 7) +
-        0.04 * Math.sin(seed * 4.7  + a * 4) +
-        0.03 * Math.cos(seed * 2.3  + a * 9) +
-        0.02 * Math.sin(seed * 5.9  + a * 6))
-    const x = cx + dr * sx * Math.cos(a)
-    const y = cy + dr * sy * Math.sin(a)
-    pts.push([x, y])
+const FILL_OPACITY  = 0.16;   // opacidade dos anéis preenchidos
+const STROKE_OPACITY_MAX = 0.30; // linha mais interna (pico)
+const STROKE_OPACITY_MIN = 0.04; // linha mais externa (base)
+
+function lerpColor(t: number, opacity: number): string {
+  // encontra o intervalo correto na paleta
+  let lo = HYPS[0], hi = HYPS[HYPS.length - 1];
+  for (let i = 0; i < HYPS.length - 1; i++) {
+    if (t >= HYPS[i].t && t <= HYPS[i + 1].t) { lo = HYPS[i]; hi = HYPS[i + 1]; break; }
   }
-  return pts
+  const f = lo.t === hi.t ? 0 : (t - lo.t) / (hi.t - lo.t);
+  // substitui OPACITY pelo valor real
+  const c1 = lo.color.replace("OPACITY", String(opacity));
+  const c2 = hi.color.replace("OPACITY", String(opacity));
+  // parse rgba
+  const p = (s: string) => s.match(/[\d.]+/g)!.map(Number);
+  const [r1,g1,b1] = p(c1); const [r2,g2,b2] = p(c2);
+  const r = Math.round(r1 + (r2-r1)*f);
+  const g = Math.round(g1 + (g2-g1)*f);
+  const b = Math.round(b1 + (b2-b1)*f);
+  return `rgba(${r},${g},${b},${opacity})`;
 }
 
-function toPath(pts: [number, number][]): string {
-  return pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)},${y.toFixed(1)}`).join(' ') + ' Z'
-}
+/* ─── GEOMETRIA DOS MORROS ───────────────────────────────────────────── */
+// cx, cy em %, radii em px (viewport ~1440px de referência)
+// Apenas 4 morros, raios contidos para não "vazar" no vazio entre eles
+const FEATS = [
+  { cx: 18, cy: 30, rx: 1.0, ry: 0.75, rot: -25, radii: [30, 55, 85, 118, 152] },
+  { cx: 72, cy: 22, rx: 1.0, ry: 0.80, rot:  15, radii: [28, 52, 80, 112, 148, 186] },
+  { cx: 45, cy: 68, rx: 1.0, ry: 0.70, rot: -10, radii: [35, 64, 98, 135, 172] },
+  { cx: 85, cy: 72, rx: 1.0, ry: 0.85, rot:  30, radii: [22, 42, 65,  90, 118] },
+];
 
-/* ─── Paleta hipsométrica — degradê IBGE/relevo (baixada → pico) ─────────
- * Cada relevo usa as MESMAS 8 faixas de cor — só a área coberta por cada
- * uma muda conforme a altitude do morro. Isto reproduz o efeito de mapa
- * de camadas em cores (verde → amarelo → laranja → marrom → branco). */
-const HYPSO = [
-  '#E8EDD9', // 0 — planície / vale
-  '#D7E2BE', // 1
-  '#C3D69E', // 2
-  '#A9C97F', // 3
-  '#D9CD7E', // 4 — transição amarela
-  '#D9A95C', // 5 — encosta média
-  '#C4824A', // 6 — encosta alta
-  '#A66238', // 7 — quase-pico
-  '#F1ECE3', // 8 — pico (neve/rocha clara)
-]
-
-/* ─── Paleta de linhas — tons terrosos em baixíssima opacidade ──────────── */
-const S = {
-  regular : 'rgba(120,100,70,0.16)',     /* curva normal                  */
-  index   : 'rgba(120,100,70,0.30)',     /* curva-índice (a cada 5ª)      */
-  label   : 'rgba(90,75,50,0.45)',       /* rótulos de cota               */
-  river   : 'rgba(70,120,168,0.30)',     /* drenagem / rios               */
-  meta    : 'rgba(90,75,50,0.40)',       /* metadados cartográficos       */
-}
-
-/* opacidade global do preenchimento hipsométrico — sutil, não compete com o conteúdo */
-const FILL_OPACITY = 0.16
-
-/* ─── Definição dos relevos ──────────────────────────────────────────────── */
-interface Feat {
-  cx: number; cy: number
-  /** raios do pico (menor) para a base (maior) */
-  radii: number[]
+/* harmônicas para deformar a elipse em curva orgânica */
+function mkContour(
+  cx: number, cy: number,
+  rx: number, ry: number,
+  rot: number, r: number,
   seed: number
-  sx?: number; sy?: number
-  /** altitude do pico e intervalo por curva (negativo = desce) */
-  altTop: number; dAlt: number
+): string {
+  const pts = 72;
+  const RAD = Math.PI / 180;
+  const s = Math.sin(rot * RAD), c = Math.cos(rot * RAD);
+  const harm = [
+    { a: 0.18 + seed * 0.07, f: 2, ph: seed * 1.3 },
+    { a: 0.10 + seed * 0.04, f: 3, ph: seed * 2.1 },
+    { a: 0.06,               f: 5, ph: seed * 0.9 },
+  ];
+  const coords: [number, number][] = [];
+  for (let i = 0; i < pts; i++) {
+    const θ = (i / pts) * 2 * Math.PI;
+    let noise = 0;
+    harm.forEach(h => { noise += h.a * Math.sin(h.f * θ + h.ph); });
+    const rr = r * (1 + noise);
+    const lx = rr * rx * Math.cos(θ);
+    const ly = rr * ry * Math.sin(θ);
+    coords.push([cx + lx * c - ly * s, cy + lx * s + ly * c]);
+  }
+  return coords
+    .map((p, i) => `${i === 0 ? "M" : "L"}${p[0].toFixed(2)},${p[1].toFixed(2)}`)
+    .join(" ") + " Z";
 }
 
-/*
- *  Layout do terreno num viewport 1400×900:
- *
- *   NW morro     N colina      NE maciço (grande)
- *   (108, 88)    (512, 46)     (1086, 86)
- *
- *   W morro                                SE crista (alongada)
- *   (50, 458)        VALE CENTRAL          (1216, 572)
- *
- *   SW morro     Planalto sul  S colina
- *   (236, 710)   (672, 643)    (655, 870)
- *
- *  Rios fluem dos planaltos pelo vale central em direção S.
- */
-const FEATS: Feat[] = [
-  /* ① Grande Maciço NE */
-  {
-    cx: 1086, cy: 86,
-    radii: [26, 56, 92, 132, 174, 218, 264, 312],
-    seed: 1.73, sx: 1.28, sy: 0.80,
-    altTop: 1840, dAlt: -80,
-  },
-  /* ② Colina NW */
-  {
-    cx: 108, cy: 90,
-    radii: [18, 42, 72, 106, 144],
-    seed: 0.91, sx: 1.12, sy: 0.92,
-    altTop: 1180, dAlt: -58,
-  },
-  /* ③ Morro Norte-Central */
-  {
-    cx: 512, cy: 46,
-    radii: [20, 48, 82, 120, 162],
-    seed: 3.44, sx: 0.86, sy: 1.20,
-    altTop: 1360, dAlt: -66,
-  },
-  /* ④ Morro Oeste-Central */
-  {
-    cx: 50, cy: 458,
-    radii: [18, 44, 76, 112, 150],
-    seed: 2.17, sx: 0.80, sy: 1.25,
-    altTop: 960,  dAlt: -52,
-  },
-  /* ⑤ Planalto Centro-Sul  (espaçamento uniforme = cume plano) */
-  {
-    cx: 672, cy: 643,
-    radii: [40, 72, 106, 142, 180, 220],
-    seed: 2.84, sx: 1.58, sy: 0.70,
-    altTop: 1080, dAlt: -58,
-  },
-  /* ⑥ Crista Sudeste  (muito alongada N-S = crista montanhosa) */
-  {
-    cx: 1216, cy: 572,
-    radii: [16, 38, 64, 92, 122, 154],
-    seed: 4.23, sx: 0.46, sy: 1.85,
-    altTop: 1280, dAlt: -62,
-  },
-  /* ⑦ Morro Sudoeste */
-  {
-    cx: 236, cy: 710,
-    radii: [20, 46, 78, 114, 152],
-    seed: 1.32, sx: 1.06, sy: 0.90,
-    altTop: 860,  dAlt: -50,
-  },
-  /* ⑧ Colina Sul-Central */
-  {
-    cx: 655, cy: 870,
-    radii: [24, 52, 86, 124],
-    seed: 3.73, sx: 1.20, sy: 0.76,
-    altTop: 940,  dAlt: -54,
-  },
-]
-
-/* ─── Componente ─────────────────────────────────────────────────────────── */
+/* ─── COMPONENTE ─────────────────────────────────────────────────────── */
 export function TopoPageBackground() {
-  /* Pré-computa todos os paths uma única vez.
-   * Para cada relevo, geramos:
-   *  - "rings": polígonos preenchidos do MAIOR raio (base) para o MENOR (pico),
-   *    cada um pintado com uma cor da escala hipsométrica. Como são desenhados
-   *    nessa ordem, cada anel mais interno "cobre" parte do anel externo,
-   *    deixando visível apenas a faixa de altitude correspondente — exatamente
-   *    como um mapa de cores por elevação (IBGE / CPRM).
-   *  - "lines": as mesmas curvas, sem preenchimento, para o traço fino por cima. */
-  const relief = useMemo(
-    () =>
-      FEATS.map((f) => {
-        const sortedDesc = [...f.radii].sort((a, b) => b - a) // maior → menor (base → pico)
-        const rings = sortedDesc.map((r, i) => {
-          const colorIdx = Math.min(
-            HYPSO.length - 1,
-            Math.round((i / Math.max(1, sortedDesc.length - 1)) * (HYPSO.length - 1)),
-          )
-          return {
-            d: toPath(contourPoints(f.cx, f.cy, r, f.seed, f.sx ?? 1, f.sy ?? 1)),
-            fill: HYPSO[colorIdx],
-          }
-        })
-        const lines = f.radii.map((r, ri) => ({
-          d: toPath(contourPoints(f.cx, f.cy, r, f.seed, f.sx ?? 1, f.sy ?? 1)),
-          isIndex: ri === 0 || (ri + 1) % 5 === 0,
-        }))
-        return { rings, lines }
-      }),
-    [],
-  )
+  const ref = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    // nada dinâmico por enquanto — layout fixo gerado no render
+  }, []);
+
+  const W = 1440, H = 900; // viewBox de referência
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none overflow-hidden select-none"
-      style={{ zIndex: 0 }}
-      aria-hidden="true"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: "none",
+        overflow: "hidden",
+      }}
     >
       <svg
-        className="w-full h-full"
-        viewBox="0 0 1400 900"
+        ref={ref}
+        viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="xMidYMid slice"
+        style={{ width: "100%", height: "100%" }}
+        xmlns="http://www.w3.org/2000/svg"
       >
-        {/* ══ BASE — tom de planície sob todo o terreno ═══════════════════ */}
-        <rect x="0" y="0" width="1400" height="900" fill={HYPSO[0]} opacity={FILL_OPACITY} />
+        {/* ── ANÉIS HIPSOMÉTRICOS (do externo para o interno) ── */}
+        {FEATS.map((f, fi) => {
+          const cx = (f.cx / 100) * W;
+          const cy = (f.cy / 100) * H;
+          const seed = fi * 1.618;
+          const n = f.radii.length;
 
-        {/* ══ CAMADAS HIPSOMÉTRICAS (preenchimento por faixa de altitude) ══ */}
-        {relief.map((feat, fi) => (
-          <g key={`fill${fi}`} opacity={FILL_OPACITY}>
-            {feat.rings.map((ring, ri) => (
-              <path key={`f${fi}ring${ri}`} d={ring.d} fill={ring.fill} stroke="none" />
-            ))}
-          </g>
+          return (
+            <g key={fi}>
+              {/* Anéis preenchidos: externo → interno */}
+              {f.radii.map((r, ri) => {
+                const t = ri / (n - 1);           // 0 = base, 1 = pico
+                const fill = lerpColor(t, FILL_OPACITY);
+                const path = mkContour(cx, cy, f.rx, f.ry, f.rot, r, seed + ri * 0.3);
+                return <path key={ri} d={path} fill={fill} stroke="none" />;
+              })}
+
+              {/* Linhas de contorno por cima: opacity proporcional à altitude */}
+              {f.radii.map((r, ri) => {
+                const t = ri / (n - 1);
+                const strokeOpacity =
+                  STROKE_OPACITY_MIN + (STROKE_OPACITY_MAX - STROKE_OPACITY_MIN) * t;
+                const path = mkContour(cx, cy, f.rx, f.ry, f.rot, r, seed + ri * 0.3);
+                return (
+                  <path
+                    key={`l${ri}`}
+                    d={path}
+                    fill="none"
+                    stroke={`rgba(60,40,20,${strokeOpacity})`}
+                    strokeWidth={t > 0.8 ? 0.8 : 0.5}
+                  />
+                );
+              })}
+            </g>
+          );
+        })}
+
+        {/* ── COORDENADAS DISCRETAS NOS CANTOS ── */}
+        {[
+          { x: 12,  y: 14,  label: "23°08′S  44°15′W" },
+          { x: W-12, y: 14,  label: "23°08′S  43°52′W", anchor: "end" },
+          { x: 12,  y: H-8, label: "23°22′S  44°15′W" },
+          { x: W-12, y: H-8, label: "23°22′S  43°52′W", anchor: "end" },
+        ].map((c, i) => (
+          <text
+            key={i}
+            x={c.x} y={c.y}
+            textAnchor={(c as { anchor?: string }).anchor ?? "start"}
+            fontSize="8"
+            fill="rgba(60,80,60,0.25)"
+            fontFamily="monospace"
+          >
+            {c.label}
+          </text>
         ))}
 
-        {/* ══ CURVAS DE NÍVEL (traço fino por cima das camadas) ═══════════ */}
-        {relief.map((feat, fi) =>
-          feat.lines.map(({ d, isIndex }, ri) => (
-            <path
-              key={`f${fi}r${ri}`}
-              d={d}
-              fill="none"
-              stroke={isIndex ? S.index : S.regular}
-              strokeWidth={isIndex ? 0.9 : 0.5}
-              strokeLinejoin="round"
-            />
-          )),
-        )}
-
-        {/* ══ RÓTULOS DE COTA ALTIMÉTRICA ═════════════════════════════════ */}
-        <g
-          fill={S.label}
-          fontSize="7.5"
-          fontFamily="'IBM Plex Mono','Courier New',monospace"
-          letterSpacing="0.06em"
-        >
-          {/* Maciço NE — flanco leste */}
-          <text x="1194" y="176">— 1.280m</text>
-          <text x="1208" y="230">— 1.120m</text>
-          <text x="1226" y="290">— 960m</text>
-          {/* Planalto central */}
-          <text x="786"  y="636">— 830m</text>
-          <text x="804"  y="692">— 720m</text>
-          {/* Crista SE */}
-          <text x="1244" y="472">— 1.034m</text>
-          {/* Colina Norte */}
-          <text x="574"  y="100">— 1.096m</text>
-          {/* Colinas W e SW */}
-          <text x="134"  y="406">— 752m</text>
-          <text x="288"  y="658">— 710m</text>
+        {/* ── ESCALA GRÁFICA ── */}
+        <g transform={`translate(${W / 2 - 60}, ${H - 18})`}>
+          <line x1="0" y1="0" x2="120" y2="0" stroke="rgba(60,80,60,0.25)" strokeWidth="1" />
+          <line x1="0" y1="-4" x2="0" y2="4"  stroke="rgba(60,80,60,0.25)" strokeWidth="1" />
+          <line x1="60" y1="-3" x2="60" y2="3" stroke="rgba(60,80,60,0.25)" strokeWidth="0.8" />
+          <line x1="120" y1="-4" x2="120" y2="4" stroke="rgba(60,80,60,0.25)" strokeWidth="1" />
+          <text x="0"   y="-7" textAnchor="middle" fontSize="7" fill="rgba(60,80,60,0.30)" fontFamily="monospace">0</text>
+          <text x="60"  y="-7" textAnchor="middle" fontSize="7" fill="rgba(60,80,60,0.30)" fontFamily="monospace">1 km</text>
+          <text x="120" y="-7" textAnchor="middle" fontSize="7" fill="rgba(60,80,60,0.30)" fontFamily="monospace">2 km</text>
         </g>
 
-        {/* ══ MARCADORES DE PICO (VÉRTICE GEODÉSICO) ══════════════════════ */}
-        {/* Pico do Maciço NE */}
-        <g stroke={S.meta} fill="none" strokeWidth="0.7">
-          <circle cx="1086" cy="86" r="3.5" />
-          <circle cx="1086" cy="86" r="9" strokeDasharray="1.5 2.5" opacity="0.65" />
-          <line x1="1075" y1="86" x2="1097" y2="86" strokeWidth="0.55" />
-          <line x1="1086" y1="75" x2="1086" y2="97" strokeWidth="0.55" />
-        </g>
-        {/* Rótulos de pico */}
-        <g
-          fill={S.meta}
-          fontSize="7"
-          fontFamily="'IBM Plex Mono',monospace"
-          fontWeight="600"
-          letterSpacing="0.04em"
-        >
-          <text x="1093" y="81">▲ 1.840m</text>
-          <text x="518"  y="40">▲ 1.360m</text>
-          <text x="114"  y="84">▲ 1.180m</text>
-          <text x="242"  y="704">▲ 860m</text>
-          <text x="660"  y="864">▲ 940m</text>
-        </g>
-
-        {/* ══ RIOS E DRENAGEM ══════════════════════════════════════════════ */}
-        <g stroke={S.river} fill="none" strokeLinecap="round" strokeLinejoin="round">
-          {/* Rio principal — vale central, flui de N para S */}
-          <path
-            strokeWidth="1.8"
-            d="M 506,0
-               C 528,72  556,155  582,246
-               C 610,340  632,424  648,510
-               C 664,596  672,670  678,746
-               C 684,818  688,866  692,900"
-          />
-          {/* Afluente NE — drena maciço */}
-          <path
-            strokeWidth="1.1"
-            d="M 996,172
-               C 954,206  914,234  874,251
-               C 838,267  804,273  770,269
-               C 738,266  711,256  686,249"
-          />
-          {/* Afluente NW — drena colina noroeste */}
-          <path
-            strokeWidth="0.95"
-            d="M 166,194
-               C 224,246  284,282  340,308
-               C 394,332  448,344  502,348
-               C 536,350  566,349  590,347"
-          />
-          {/* Afluente W central */}
-          <path
-            strokeWidth="0.85"
-            d="M 106,516
-               C 176,506  243,494  306,486
-               C 366,478  426,474  482,474
-               C 528,474  564,476  594,481"
-          />
-          {/* Drenagem SE — crista para o vale */}
-          <path
-            strokeWidth="1.3"
-            d="M 1400,472
-               C 1346,496  1296,514  1250,527
-               C 1206,540  1162,548  1116,556
-               C 1072,563  1028,568  988,574
-               C 946,580  906,584  866,590
-               C 824,596  786,602  754,612"
-          />
-          {/* Micro-afluente do planalto sul */}
-          <path
-            strokeWidth="0.8"
-            d="M 802,776
-               C 780,756  762,738  748,720
-               C 734,702  722,684  714,666
-               C 706,648  702,630  698,614
-               C 695,602  693,592  691,583"
-          />
-        </g>
-
-        {/* ══ CRUZETAS DA GRADE CARTOGRÁFICA ══════════════════════════════ */}
-        <g stroke={S.meta} strokeWidth="0.55" opacity="0.55">
-          {[350, 700, 1050].flatMap((gx) =>
-            [225, 450, 675].map((gy) => (
-              <g key={`g${gx}-${gy}`}>
-                <line x1={gx - 7} y1={gy} x2={gx + 7} y2={gy} />
-                <line x1={gx} y1={gy - 7} x2={gx} y2={gy + 7} />
+        {/* ── LEGENDA HIPSOMÉTRICA ── */}
+        <g transform="translate(16, 420)">
+          <text fontSize="7" fill="rgba(60,80,60,0.40)" fontFamily="monospace" y="-4">
+            HIPSOMETRIA (m)
+          </text>
+          {HYPS.slice(0, -1).map((h, i) => {
+            const next = HYPS[i + 1];
+            const midT = (h.t + next.t) / 2;
+            const fill = lerpColor(midT, 0.6);
+            const altLo = Math.round(h.t * 800);
+            const altHi = Math.round(next.t * 800);
+            return (
+              <g key={i} transform={`translate(0, ${i * 14})`}>
+                <rect width="18" height="11" rx="1" fill={fill} />
+                <text x="22" y="9" fontSize="7" fill="rgba(60,80,60,0.50)" fontFamily="monospace">
+                  {altLo}–{altHi} m
+                </text>
               </g>
-            )),
-          )}
-        </g>
-
-        {/* ══ COORDENADAS E METADADOS ══════════════════════════════════════ */}
-        <g
-          fill={S.meta}
-          fontSize="8"
-          fontFamily="'IBM Plex Mono',monospace"
-          letterSpacing="0.05em"
-          opacity="0.9"
-        >
-          {/* Canto NW */}
-          <text x="18"   y="19">23°32′14″S</text>
-          <text x="18"   y="31">46°38′09″W</text>
-          {/* Canto NE */}
-          <text x="1268" y="19">23°28′51″S</text>
-          <text x="1268" y="31">46°31′44″W</text>
-          {/* Rodapé esquerdo */}
-          <text x="18"   y="889">UTM 23S  ·  DATUM SIRGAS2000  ·  FUSO 23</text>
-          {/* Rodapé direito */}
-          <text x="1142" y="889">ESCALA 1:25.000</text>
-        </g>
-
-        {/* ══ LEGENDA HIPSOMÉTRICA (faixas de cor por altitude) ════════════ */}
-        <g fontFamily="'IBM Plex Mono',monospace" fontSize="7" opacity="0.85">
-          {[
-            { label: '0–200m',     color: HYPSO[0] },
-            { label: '200–400m',   color: HYPSO[2] },
-            { label: '400–700m',   color: HYPSO[4] },
-            { label: '700–1000m',  color: HYPSO[6] },
-            { label: '1000m+',     color: HYPSO[8] },
-          ].map((row, i) => (
-            <g key={row.label} transform={`translate(18, ${742 + i * 14})`}>
-              <rect width="14" height="9" fill={row.color} stroke={S.meta} strokeWidth="0.4" />
-              <text x="20" y="7.5" fill={S.meta}>{row.label}</text>
-            </g>
-          ))}
-        </g>
-
-        {/* ══ BARRA DE ESCALA GRÁFICA ══════════════════════════════════════ */}
-        <g stroke={S.meta} fill={S.meta} strokeWidth="0.8" opacity="0.8">
-          <line x1="1252" y1="858" x2="1384" y2="858" />
-          <line x1="1252" y1="853" x2="1252" y2="863" />
-          <line x1="1318" y1="854" x2="1318" y2="862" />
-          <line x1="1384" y1="853" x2="1384" y2="863" />
-          <rect x="1252" y="856" width="66" height="4" opacity="0.35" />
-          <text x="1250" y="873" fontSize="7.5" fontFamily="'IBM Plex Mono',monospace">0</text>
-          <text x="1306" y="873" fontSize="7.5" fontFamily="'IBM Plex Mono',monospace">500m</text>
-          <text x="1362" y="873" fontSize="7.5" fontFamily="'IBM Plex Mono',monospace">1km</text>
-        </g>
-
-        {/* ══ MARCAS DE REGISTRO (CANTOS) ══════════════════════════════════ */}
-        <g stroke={S.meta} strokeWidth="0.55" opacity="0.38">
-          {/* NW */}
-          <line x1="0"    y1="12"  x2="26"   y2="12"  />
-          <line x1="12"   y1="0"   x2="12"   y2="26"  />
-          {/* NE */}
-          <line x1="1374" y1="12"  x2="1400" y2="12"  />
-          <line x1="1388" y1="0"   x2="1388" y2="26"  />
-          {/* SW */}
-          <line x1="0"    y1="888" x2="26"   y2="888" />
-          <line x1="12"   y1="874" x2="12"   y2="900" />
-          {/* SE */}
-          <line x1="1374" y1="888" x2="1400" y2="888" />
-          <line x1="1388" y1="874" x2="1388" y2="900" />
+            );
+          })}
+          <text fontSize="6" fill="rgba(60,80,60,0.25)" fontFamily="monospace" y={HYPS.length * 14 + 4}>
+            Datum SIRGAS2000
+          </text>
         </g>
       </svg>
     </div>
-  )
+  );
 }
+
+export default TopoPageBackground;
