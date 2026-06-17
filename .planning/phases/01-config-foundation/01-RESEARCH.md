@@ -451,22 +451,19 @@ export function getJsonLd(config: SiteConfig) {
 
 **If this table is empty:** Not applicable — 3 assumptions listed above.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should lib/config-types.ts be a single file or split per section?**
-   - What we know: 23 sections means ~300-400 lines of schema definitions
-   - What's unclear: Whether single-file or multi-file is better for maintainability
-   - Recommendation: Start with single file. Split only if it exceeds 400 lines. The schemas are closely related and benefit from being co-located.
+1. **Should lib/config-types.ts be a single file or split per section?** (RESOLVED)
+   - Decision: Single file. 23 sections (~300-400 lines) benefit from co-location. Split only if exceeding 400 lines.
+   - Rationale: Schemas are closely related, single file enables easier refactoring and autocomplete.
 
-2. **Should site.config.ts export a validated object or a type + raw data?**
-   - What we know: Components need both the validated data and TypeScript types
-   - What's unclear: Whether to export the validated object or let components import the schema and validate themselves
-   - Recommendation: Export the validated object from site.config.ts. Components import it directly. Types exported from lib/config-types.ts for when components need the type without the data.
+2. **Should site.config.ts export a validated object or a type + raw data?** (RESOLVED)
+   - Decision: Export validated object from site.config.ts. Components import directly. Types exported from lib/config-types.ts.
+   - Rationale: Simpler API — one import per component. Runtime validation via Zod parse.
 
-3. **How should icon names be validated?**
-   - What we know: Services, equipment, differentials, and process sections reference icons by string name
-   - What's unclear: Whether to validate icon names against the known icon map at config validation time
-   - Recommendation: Use `z.enum()` with the known icon names from lib/icons.ts. This catches typos at validation time rather than rendering time.
+3. **How should icon names be validated?** (RESOLVED)
+   - Decision: Use `z.enum()` with known icon names from lib/icons.ts. Catches typos at validation time.
+   - Rationale: Fail-fast on invalid icon names prevents runtime rendering errors.
 
 ## Environment Availability
 
