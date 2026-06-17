@@ -33,7 +33,7 @@ export function Footer() {
                   {brand.name.split(' ')[0]}
                 </span>
                 <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-topo-accent opacity-50">
-                  {brand.slogan.split('&')[1]?.trim() || brand.slogan}
+                  {brand.slogan?.split('&')[1]?.trim() || brand.slogan}
                 </span>
               </div>
             </div>
