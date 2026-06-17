@@ -57,7 +57,7 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="relative py-24 lg:py-32 backdrop-blur-[2px]" style={{ backgroundColor: 'rgba(237,241,247,0.85)' }}>
+    <section id="faq" className="relative py-24 lg:py-32 backdrop-blur-[2px]" style={{ backgroundColor: 'rgba(237,241,247,0.55)' }}>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">

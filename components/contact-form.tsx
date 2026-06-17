@@ -192,7 +192,7 @@ export function ContactForm() {
       </section>
 
       {/* Formulário — fundo claro */}
-      <section id="contato" className="relative py-24 lg:py-32 backdrop-blur-[2px]" style={{ backgroundColor: 'rgba(248,250,252,0.85)' }}>
+      <section id="contato" className="relative py-24 lg:py-32 backdrop-blur-[2px]" style={{ backgroundColor: 'rgba(248,250,252,0.55)' }}>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={ref}>

@@ -57,7 +57,7 @@ export function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden">
+    <section className="relative min-h-screen flex flex-col overflow-hidden" style={{ backgroundColor: '#F8FAFC' }}>
       {/* Background */}
       <TopoBackground showGrid showCoords backgroundImageUrl="/images/mapa-topo-bg.jpeg" backgroundImageUrlMobile="/images/mapa-topo-bg-mobile.jpeg" />
 
