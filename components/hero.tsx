@@ -266,6 +266,16 @@ export function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Transição blur no fim da hero */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, #F8FAFC)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+        }}
+      />
     </section>
   )
 }

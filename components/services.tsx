@@ -128,6 +128,16 @@ export function Services() {
   return (
     <section id="servicos" className="relative py-24 lg:py-32" style={{ backgroundColor: 'rgba(248,250,252,0.50)' }}>
 
+      {/* Transição blur no início da seção */}
+      <div
+        className="absolute top-0 left-0 right-0 h-24 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to top, transparent, rgba(248,250,252,0.50))',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+        }}
+      />
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
           <motion.div
