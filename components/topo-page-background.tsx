@@ -95,6 +95,28 @@ export function TopoPageBackground() {
         overflow: "hidden",
       }}
     >
+      {/* ── IMAGEM DE FUNDO (repetida para manter qualidade) ── */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "url('/images/bg-site-desktop.png')",
+          backgroundSize: "auto",
+          backgroundPosition: "center top",
+          backgroundRepeat: "repeat",
+        }}
+      />
+
+      {/* ── OVERLAY DE CONTROLE DE VISIBILIDADE ── */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "rgba(248, 250, 252, 0.80)", // ajuste a opacidade aqui (0 = imagem totalmente visível, 1 = oculta)
+          backdropFilter: "blur(1px)",
+        }}
+      />
+
       <svg
         ref={ref}
         viewBox={`0 0 ${W} ${H}`}
