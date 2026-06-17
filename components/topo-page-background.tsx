@@ -113,7 +113,7 @@ export function TopoPageBackground() {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(248, 250, 252, 0.25)", // ajuste a opacidade aqui (0 = imagem totalmente visível, 1 = oculta)
+          backgroundColor: "rgba(248, 250, 252, 0.30)", // ajuste a opacidade aqui (0 = imagem totalmente visível, 1 = oculta)
           backdropFilter: "blur(0px)",
         }}
       />
