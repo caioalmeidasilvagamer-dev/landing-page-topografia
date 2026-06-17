@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 import { TopoPageBackground } from '@/components/topo-page-background'
+import config from '@/site.config'
 import './globals.css'
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -19,41 +20,28 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'GeoTech | Topografia & Georreferenciamento',
-  description:
-    'Soluções precisas em topografia, georreferenciamento, locação de obras e regularização fundiária. Equipamentos GNSS de alta precisão e equipe especializada.',
-  keywords: [
-    'topografia',
-    'georreferenciamento',
-    'levantamento topográfico',
-    'locação de obras',
-    'regularização fundiária',
-    'aerolevantamento',
-    'drone',
-    'GNSS',
-    'cadastro técnico',
-    'engenharia',
-  ],
+  title: config.seo.title,
+  description: config.seo.description,
+  keywords: config.seo.keywords,
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    title: 'GeoTech | Topografia & Georreferenciamento',
-    description:
-      'Precisão em topografia para o seu projeto. Levantamentos topográficos, georreferenciamento e locação de obras.',
-    siteName: 'GeoTech Topografia',
+    title: config.seo.title,
+    description: config.seo.description,
+    siteName: config.brand.name,
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true },
   },
-  authors: [{ name: 'GeoTech Topografia' }],
+  authors: [{ name: config.brand.name }],
   category: 'Engenharia',
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#1F3A5F',
+  themeColor: config.colors.primary,
   width: 'device-width',
   initialScale: 1,
 }
@@ -76,23 +64,16 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'LocalBusiness',
-              name: 'GeoTech Topografia',
-              description:
-                'Empresa especializada em topografia, georreferenciamento e engenharia de precisão.',
-              url: 'https://geotech.com.br',
-              telephone: '+55-11-99999-9999',
+              name: config.brand.name,
+              description: config.seo.description,
+              url: config.seo.ogImage || 'https://example.com',
+              telephone: config.contact.phone,
               address: {
                 '@type': 'PostalAddress',
-                addressLocality: 'São Paulo',
-                addressRegion: 'SP',
+                addressLocality: config.contact.address,
                 addressCountry: 'BR',
               },
-              geo: {
-                '@type': 'GeoCoordinates',
-                latitude: -23.5505,
-                longitude: -46.6333,
-              },
-              sameAs: ['https://instagram.com/geotech'],
+              sameAs: [config.social.instagram, config.social.linkedin].filter(Boolean),
               openingHoursSpecification: [
                 {
                   '@type': 'OpeningHoursSpecification',
@@ -102,15 +83,6 @@ export default function RootLayout({
                 },
               ],
               priceRange: '$$',
-              serviceArea: {
-                '@type': 'GeoCircle',
-                geoMidpoint: {
-                  '@type': 'GeoCoordinates',
-                  latitude: -23.5505,
-                  longitude: -46.6333,
-                },
-                geoRadius: '500000',
-              },
             }),
           }}
         />
