@@ -105,7 +105,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning>
         {/* Fundo topográfico fixo — carta de relevo para todo o site */}
         <TopoPageBackground />
         {/* Conteúdo acima do fundo */}
