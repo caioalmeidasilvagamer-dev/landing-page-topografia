@@ -1,54 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ClipboardList, MapPinned, Scan, Cpu, PackageCheck } from 'lucide-react'
-
-const steps = [
-  {
-    number: '01',
-    icon: ClipboardList,
-    title: 'Solicitação',
-    description:
-      'Análise da demanda, definição do escopo técnico, emissão de proposta comercial com especificações completas e prazo de execução.',
-    detail: 'Proposta em até 24h',
-  },
-  {
-    number: '02',
-    icon: MapPinned,
-    title: 'Visita Técnica',
-    description:
-      'Reconhecimento do terreno, avaliação de acesso, identificação de marcos geodésicos e planejamento logístico para o levantamento.',
-    detail: 'Agendamento flexível',
-  },
-  {
-    number: '03',
-    icon: Scan,
-    title: 'Levantamento',
-    description:
-      'Execução em campo com equipamentos GNSS e estação total. Coleta de pontos, coordenadas, cotas e dados planialtimétricos completos.',
-    detail: 'Rastreamento em tempo real',
-  },
-  {
-    number: '04',
-    icon: Cpu,
-    title: 'Processamento',
-    description:
-      'Processamento em software geodésico, ajustamento de redes, geração de modelos digitais e elaboração de relatórios técnicos conforme normas.',
-    detail: 'Trimble Business Center',
-  },
-  {
-    number: '05',
-    icon: PackageCheck,
-    title: 'Entrega Final',
-    description:
-      'Entrega dos arquivos DWG/DXF, memoriais descritivos, relatórios georeferenciados, ART/RRT e suporte técnico pós-entrega.',
-    detail: 'Arquivos + ART inclusos',
-  },
-]
+import config from '@/site.config'
+import { getIcon } from '@/lib/icons'
 
 const VP = { once: true, amount: 0.05 } as const
 
 export function Process() {
+  const steps = config.process
+
   return (
     <section className="relative py-24 lg:py-32 bg-background/50">
 
@@ -101,7 +61,7 @@ export function Process() {
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-4 relative z-10">
             {steps.map((step, index) => {
-              const Icon = step.icon
+              const Icon = getIcon(step.icon)
               return (
                 <motion.div
                   key={step.number}

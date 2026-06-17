@@ -1,44 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Satellite, ScanLine, Plane, Waves } from 'lucide-react'
+import config from '@/site.config'
+import { getIcon } from '@/lib/icons'
 
 const VP = { once: true, amount: 0.05 } as const
-
-const equipment = [
-  {
-    icon: Satellite,
-    model: 'GNSS RTK Geodésico',
-    name: 'Trimble R12i / Leica GS18 T',
-    description:
-      'Receptor com rastreamento L1/L2/L5 em todas as constelações GNSS. Precisão horizontal ±3mm + 0.5ppm.',
-    specs: ['Precisão ±3mm + 0.5ppm', 'Constelações GPS/GLONASS/Galileo/BeiDou', 'Correção RTK e PPP'],
-  },
-  {
-    icon: ScanLine,
-    model: 'Estação Total Robotizada',
-    name: 'Leica TS16 / Topcon GT-1200',
-    description:
-      'Medição angular e distância com alcance de 3.500m sem prisma e precisão angular de 1″.',
-    specs: ['Alcance 3.500m sem prisma', 'Precisão angular 1″', 'Rastreamento automático de prisma'],
-  },
-  {
-    icon: Plane,
-    model: 'VANT Aerofotogramétrico',
-    name: 'DJI Matrice 350 RTK + Zenmuse P1',
-    description:
-      'Câmera 45MP full-frame, homologada ANAC. GSD de 3cm a 120m de altitude.',
-    specs: ['Câmera 45MP full-frame', 'GSD 3cm a 120m', 'ANAC homologado SARP'],
-  },
-  {
-    icon: Waves,
-    model: 'Laser Scanner 3D',
-    name: 'Leica RTC360',
-    description:
-      'Varredura 3D de alta velocidade (2 milhões pontos/seg), alcance 130m, ideal para plantas industriais.',
-    specs: ['2M pontos por segundo', 'Alcance 130m', 'Precisão 3D ±1.9mm'],
-  },
-]
 
 const manufacturers = ['Trimble', 'Leica Geosystems', 'DJI', 'Topcon', 'Agisoft', 'Autodesk']
 
@@ -83,8 +49,8 @@ export function Equipment() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {equipment.map((item, index) => {
-            const Icon = item.icon
+          {config.equipment.map((item, index) => {
+            const Icon = getIcon(item.icon)
             return (
               <motion.div
                 key={item.model}

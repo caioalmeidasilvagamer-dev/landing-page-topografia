@@ -1,54 +1,16 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Crosshair, Users, MapPin, Clock, ShieldCheck } from 'lucide-react'
-
-const differentials = [
-  {
-    icon: Crosshair,
-    title: 'Equipamentos de Alta Precisão',
-    description:
-      'Receptores GNSS geodésicos Trimble e Leica, estações totais robotizadas e drones aerofotogramétricos DJI com câmeras métricas. Tecnologia de ponta para resultados confiáveis.',
-    metric: '±5mm',
-    metricLabel: 'Precisão posicional',
-  },
-  {
-    icon: Users,
-    title: 'Equipe Especializada',
-    description:
-      'Engenheiros cartógrafos, agrimensores e técnicos em georreferenciamento com registro ativo no CREA/CONFEA, especializados nos mais rigorosos padrões normativos.',
-    metric: '18+',
-    metricLabel: 'Profissionais certificados',
-  },
-  {
-    icon: MapPin,
-    title: 'Atendimento Regional',
-    description:
-      'Cobertura nos estados do Sudeste, Centro-Oeste e Sul do Brasil. Mobilização rápida para qualquer município com logística otimizada para reduzir custos operacionais.',
-    metric: '12',
-    metricLabel: 'Estados atendidos',
-  },
-  {
-    icon: Clock,
-    title: 'Entrega Ágil',
-    description:
-      'Processamento interno com software GIS e CAD profissional. Relatórios técnicos e arquivos georreferenciados entregues no menor prazo do mercado, sem abrir mão da precisão.',
-    metric: '5 dias',
-    metricLabel: 'Prazo médio de entrega',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Conformidade Técnica',
-    description:
-      'Todos os trabalhos seguem as normas NBR 13.133, INCRA 572, e demais especificações técnicas do IBGE e órgãos reguladores. Laudos e ARTs em conformidade total.',
-    metric: '100%',
-    metricLabel: 'Conformidade normativa',
-  },
-]
+import config from '@/site.config'
+import { getIcon } from '@/lib/icons'
 
 const VP = { once: true, amount: 0.05 } as const
 
 export function Differentials() {
+  const diffs = config.differentials
+  const featured = diffs[0]
+  const rest = diffs.slice(1)
+
   return (
     <section id="diferenciais" className="relative py-24 lg:py-32 overflow-hidden bg-muted/50">
 
@@ -74,7 +36,7 @@ export function Differentials() {
             transition={{ duration: 0.4, delay: 0.08 }}
             className="font-heading font-semibold text-3xl lg:text-4xl text-foreground max-w-xl text-balance"
           >
-            Por que escolher a GeoTech?
+            Por que escolher a {config.brand.name}?
           </motion.h2>
         </div>
 
@@ -105,24 +67,22 @@ export function Differentials() {
 
             <div className="relative z-10 p-8 flex flex-col gap-6 flex-1">
               <div className="size-14 flex items-center justify-center border border-primary/20 rounded-lg bg-muted">
-                <Crosshair className="size-7 text-primary" />
+                {(() => { const Icon = getIcon(featured.icon); return <Icon className="size-7 text-primary" /> })()}
               </div>
 
               <div className="flex flex-col gap-3">
                 <h3 className="font-heading font-semibold text-xl text-foreground">
-                  Equipamentos de Alta Precisão
+                  {featured.title}
                 </h3>
                 <p className="font-sans text-sm text-muted-foreground leading-relaxed">
-                  Receptores GNSS geodésicos Trimble e Leica, estações totais robotizadas e
-                  drones aerofotogramétricos DJI com câmeras métricas. Tecnologia de ponta
-                  para resultados confiáveis e rastreáveis.
+                  {featured.description}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
                 <div>
-                  <div className="font-heading font-semibold text-3xl text-primary">±5mm</div>
-                  <div className="font-sans text-xs text-muted-foreground mt-1">Precisão posicional</div>
+                  <div className="font-heading font-semibold text-3xl text-primary">{featured.metric}</div>
+                  <div className="font-sans text-xs text-muted-foreground mt-1">{featured.metricLabel}</div>
                 </div>
                 <div>
                   <div className="font-heading font-semibold text-3xl text-primary">L1/L2</div>
@@ -133,8 +93,8 @@ export function Differentials() {
           </motion.div>
 
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-            {differentials.slice(1).map((diff, index) => {
-              const Icon = diff.icon
+            {rest.map((diff, index) => {
+              const Icon = getIcon(diff.icon)
               return (
                 <motion.div
                   key={diff.title}

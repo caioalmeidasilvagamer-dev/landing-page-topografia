@@ -3,43 +3,14 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check } from 'lucide-react'
+import config from '@/site.config'
 
 const VP = { once: true, amount: 0.05 } as const
 
-const states = [
-  { abbr: 'AC', name: 'Acre', served: false },
-  { abbr: 'AL', name: 'Alagoas', served: false },
-  { abbr: 'AP', name: 'Amapá', served: false },
-  { abbr: 'AM', name: 'Amazonas', served: false },
-  { abbr: 'BA', name: 'Bahia', served: false },
-  { abbr: 'CE', name: 'Ceará', served: false },
-  { abbr: 'DF', name: 'Distrito Federal', served: true },
-  { abbr: 'ES', name: 'Espírito Santo', served: true },
-  { abbr: 'GO', name: 'Goiás', served: true },
-  { abbr: 'MA', name: 'Maranhão', served: false },
-  { abbr: 'MT', name: 'Mato Grosso', served: true },
-  { abbr: 'MS', name: 'Mato Grosso do Sul', served: true },
-  { abbr: 'MG', name: 'Minas Gerais', served: true },
-  { abbr: 'PA', name: 'Pará', served: false },
-  { abbr: 'PB', name: 'Paraíba', served: false },
-  { abbr: 'PR', name: 'Paraná', served: true },
-  { abbr: 'PE', name: 'Pernambuco', served: false },
-  { abbr: 'PI', name: 'Piauí', served: false },
-  { abbr: 'RJ', name: 'Rio de Janeiro', served: true },
-  { abbr: 'RN', name: 'Rio Grande do Norte', served: false },
-  { abbr: 'RS', name: 'Rio Grande do Sul', served: true },
-  { abbr: 'RO', name: 'Rondônia', served: false },
-  { abbr: 'RR', name: 'Roraima', served: false },
-  { abbr: 'SC', name: 'Santa Catarina', served: true },
-  { abbr: 'SP', name: 'São Paulo', served: true },
-  { abbr: 'SE', name: 'Sergipe', served: false },
-  { abbr: 'TO', name: 'Tocantins', served: false },
-]
-
-const servedStates = states.filter((s) => s.served)
-
 export function CoverageMap() {
   const [hovered, setHovered] = useState<string | null>(null)
+  const states = config.coverage
+  const servedStates = states.filter((s) => s.served)
 
   return (
     <section className="relative py-24 lg:py-32 bg-background/50">
@@ -78,7 +49,7 @@ export function CoverageMap() {
             className="flex flex-col gap-6"
           >
             <p className="font-sans text-base text-muted-foreground leading-relaxed">
-              Com equipe própria e equipamentos mobilizados, atendemos projetos em 11 estados brasileiros. Nossa cobertura abrange as regiões Sudeste, Sul, Centro-Oeste e parte do Norte.
+              Com equipe própria e equipamentos mobilizados, atendemos projetos em {servedStates.length} estados brasileiros. Nossa cobertura abrange as regiões Sudeste, Sul, Centro-Oeste e parte do Norte.
             </p>
 
             <div className="grid grid-cols-2 gap-2">
