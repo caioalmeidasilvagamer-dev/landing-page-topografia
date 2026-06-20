@@ -85,7 +85,7 @@ const config = SiteConfigSchema.parse({
     badge: 'Precisão GNSS Certificada',
     headline: 'Precisão em Topografia para Seu Projeto',
     subheadline:
-      'Levantamentos planialtimétricos, georreferenciamento rural, locação de obras e regularização fundiária com equipamentos de alta precisão e equipe certificada.',
+      'Levantamentos planialtimétricos, georreferenciamento rural, locação de obras e regularização fundiária com equipamentos de alta precisão e equipe certificada. Atendemos desde grandes propriedades rurais até sítios e chácaras.',
     stats: [
       { value: 850, suffix: '+', label: 'Projetos Realizados' },
       { value: 15, suffix: ' anos', label: 'De Experiência' },
@@ -142,8 +142,8 @@ const config = SiteConfigSchema.parse({
       code: 'SRV-04',
       title: 'Regularização Fundiária',
       description:
-        'Processo completo de regularização de imóveis rurais e urbanos, desde o levantamento topográfico até a obtenção de certidões e registros.',
-      specs: ['Certificado INCRA', 'Memorial Descritivo', 'Registro em Cartório'],
+        'Processo completo de regularização de imóveis rurais e urbanos: usucapião, parcelamento, retificação de matrícula, desde o levantamento topográfico até a obtenção de certidões e registros.',
+      specs: ['NBR 17047', 'Certificado INCRA', 'Registro em Cartório'],
     },
     {
       icon: 'Plane',
@@ -158,7 +158,7 @@ const config = SiteConfigSchema.parse({
       code: 'SRV-06',
       title: 'Cadastro Técnico Rural',
       description:
-        'Elaboração de cadastro técnico rural para fins de tributação, crédito rural e programas governamentais, com levantamento e mapeamento da propriedade.',
+        'Elaboração de cadastro técnico rural para fins de tributação, crédito rural e programas governamentais. Mais de 7 milhões de imóveis estão cadastrados no SICAR nacionalmente, mas a maioria ainda aguarda validação — regularizamos seu CAR para acesso a crédito rural e licenciamento ambiental.',
       specs: ['CAR/SNCR', 'Georreferenciamento', 'Compatível INCRA'],
     },
     ],
@@ -376,6 +376,16 @@ const config = SiteConfigSchema.parse({
       location: 'Campinas, SP',
       project: 'Locação e Monitoramento — Centro Logístico',
     },
+    {
+      id: 5,
+      name: 'Mariana Ferreira',
+      role: 'Proprietária Rural',
+      company: 'Sítio Recanto Verde',
+      rating: 5,
+      text: 'Tinha um sítio de 12 hectares em Cotia e precisava vender para quitar um financiamento. Achava que georreferenciamento era só para fazendas grandes. A GeoTech explicou que desde novembro de 2025 imóveis pequenos também precisam, fez tudo rapidamente e consegui vender o terreno sem travar em cartório.',
+      location: 'Cotia, SP',
+      project: 'Georreferenciamento — Sítio 12 ha',
+    },
   ],
 
   clientLogos: {
@@ -431,6 +441,12 @@ const config = SiteConfigSchema.parse({
         question: 'O prazo do INCRA foi prorrogado para 2029. Isso significa que posso esperar para regularizar meu imóvel?',
         answer:
           'Não. O Decreto nº 12.689/2025 prorrogou apenas a exigência de CERTIFICAÇÃO no INCRA até 21/10/2029 — mas o georreferenciamento em si continua obrigatório agora para qualquer venda, doação, partilha, desmembramento ou financiamento rural. Sem ele, o imóvel fica travado em cartório nessas operações, independente do prazo de certificação. Recomendamos não esperar: regularizar agora evita atrasos quando a oportunidade de negócio surgir.',
+      },
+      {
+        id: 'q0b',
+        question: 'Minha propriedade rural tem menos de 25 hectares. Preciso mesmo regularizar?',
+        answer:
+          'Sim, e isso é recente: desde 20 de novembro de 2025, todos os imóveis rurais — inclusive sítios e chácaras com menos de 25 hectares — também são obrigados ao georreferenciamento para venda, doação, financiamento, partilha ou qualquer transferência. Antes dessa data, só propriedades maiores precisavam. Se você tem uma propriedade pequena e nunca regularizou, esse é o momento certo.',
       },
       {
         id: 'q1',
@@ -579,6 +595,16 @@ const config = SiteConfigSchema.parse({
   },
 
   blog: [
+    {
+      category: 'Georreferenciamento',
+      categoryColor: '#5E7C52',
+      topColor: '#EAF3DE',
+      title: 'Sítios e chácaras também precisam de georreferenciamento agora — entenda a mudança de novembro/2025',
+      excerpt:
+        'Desde 20/11/2025 o cronograma do Decreto 4.449/2002 passou a incluir propriedades menores de 25 hectares. Entenda o que isso significa pra quem nunca regularizou e como evitar surpresas na hora de vender ou financiar.',
+      date: '18 Jun 2025',
+      readTime: '5 min',
+    },
     {
       category: 'Georreferenciamento',
       categoryColor: '#5E7C52',

@@ -84,7 +84,7 @@ const config = SiteConfigSchema.parse({
     badge: 'Incerteza zero em cada coordenada',
     headline: 'Georreferenciamento com precisão certificada pelo INCRA',
     subheadline:
-      'Georreferenciamento de imóveis rurais, levantamentos topográficos, mapeamento por drone e consultoria geoespacial com rastreamento GNSS de dupla frequência.',
+      'Georreferenciamento de imóveis rurais, levantamentos topográficos, mapeamento por drone e consultoria geoespacial com rastreamento GNSS de dupla frequência. Atendemos desde grandes propriedades rurais até sítios e chácaras.',
     stats: [
       { value: 1200, suffix: '+', label: 'Imóveis Certificados' },
       { value: 20, suffix: ' anos', label: 'De Experiência' },
@@ -149,7 +149,7 @@ const config = SiteConfigSchema.parse({
       code: 'CP-05',
       title: 'Cadastro Técnico Rural',
       description:
-        'Elaboração de cadastro técnico rural para fins de tributação, crédito rural e programas governamentais.',
+        'Elaboração de cadastro técnico rural para fins de tributação, crédito rural e programas governamentais. Mais de 7 milhões de imóveis estão cadastrados no SICAR nacionalmente, mas a maioria ainda aguarda validação — regularizamos seu CAR para acesso a crédito rural e licenciamento ambiental.',
       specs: ['CAR/SNCR', 'Georreferenciamento', 'Compatível INCRA'],
     },
     {
@@ -375,6 +375,16 @@ const config = SiteConfigSchema.parse({
       location: 'Itabira, MG',
       project: 'Mapeamento Aéreo — 1.200 ha',
     },
+    {
+      id: 5,
+      name: 'Luciana Campos',
+      role: 'Proprietária Rural',
+      company: 'Chácara Serra Azul',
+      rating: 5,
+      text: 'Minha chácara de 8 hectares em Betim precisava ser regularizada para financiamento. Achava que era burocracia demais para um terreno tão pequeno. A CartoPrime resolveu tudo em poucas semanas — sem mim sem saber que desde novembro de 2025 propriedades pequenas também precisam de georreferenciamento.',
+      location: 'Betim, MG',
+      project: 'Georreferenciamento — Chácara 8 ha',
+    },
   ],
 
   clientLogos: {
@@ -430,6 +440,12 @@ const config = SiteConfigSchema.parse({
         question: 'O prazo do INCRA foi prorrogado para 2029. Isso significa que posso esperar para regularizar meu imóvel?',
         answer:
           'Não. O Decreto nº 12.689/2025 prorrogou apenas a exigência de CERTIFICAÇÃO no INCRA até 21/10/2029 — mas o georreferenciamento em si continua obrigatório agora para qualquer venda, doação, partilha, desmembramento ou financiamento rural. Sem ele, o imóvel fica travado em cartório nessas operações, independente do prazo de certificação. Recomendamos não esperar: regularizar agora evita atrasos quando a oportunidade de negócio surgir.',
+      },
+      {
+        id: 'cp-q0b',
+        question: 'Minha propriedade rural tem menos de 25 hectares. Preciso mesmo regularizar?',
+        answer:
+          'Sim, e isso é recente: desde 20 de novembro de 2025, todos os imóveis rurais — inclusive sítios e chácaras com menos de 25 hectares — também são obrigados ao georreferenciamento para venda, doação, financiamento, partilha ou qualquer transferência. Antes dessa data, só propriedades maiores precisavam. Se você tem uma propriedade pequena e nunca regularizou, esse é o momento certo.',
       },
       {
         id: 'cp-q1',
@@ -572,6 +588,16 @@ const config = SiteConfigSchema.parse({
   },
 
   blog: [
+    {
+      category: 'Georreferenciamento',
+      categoryColor: '#2D6A4F',
+      topColor: '#E8F5E9',
+      title: 'Sítios e chácaras também precisam de georreferenciamento agora — entenda a mudança de novembro/2025',
+      excerpt:
+        'Desde 20/11/2025 o cronograma do Decreto 4.449/2002 passou a incluir propriedades menores de 25 hectares. Entenda o que isso significa pra quem nunca regularizou e como evitar surpresas na hora de vender ou financiar.',
+      date: '18 Jun 2025',
+      readTime: '5 min',
+    },
     {
       category: 'Georreferenciamento',
       categoryColor: '#2D6A4F',
