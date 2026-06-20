@@ -47,6 +47,7 @@ export function ContactForm() {
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
+  const [consent, setConsent] = useState(false)
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {}
@@ -67,7 +68,7 @@ export function ContactForm() {
       newErrors.mensagem = 'Descreva sua necessidade (mín. 20 caracteres)'
     }
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    return Object.keys(newErrors).length === 0 && consent
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -318,10 +319,25 @@ export function ContactForm() {
                       )}
                     </div>
 
+                    <label className="flex items-start gap-2.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={consent}
+                        onChange={(e) => setConsent(e.target.checked)}
+                        className="mt-0.5 size-4 rounded border-border text-primary focus:ring-primary/30"
+                      />
+                      <span className="font-sans text-xs text-muted-foreground leading-relaxed">
+                        Autorizo o uso dos meus dados para contato sobre este orçamento, conforme nossa{' '}
+                        <a href="/politica-de-privacidade" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          Política de Privacidade
+                        </a>.
+                      </span>
+                    </label>
+
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
                       <button
                         type="submit"
-                        disabled={status === 'loading'}
+                        disabled={status === 'loading' || !consent}
                         className="group flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-sans font-semibold text-sm hover:bg-primary/90 disabled:opacity-60 transition-all rounded-[6px]"
                       >
                         {status === 'loading' ? (
