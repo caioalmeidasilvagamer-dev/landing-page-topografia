@@ -602,7 +602,7 @@ const config = SiteConfigSchema.parse({
       title: 'Sítios e chácaras também precisam de georreferenciamento agora — entenda a mudança de novembro/2025',
       excerpt:
         'Desde 20/11/2025 o cronograma do Decreto 4.449/2002 passou a incluir propriedades menores de 25 hectares. Entenda o que isso significa pra quem nunca regularizou e como evitar surpresas na hora de vender ou financiar.',
-      date: '18 Jun 2025',
+      date: '18 Jun 2026',
       readTime: '5 min',
     },
     {
@@ -612,7 +612,7 @@ const config = SiteConfigSchema.parse({
       title: 'Prazo do INCRA foi para 2029: você ainda precisa regularizar agora?',
       excerpt:
         'O Decreto 12.689/2025 gerou confusão entre proprietários rurais. Entenda a diferença entre certificação no INCRA e georreferenciamento, e por que esperar até 2029 pode travar sua próxima venda ou financiamento.',
-      date: '19 Jun 2025',
+      date: '19 Jun 2026',
       readTime: '6 min',
     },
     {
