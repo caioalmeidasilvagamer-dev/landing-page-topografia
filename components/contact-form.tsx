@@ -12,6 +12,7 @@ interface FormData {
   cidade: string
   servico: string
   mensagem: string
+  consentimento: boolean
 }
 
 interface FormErrors {
@@ -20,6 +21,7 @@ interface FormErrors {
   cidade?: string
   servico?: string
   mensagem?: string
+  consentimento?: string
 }
 
 function formatPhone(value: string): string {
@@ -44,10 +46,10 @@ export function ContactForm() {
     cidade: '',
     servico: '',
     mensagem: '',
+    consentimento: false,
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
-  const [consent, setConsent] = useState(false)
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {}
@@ -67,8 +69,11 @@ export function ContactForm() {
     if (!form.mensagem.trim() || form.mensagem.trim().length < 20) {
       newErrors.mensagem = 'Descreva sua necessidade (mín. 20 caracteres)'
     }
+    if (!form.consentimento) {
+      newErrors.consentimento = 'É necessário autorizar o uso dos dados para enviar o formulário'
+    }
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0 && consent
+    return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -319,25 +324,33 @@ export function ContactForm() {
                       )}
                     </div>
 
-                    <label className="flex items-start gap-2.5 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={consent}
-                        onChange={(e) => setConsent(e.target.checked)}
-                        className="mt-0.5 size-4 rounded border-border text-primary focus:ring-primary/30"
-                      />
-                      <span className="font-sans text-xs text-muted-foreground leading-relaxed">
-                        Autorizo o uso dos meus dados para contato sobre este orçamento, conforme nossa{' '}
-                        <a href="/politica-de-privacidade" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                          Política de Privacidade
-                        </a>.
-                      </span>
-                    </label>
+                    <div className="flex flex-col gap-2">
+                      <label className="flex items-start gap-2.5 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={form.consentimento}
+                          onChange={(e) => {
+                            setForm((prev) => ({ ...prev, consentimento: e.target.checked }))
+                            if (errors.consentimento) setErrors((prev) => ({ ...prev, consentimento: undefined }))
+                          }}
+                          className="mt-0.5 size-4 accent-primary shrink-0"
+                        />
+                        <span className="font-sans text-xs text-muted-foreground leading-relaxed">
+                          Autorizo o uso dos meus dados para contato sobre este orçamento, conforme a{' '}
+                          <a href="/politica-de-privacidade" className="text-primary underline" target="_blank" rel="noopener noreferrer">
+                            Política de Privacidade
+                          </a>.
+                        </span>
+                      </label>
+                      {errors.consentimento && (
+                        <span className="font-sans text-xs text-destructive">{errors.consentimento}</span>
+                      )}
+                    </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
                       <button
                         type="submit"
-                        disabled={status === 'loading' || !consent}
+                        disabled={status === 'loading'}
                         className="group flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-sans font-semibold text-sm hover:bg-primary/90 disabled:opacity-60 transition-all rounded-[6px]"
                       >
                         {status === 'loading' ? (
