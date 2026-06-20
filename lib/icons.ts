@@ -28,6 +28,7 @@ import {
   Cpu,
   PackageCheck,
   Award,
+  Lock,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -55,6 +56,7 @@ export const iconMap: Record<string, LucideIcon> = {
   Cpu,
   PackageCheck,
   Award,
+  Lock,
 }
 
 export const iconNames = Object.keys(iconMap)

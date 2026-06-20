@@ -239,6 +239,14 @@ const config = SiteConfigSchema.parse({
       metric: '100%',
       metricLabel: 'Taxa de aprovação INCRA',
     },
+    {
+      icon: 'Lock',
+      title: 'Sem Imóvel Travado',
+      description:
+        'Regularizamos agora, mesmo com o prazo de certificação estendido até 2029 — você não fica refém da burocracia na hora de vender, financiar ou fazer partilha.',
+      metric: '2029',
+      metricLabel: 'Prazo de certificação — não espere até lá',
+    },
   ],
 
   about: {
@@ -418,6 +426,12 @@ const config = SiteConfigSchema.parse({
     ],
     items: [
       {
+        id: 'cp-q0',
+        question: 'O prazo do INCRA foi prorrogado para 2029. Isso significa que posso esperar para regularizar meu imóvel?',
+        answer:
+          'Não. O Decreto nº 12.689/2025 prorrogou apenas a exigência de CERTIFICAÇÃO no INCRA até 21/10/2029 — mas o georreferenciamento em si continua obrigatório agora para qualquer venda, doação, partilha, desmembramento ou financiamento rural. Sem ele, o imóvel fica travado em cartório nessas operações, independente do prazo de certificação. Recomendamos não esperar: regularizar agora evita atrasos quando a oportunidade de negócio surgir.',
+      },
+      {
         id: 'cp-q1',
         question: 'Qual o prazo para georreferenciamento de imóvel rural?',
         answer:
@@ -539,6 +553,7 @@ const config = SiteConfigSchema.parse({
       'Consultoria Geoespacial',
     ],
     purposeOptions: [
+      'Venda ou Financiamento do Imóvel',
       'Certificação INCRA',
       'Engenharia Civil',
       'Agronegócio',
@@ -557,6 +572,16 @@ const config = SiteConfigSchema.parse({
   },
 
   blog: [
+    {
+      category: 'Georreferenciamento',
+      categoryColor: '#2D6A4F',
+      topColor: '#E8F5E9',
+      title: 'Prazo do INCRA foi para 2029: você ainda precisa regularizar agora?',
+      excerpt:
+        'O Decreto 12.689/2025 gerou confusão entre proprietários rurais. Entenda a diferença entre certificação no INCRA e georreferenciamento, e por que esperar até 2029 pode travar sua próxima venda ou financiamento.',
+      date: '19 Jun 2025',
+      readTime: '6 min',
+    },
     {
       category: 'Georreferenciamento',
       categoryColor: '#2D6A4F',
