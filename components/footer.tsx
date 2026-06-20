@@ -150,7 +150,7 @@ export function Footer() {
             © {new Date().getFullYear()} {brand.name} Ltda. · {contact.address} · Todos os direitos reservados.
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" className="font-sans text-[11px] text-topo-accent/35 hover:text-topo-accent/70 transition-colors">
+            <a href="/politica-de-privacidade" className="font-sans text-[11px] text-topo-accent/35 hover:text-topo-accent/70 transition-colors">
               Política de Privacidade
             </a>
             <div className="font-mono text-[10px] text-topo-accent/20">·</div>
